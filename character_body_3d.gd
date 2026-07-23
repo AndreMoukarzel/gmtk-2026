@@ -6,6 +6,9 @@ const JUMP_VELOCITY = 4.5
 var max_health: int = 100
 var health: int = 100
 
+func _ready() -> void:
+	add_to_group("player")
+
 func take_damage(amount: int) -> void:
 	if health <= 0:
 		return

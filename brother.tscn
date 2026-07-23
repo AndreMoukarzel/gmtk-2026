@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbmn5pucfxq6f"]
 
 [ext_resource type="Script" uid="uid://buqmbm83v8nh1" path="res://character_body_3d.gd" id="1_pbm8k"]
+[ext_resource type="Script" uid="uid://3ai444rinfp1" path="res://inimigo_1.gd" id="2_eadea"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wnd53"]
 albedo_color = Color(1, 0.22658296, 0, 1)
@@ -9,6 +10,14 @@ albedo_color = Color(1, 0.22658296, 0, 1)
 material = SubResource("StandardMaterial3D_wnd53")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_usgnq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c12ck"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wnd53"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mtxbc"]
+margin = 0.05
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_usgnq"]
 height = 0.91
@@ -19,23 +28,37 @@ top_radius = 5.955
 bottom_radius = 5.955
 height = 0.91
 
-[node name="Brother" type="Node3D" unique_id=1861133393]
+[node name="mundo" type="Node3D" unique_id=1861133393]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=399718691]
+[node name="hero" type="CharacterBody3D" parent="." unique_id=447855001]
 editor_description = "o melhor brother de todos"
-transform = Transform3D(1, 0, 0, 0, 0.9999907, -0.0043143495, 0, 0.0043143495, 0.9999907, 0, 1.0164126, 0.2588625)
+transform = Transform3D(1, 0, 0, 0, 0.9999628, -0.008628619, 0, 0.008628619, 0.9999628, 0, 1.0715263, 0.51382244)
 script = ExtResource("1_pbm8k")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=2142217350]
-transform = Transform3D(1, 0, 0, 0, 0.9999907, 0.0043143495, 0, -0.0043143495, 0.9999907, 0, 0, 0)
+[node name="Camera3D" type="Camera3D" parent="hero" unique_id=708655596]
+transform = Transform3D(-0.87433887, -0.2075646, 0.43868965, -0.03596975, 0.9291549, 0.36793652, -0.48398122, 0.3059216, -0.8198622, 7.7561727, 3.769937, -8.494659)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="hero" unique_id=545320713]
+transform = Transform3D(1, 0, 0, 0, 0.9999907, 0.004314161, 0, -0.004314161, 0.9999907, 0, 0, 0)
 mesh = SubResource("BoxMesh_mtxbc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=620379932]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hero" unique_id=1255822536]
 shape = SubResource("BoxShape3D_usgnq")
 debug_color = Color(0.92156863, 0.21568628, 0, 1)
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CollisionShape3D" unique_id=427282706]
-transform = Transform3D(-0.87433887, -0.20756464, 0.43868965, -0.03596975, 0.9291551, 0.36793664, -0.48398125, 0.30592164, -0.81986237, 7.7561727, 3.7699375, -8.494659)
+[node name="inimigo 1" type="CharacterBody3D" parent="." unique_id=399718691]
+editor_description = "o melhor brother de todos"
+transform = Transform3D(1, 0, 0, 0, 0.9999907, -0.0043143495, 0, 0.0043143495, 0.9999907, 0, 0.9982082, 4.4783278)
+script = ExtResource("2_eadea")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="inimigo 1" unique_id=2142217350]
+transform = Transform3D(1, 0, 0, 0, 0.9999907, 0.0043143495, 0, -0.0043143495, 0.9999907, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_c12ck")
+mesh = SubResource("CylinderMesh_wnd53")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="inimigo 1" unique_id=620379932]
+shape = SubResource("CylinderShape3D_mtxbc")
+debug_color = Color(0.73441774, 0.13669404, 0.99999994, 1)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1072183900]
 

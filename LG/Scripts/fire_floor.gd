@@ -15,6 +15,7 @@ func _ready() -> void:
 	damage_timer.timeout.connect(_on_damage_timer_timeout)
 
 	damage_timer.wait_time = damage_interval
+	damage_timer.one_shot = false
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -24,9 +25,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body not in bodies_inside:
 		bodies_inside.append(body)
 
-	# Aplica dano imediatamente ao entrar.
-	apply_fire_damage(body)
-
+	# Apenas inicia o timer. Não causa dano imediatamente.
 	if damage_timer.is_stopped():
 		damage_timer.start()
 

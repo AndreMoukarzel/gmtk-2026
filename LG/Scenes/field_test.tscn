@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://do4polsn23nh2"]
+[gd_scene load_steps=24 format=3 uid="uid://do4polsn23nh2"]
 
 [ext_resource type="Shader" uid="uid://ou25g4ilxiid" path="res://LG/Shaders/field_test.gdshader" id="1_eaq1v"]
 [ext_resource type="PackedScene" uid="uid://dq71q4ejun540" path="res://LG/Scenes/player.tscn" id="1_vqppc"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://sw4ch5rxg6h4" path="res://LG/Scenes/speed_up.tscn" id="4_njs15"]
 [ext_resource type="PackedScene" uid="uid://d1tukjcyi7vqk" path="res://LG/Scenes/calamity_blackout.tscn" id="4_oiwje"]
 [ext_resource type="PackedScene" uid="uid://8bauloig1egn" path="res://LG/Scenes/items_ui.tscn" id="5_8or0p"]
+[ext_resource type="Resource" uid="uid://jpa63ngq6uvf" path="res://LG/Calamities/calamity_firespread.tres" id="5_ndbta"]
 [ext_resource type="PackedScene" uid="uid://ce5qbm2kq6dvu" path="res://LG/Scenes/calamity_ui.tscn" id="5_t4twv"]
+[ext_resource type="PackedScene" uid="uid://crtmypoeghm5m" path="res://LG/Scenes/calamity_fire_spread.tscn" id="6_0k68c"]
 [ext_resource type="PackedScene" uid="uid://bynow8i10wjbp" path="res://LG/Scenes/calamity_announcement.tscn" id="6_t4twv"]
 [ext_resource type="PackedScene" uid="uid://bkn4xq0307q0q" path="res://LG/Scenes/item_bullet.tscn" id="6_tveew"]
 [ext_resource type="PackedScene" uid="uid://bnkqqfvk2y7ec" path="res://LG/Scenes/calamity_queue_item.tscn" id="6_ug2oi"]
@@ -38,9 +40,15 @@ size = Vector3(50, 1, 50)
 
 [node name="Field_test" type="Node3D"]
 
+[node name="Player" parent="." instance=ExtResource("1_vqppc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.16254, 7.29275, 5.23772)
+
+[node name="Camera3D2" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 12, 6)
+
 [node name="CalamityController" type="Node" parent="."]
 script = ExtResource("2_d5lmg")
-available_calamities = Array[ExtResource("2_0m2eu")]([ExtResource("3_ug2oi")])
+available_calamities = Array[ExtResource("2_0m2eu")]([ExtResource("3_ug2oi"), ExtResource("5_ndbta")])
 
 [node name="Calamities" type="Node" parent="."]
 
@@ -48,6 +56,16 @@ available_calamities = Array[ExtResource("2_0m2eu")]([ExtResource("3_ug2oi")])
 controller = NodePath("../../CalamityController")
 world_environment = NodePath("../../Enviroment/WorldEnvironment")
 directional_light = NodePath("../../Enviroment/DirectionalLight3D")
+
+[node name="CalamityFireSpread" parent="Calamities" node_paths=PackedStringArray("calamity_controller", "spawn_collision") instance=ExtResource("6_0k68c")]
+calamity_controller = NodePath("../../CalamityController")
+spawn_collision = NodePath("SpawnArea/CollisionShape3D")
+
+[node name="SpawnArea" parent="Calamities/CalamityFireSpread" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0479186, 1.09918, 0.0863746)
+
+[node name="CollisionShape3D" parent="Calamities/CalamityFireSpread/SpawnArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33667, -0.4995, -0.107208)
 
 [node name="UI" type="Node" parent="."]
 
@@ -76,12 +94,6 @@ shape = SubResource("BoxShape3D_i2dtn")
 material_override = SubResource("ShaderMaterial_sykjq")
 mesh = SubResource("BoxMesh_eaq1v")
 
-[node name="Player" parent="." instance=ExtResource("1_vqppc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.16254, 7.29275, 5.23772)
-
-[node name="Camera3D2" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 12, 6)
-
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy1" parent="Enemies" instance=ExtResource("3_sykjq")]
@@ -107,4 +119,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27141, 1.41849, 3.94751)
 [node name="FireFloor" parent="." instance=ExtResource("8_at6ur")]
 transform = Transform3D(0.999732, 0, -0.0231584, 0, 1, 0, 0.0231584, 0, 0.999732, -5.026, 0.568856, 5.68517)
 
+[editable path="Calamities/CalamityFireSpread"]
 [editable path="UI/CalamityUI"]

@@ -7,6 +7,7 @@ signal presentation_finished
 @onready var name_label: Label = %NameLabel
 @onready var description_label: Label = %DescriptionLabel
 
+@export var display_time := 4.5
 
 func setup(calamity: CalamityData) -> void:
 	icon.texture = calamity.icon
@@ -36,7 +37,7 @@ func play_presentation() -> void:
 	).set_trans(Tween.TRANS_BACK)
 
 	await appear_tween.finished
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(display_time).timeout
 
 	var disappear_tween := create_tween()
 	disappear_tween.tween_property(

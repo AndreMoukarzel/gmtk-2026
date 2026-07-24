@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlfy2ux6hwrj1"]
+
+[ext_resource type="Script" uid="uid://caenxiduueaj" path="res://LG/Scripts/fire_floor.gd" id="1_hamua"]
+[ext_resource type="Shader" uid="uid://chd63vmi4ewf8" path="res://LG/Shaders/fire_floor.gdshader" id="2_a3g37"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_herkg"]
+render_priority = 0
+shader = ExtResource("2_a3g37")
+shader_parameter/color_bottom = Color(0.9, 0.03, 0, 1)
+shader_parameter/color_middle = Color(1, 0.3, 0, 1)
+shader_parameter/color_top = Color(1, 0.9, 0.15, 1)
+shader_parameter/speed = 8.292
+shader_parameter/scale = 19.789
+shader_parameter/distortion = 0.419
+shader_parameter/emission_strength = 1.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a3g37"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_herkg"]
+size = Vector3(1.98615, 1, 1.99323)
+
+[node name="FireFloor" type="Area3D"]
+collision_layer = 2
+script = ExtResource("1_hamua")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_herkg")
+mesh = SubResource("PlaneMesh_a3g37")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0167973, 0.460077, 0.00675988)
+shape = SubResource("BoxShape3D_herkg")
+
+[node name="DamageTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

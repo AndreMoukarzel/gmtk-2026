@@ -1,14 +1,23 @@
 # Player
 extends CharacterBody3D
 
-const SPEED: float = 10.0
+
+# Movement
 const ACCELERATION: float = 250.0
 const DECELERATION: float = 350.0
-
 const JUMP_VELOCITY: float = 6.0
 const GRAVITY: float = 18.0
 
+# Health
+@export var max_health: float = 100.0
+
+var health: float
+var damage_immunities: Array[DamageTypes.Type] = []
+
+# References
 @export var shoot_origin: Marker3D
+
+var inventory_ui: ItemUI
 
 # Boost Speed
 var current_speed: float
@@ -26,11 +35,41 @@ var equipped_bullet_item_scene: PackedScene = null
 var equipped_bullet_scene: PackedScene = null
 var has_bullet_item: bool = false
 
-var inventory_ui: ItemUI
+# Fire Boots
+var nearby_fire_boots_item: Area3D = null
+
+var equipped_fire_boots_item_scene: PackedScene = null
+var has_fire_boots_item: bool = false
+
+
+# Regeneration Item
+var nearby_regeneration_item: Area3D = null
+
+var equipped_regeneration_item_scene: PackedScene = null
+var equipped_regeneration_value: float = 0.0
+var has_regeneration_item: bool = false
+
+var regeneration_timer: float = 0.0
+
+
+# Light Item
+var nearby_light_item: Area3D = null
+
+var equipped_light_item_scene: PackedScene = null
+var equipped_light_range: float = 0
+var equipped_light_energy: float = 0
+var has_light_item: bool = false
+
+
+@onready var health_fill: MeshInstance3D = $HealthBar/Fill
+@onready var item_light: OmniLight3D = $ItemLight
 
 
 func _ready() -> void:
+	health = max_health
+	update_health_bar()
 	current_speed = Game.speed
+	item_light.visible = false
 
 	inventory_ui = get_tree().get_first_node_in_group("item_ui") as ItemUI
 
@@ -107,6 +146,8 @@ func _physics_process(delta: float) -> void:
 			0.0,
 			DECELERATION * delta
 		)
+
+	process_health_regeneration(delta)
 
 	move_and_slide()
 
@@ -190,8 +231,24 @@ func try_get_item() -> void:
 			nearby_bullet_item.collect(self)
 			return
 
+	if is_instance_valid(nearby_fire_boots_item):
+		if nearby_fire_boots_item.has_method("collect"):
+			nearby_fire_boots_item.collect(self)
+			return
+
+	if is_instance_valid(nearby_regeneration_item):
+		if nearby_regeneration_item.has_method("collect"):
+			nearby_regeneration_item.collect(self)
+			return
+
+	if is_instance_valid(nearby_light_item):
+		if nearby_light_item.has_method("collect"):
+			nearby_light_item.collect(self)
+			return
+
 	nearby_speed_item = null
 	nearby_bullet_item = null
+	nearby_fire_boots_item = null
 
 	print("Nenhum item próximo.")
 
@@ -254,6 +311,36 @@ func drop_speed_item() -> void:
 	print("SpeedUp largado.")
 
 
+func equip_fire_boots(
+	item_scene: PackedScene,
+	item_icon: Texture2D
+) -> bool:
+	if has_fire_boots_item:
+		print("Você já possui as Fire Boots.")
+		return false
+
+	if inventory_ui == null:
+		push_error("ItemUI não encontrada.")
+		return false
+
+	var was_added := inventory_ui.add_item(
+		&"fire_boots",
+		item_icon
+	)
+
+	if not was_added:
+		return false
+
+	equipped_fire_boots_item_scene = item_scene
+	has_fire_boots_item = true
+	nearby_fire_boots_item = null
+
+	add_damage_immunity(DamageTypes.Type.FIRE)
+
+	print("Fire Boots equipadas. Imunidade a fogo ativada.")
+	return true
+
+
 func _on_selected_item_changed(item_id: StringName) -> void:
 	print("Item ativo: ", item_id)
 	
@@ -311,6 +398,15 @@ func drop_selected_item() -> void:
 		&"bullet":
 			drop_bullet_item()
 
+		&"fire_boots":
+			drop_fire_boots()
+
+		&"regeneration":
+			drop_regeneration_item()
+
+		&"light":
+			drop_light_item()
+
 		_:
 			print("Nenhum item selecionado.")
 
@@ -337,3 +433,256 @@ func drop_bullet_item() -> void:
 	inventory_ui.remove_item(&"bullet")
 
 	print("ItemBullet largado.")
+
+
+func drop_fire_boots() -> void:
+	if not has_fire_boots_item:
+		return
+
+	if equipped_fire_boots_item_scene == null:
+		return
+
+	var dropped_item := equipped_fire_boots_item_scene.instantiate()
+	get_tree().current_scene.add_child(dropped_item)
+
+	dropped_item.global_position = (
+		global_position + Vector3(0.0, 0.0, 1.5)
+	)
+
+	has_fire_boots_item = false
+	equipped_fire_boots_item_scene = null
+	nearby_fire_boots_item = null
+
+	remove_damage_immunity(DamageTypes.Type.FIRE)
+
+	inventory_ui.remove_item(&"fire_boots")
+
+	print("Fire Boots largadas. Imunidade a fogo removida.")
+
+
+func set_nearby_fire_boots_item(item: Area3D) -> void:
+	nearby_fire_boots_item = item
+	print("Fire Boots próximas. Pressione get_item para pegar.")
+
+
+func remove_nearby_fire_boots_item(item: Area3D) -> void:
+	if nearby_fire_boots_item == item:
+		nearby_fire_boots_item = null
+
+
+func add_damage_immunity(damage_type: DamageTypes.Type) -> void:
+	if damage_type not in damage_immunities:
+		damage_immunities.append(damage_type)
+
+
+func remove_damage_immunity(damage_type: DamageTypes.Type) -> void:
+	damage_immunities.erase(damage_type)
+
+
+func is_immune_to(damage_type: DamageTypes.Type) -> bool:
+	return damage_type in damage_immunities
+
+
+func take_damage(
+	damage: float,
+	damage_type: DamageTypes.Type
+) -> void:
+	if damage <= 0.0:
+		return
+
+	if is_immune_to(damage_type):
+		print("Dano bloqueado: ", damage_type)
+		return
+
+	health = maxf(health - damage, 0.0)
+	update_health_bar()
+
+	print("Player recebeu ", damage, " de dano.")
+	print("Vida atual: ", health)
+
+	if health <= 0.0:
+		die()
+
+
+func die() -> void:
+	print("Player morreu.")
+
+
+func update_health_bar() -> void:
+	var health_percent := health / max_health
+
+	health_fill.scale.x = health_percent
+	health_fill.position.x = -(1.0 - health_percent) * 0.6
+
+
+func process_health_regeneration(delta: float) -> void:
+	if not has_regeneration_item:
+		regeneration_timer = 0.0
+		return
+
+	if health >= max_health:
+		regeneration_timer = 0.0
+		return
+
+	regeneration_timer += delta
+
+	if regeneration_timer >= 1.0:
+		regeneration_timer -= 1.0
+		heal(equipped_regeneration_value)
+
+
+func heal(amount: float) -> void:
+	if amount <= 0.0:
+		return
+
+	health = minf(health + amount, max_health)
+	update_health_bar()
+
+	print("Player recuperou ", amount, " de vida.")
+	print("Vida atual: ", health)
+
+
+func set_nearby_regeneration_item(item: Area3D) -> void:
+	nearby_regeneration_item = item
+	print("Item de regeneração próximo. Pressione get_item para pegar.")
+
+
+func remove_nearby_regeneration_item(item: Area3D) -> void:
+	if nearby_regeneration_item == item:
+		nearby_regeneration_item = null
+
+
+func equip_regeneration_item(
+	item_scene: PackedScene,
+	regeneration_value: float,
+	item_icon: Texture2D
+) -> bool:
+	if has_regeneration_item:
+		print("Você já possui o item de regeneração.")
+		return false
+
+	if inventory_ui == null:
+		push_error("ItemUI não encontrada.")
+		return false
+
+	var was_added := inventory_ui.add_item(
+		&"regeneration",
+		item_icon
+	)
+
+	if not was_added:
+		return false
+
+	equipped_regeneration_item_scene = item_scene
+	equipped_regeneration_value = regeneration_value
+	has_regeneration_item = true
+	nearby_regeneration_item = null
+	regeneration_timer = 0.0
+
+	print(
+		"Item de regeneração equipado. Recuperação por segundo: ",
+		regeneration_value
+	)
+
+	return true
+
+
+func drop_regeneration_item() -> void:
+	if not has_regeneration_item:
+		return
+
+	if equipped_regeneration_item_scene == null:
+		return
+
+	var dropped_item := equipped_regeneration_item_scene.instantiate()
+	get_tree().current_scene.add_child(dropped_item)
+
+	dropped_item.global_position = (
+		global_position + Vector3(0.0, 0.0, 1.5)
+	)
+
+	has_regeneration_item = false
+	equipped_regeneration_item_scene = null
+	equipped_regeneration_value = 0.0
+	nearby_regeneration_item = null
+	regeneration_timer = 0.0
+
+	inventory_ui.remove_item(&"regeneration")
+
+	print("Item de regeneração largado.")
+
+
+func set_nearby_light_item(item: Area3D) -> void:
+	nearby_light_item = item
+
+	print("Item de luz próximo. Pressione get_item para pegar.")
+
+
+func remove_nearby_light_item(item: Area3D) -> void:
+	if nearby_light_item == item:
+		nearby_light_item = null
+
+
+func equip_light_item(
+	item_scene: PackedScene,
+	light_range: float,
+	light_energy: float,
+	item_icon: Texture2D
+) -> bool:
+	if has_light_item:
+		print("Você já possui o item de luz.")
+		return false
+
+	if inventory_ui == null:
+		push_error("ItemUI não encontrada.")
+		return false
+
+	if item_light == null:
+		push_error("ItemLight não foi encontrada no Player.")
+		return false
+
+	var was_added := inventory_ui.add_item(
+		&"light",
+		item_icon
+	)
+
+	if not was_added:
+		return false
+
+	equipped_light_item_scene = item_scene
+	equipped_light_range = light_range
+	equipped_light_energy = light_energy
+	has_light_item = true
+	nearby_light_item = null
+
+	item_light.omni_range = equipped_light_range
+	item_light.light_energy = equipped_light_energy
+	item_light.visible = true
+
+	print("Item de luz equipado.")
+	return true
+
+
+func drop_light_item() -> void:
+	if not has_light_item:
+		return
+
+	if equipped_light_item_scene == null:
+		return
+
+	var dropped_item := equipped_light_item_scene.instantiate()
+	get_tree().current_scene.add_child(dropped_item)
+
+	dropped_item.global_position = (
+		global_position + Vector3(0.0, 0.0, 1.5)
+	)
+
+	has_light_item = false
+	equipped_light_item_scene = null
+	nearby_light_item = null
+
+	item_light.visible = false
+
+	inventory_ui.remove_item(&"light")
+
+	print("Item de luz largado. Luz desativada.")

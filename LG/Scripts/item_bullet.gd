@@ -8,11 +8,24 @@ var consumed: bool = false
 
 
 func _ready() -> void:
+	print("Fire Boots carregadas: ", name)
+	print("Monitoring: ", monitoring)
+	print("Collision Layer: ", collision_layer)
+	print("Collision Mask: ", collision_mask)
+
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
 
 func _on_body_entered(body: Node3D) -> void:
+	print("Entrou na área das Fire Boots: ", body.name)
+	print("Está no grupo player: ", body.is_in_group("player"))
+	print(
+		"Possui set_nearby_fire_boots_item: ",
+		body.has_method("set_nearby_fire_boots_item")
+	)
+
+
 	if consumed:
 		return
 

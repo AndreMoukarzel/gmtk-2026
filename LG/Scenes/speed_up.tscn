@@ -4,12 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://dlsb4v1a77t8v" path="res://LG/Assets/Sprites/Speedup.png" id="2_n2k4i"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fcvpw"]
+radius = 0.3
+height = 1.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n2k4i"]
 albedo_color = Color(1, 0.85098, 0.0313726, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n2k4i"]
-radius = 1.12885
+radius = 1.12884
 height = 2.25769
 
 [node name="SpeedUp" type="Area3D"]

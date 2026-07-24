@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq71q4ejun540"]
+
+[ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://LG/Scripts/player.gd" id="1_weodu"]
+[ext_resource type="Shader" uid="uid://b8er36evvge2h" path="res://LG/Shaders/player.gdshader" id="2_jasja"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_di2rl"]
+render_priority = 0
+shader = ExtResource("2_jasja")
+shader_parameter/base_color = Color(0.1, 0.7, 1, 1)
+shader_parameter/pulse_speed = 4.798
+shader_parameter/pulse_strength = 0.065
+shader_parameter/color_speed = 1.368
+shader_parameter/emission_strength = 0.35
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jasja"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("shoot_origin") groups=["player"]]
+script = ExtResource("1_weodu")
+shoot_origin = NodePath("ShootOrigin")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_di2rl")
+mesh = SubResource("CapsuleMesh_jasja")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_di2rl")
+
+[node name="ShootOrigin" type="Marker3D" parent="."]

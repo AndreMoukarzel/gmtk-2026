@@ -3,7 +3,22 @@
 [ext_resource type="Script" uid="uid://ddp1jkucpj2em" path="res://Items/Bow/item_bow.gd" id="1_vp7s0"]
 [ext_resource type="PackedScene" uid="uid://bt7k6r8qxc080" path="res://Items/Bow/Arrow/arrow.tscn" id="2_68slw"]
 [ext_resource type="Texture2D" uid="uid://dauund4d8rcb" path="res://Items/Bow/bow_icon.png" id="3_vp7s0"]
+[ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="4_c2jwn"]
 [ext_resource type="PackedScene" uid="uid://brvrr11gnhae6" path="res://Items/Bow/Mesh/Bow.glb" id="4_rfu62"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_18ihm"]
+render_priority = 0
+shader = ExtResource("4_c2jwn")
+shader_parameter/light_color = Color(0.38022956, 0.24555603, 1, 1)
+shader_parameter/glow_strength = 4.390000208525
+shader_parameter/fade_power = 1.8550000643625
+shader_parameter/scroll_speed = 0.73
+shader_parameter/noise_scale = 0.635
+shader_parameter/distortion = 0.42
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hm3jy"]
+top_radius = 0.92
+bottom_radius = 1.095
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_76r7q"]
 radius = 1.12884
@@ -77,6 +92,11 @@ collision_mask = 4
 script = ExtResource("1_vp7s0")
 bullet_scene = ExtResource("2_68slw")
 item_icon = ExtResource("3_vp7s0")
+
+[node name="Aura" type="MeshInstance3D" parent="." unique_id=1178501123]
+transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_18ihm")
+mesh = SubResource("CylinderMesh_hm3jy")
 
 [node name="Bow" parent="." unique_id=415597373 instance=ExtResource("4_rfu62")]
 transform = Transform3D(0.036306575, 0.044236872, -0.018025843, -0.04767719, 0.03215869, -0.017108573, -0.0029523703, 0.024676263, 0.05461104, 0, 0, 0)

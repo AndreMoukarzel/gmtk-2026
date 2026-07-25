@@ -23,19 +23,19 @@ func collect(player: Node3D) -> void:
 		return
 
 	if item_icon == null:
-		push_error("Item Icon não foi configurado no ItemBullet.")
+		push_error("Item Icon não foi configurado no ItemSword.")
 		return
 
 	var own_scene := load(scene_file_path) as PackedScene
 
 	if own_scene == null:
 		push_error(
-			"Não foi possível carregar a cena do ItemBullet: "
+			"Não foi possível carregar a cena do ItemSword: "
 			+ scene_file_path
 		)
 		return
 
-	if not player.has_method("equip_bullet_item"):
+	if not player.has_method("equip_sword_item"):
 		return
 
 	var was_equipped: bool = player.equip_sword_item(

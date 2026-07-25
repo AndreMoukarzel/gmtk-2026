@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CalamityData" format=3 uid="uid://cxbdfm3vei5x2"]
+
+[ext_resource type="Texture2D" uid="uid://dy0jlr0c7jxoa" path="res://Calamities/blackout/darkness.jpeg" id="1_q0mao"]
+[ext_resource type="Script" uid="uid://cptx31raarx11" path="res://Calamities/calamity_data.gd" id="2_uf0mp"]
+
+[resource]
+script = ExtResource("2_uf0mp")
+calamity_id = &"calamity_blackout"
+calamity_name = "Blackout"
+description = "The Sun itself will turn its back to you"
+icon = ExtResource("1_q0mao")
+metadata/_custom_type_script = "uid://cptx31raarx11"

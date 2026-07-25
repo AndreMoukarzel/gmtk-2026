@@ -33,8 +33,10 @@ window/stretch/mode="canvas_items"
 
 folder_colors={
 "res://Assets/Models/": "red",
+"res://Calamities/": "orange",
 "res://Enemies/": "red",
 "res://Hazzards/": "yellow",
+"res://Items/": "green",
 "res://Items/Boot/": "teal",
 "res://Items/Bow/": "purple",
 "res://Items/Bow/Arrow/": "yellow",

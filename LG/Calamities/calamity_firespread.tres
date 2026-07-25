@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CalamityData" load_steps=3 format=3 uid="uid://jpa63ngq6uvf"]
+
+[ext_resource type="Texture2D" uid="uid://bdbvcwsbgjfne" path="res://LG/Assets/Sprites/calamity_firespread_icon.png" id="1_cnim7"]
+[ext_resource type="Script" uid="uid://cptx31raarx11" path="res://LG/Calamities/calamity_data.gd" id="1_v3a3a"]
+
+[resource]
+script = ExtResource("1_v3a3a")
+calamity_id = &"calamity_firespread"
+calamity_name = "Firespread"
+description = "O Demônio está com fogo no cu e peidou na sua Ilha"
+icon = ExtResource("1_cnim7")
+duration = 10.0
+metadata/_custom_type_script = "uid://cptx31raarx11"

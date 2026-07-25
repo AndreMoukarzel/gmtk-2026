@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://crtmypoeghm5m"]
+
+[ext_resource type="Script" uid="uid://dfx7ty5jg5r0g" path="res://LG/Scripts/calamity_fire_spread.gd" id="1_ayogg"]
+[ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://LG/Scenes/fire_floor.tscn" id="2_4e145"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7nsdh"]
+size = Vector3(47.4146, 0.001, 48.0247)
+
+[node name="CalamityFireSpread" type="Node3D" unique_id=2056114052]
+script = ExtResource("1_ayogg")
+fire_floor_scene = ExtResource("2_4e145")
+
+[node name="SpawnArea" type="Area3D" parent="." unique_id=1942289425]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnArea" unique_id=1480479869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4995, 0)
+shape = SubResource("BoxShape3D_7nsdh")
+
+[node name="DurationTimer" type="Timer" parent="." unique_id=1986621431]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3bgfwf7wbgq0"]
+
+[ext_resource type="Script" uid="uid://wr0w03dn2f4b" path="res://LG/Scripts/game.gd" id="1_42q8i"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_42q8i")

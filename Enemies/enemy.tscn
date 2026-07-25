@@ -12,7 +12,7 @@ radius = 1.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_47qgu"]
 radius = 1.405
 
-[node name="Enemy" type="CharacterBody3D" unique_id=1541529888 groups=["enemy"]]
+[node name="Enemy" type="CharacterBody3D" unique_id=1541529888]
 script = ExtResource("1_bxkaj")
 
 [node name="Wolf" parent="." unique_id=2080456522 instance=ExtResource("2_bxkaj")]
@@ -43,11 +43,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0169678, 0)
 shape = SubResource("SphereShape3D_ivic6")
 
 [node name="Hitbox" type="Area3D" parent="." unique_id=386811988]
-collision_layer = 2
-monitoring = false
+collision_layer = 0
+collision_mask = 8
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=1184434724]
 shape = SubResource("SphereShape3D_47qgu")
 debug_color = Color(0, 0.63479745, 0.41855842, 0.41960785)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 
 [editable path="Wolf"]

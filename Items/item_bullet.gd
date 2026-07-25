@@ -18,18 +18,7 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	print("Entrou na área das Fire Boots: ", body.name)
-	print("Está no grupo player: ", body.is_in_group("player"))
-	print(
-		"Possui set_nearby_fire_boots_item: ",
-		body.has_method("set_nearby_fire_boots_item")
-	)
-
-
 	if consumed:
-		return
-
-	if not body.is_in_group("player"):
 		return
 
 	if body.has_method("set_nearby_bullet_item"):
@@ -37,9 +26,6 @@ func _on_body_entered(body: Node3D) -> void:
 
 
 func _on_body_exited(body: Node3D) -> void:
-	if not body.is_in_group("player"):
-		return
-
 	if body.has_method("remove_nearby_bullet_item"):
 		body.remove_nearby_bullet_item(self)
 

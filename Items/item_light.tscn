@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b68tnjokijax0"]
 
-[ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Scripts/item_light.gd" id="1_08c6a"]
+[ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Items/item_light.gd" id="1_08c6a"]
 [ext_resource type="Texture2D" uid="uid://bqv3lmpc8a4ln" path="res://Assets/Sprites/light_icon.png" id="2_4bgij"]
 [ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="2_5ts3w"]
 
@@ -19,16 +19,18 @@ height = 1.4
 radius = 1.12884
 height = 2.25769
 
-[node name="item_light" type="Area3D"]
+[node name="item_light" type="Area3D" unique_id=2008136796]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_08c6a")
 item_icon = ExtResource("2_4bgij")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=848511244]
 material_override = SubResource("ShaderMaterial_4bgij")
 mesh = SubResource("CapsuleMesh_5ts3w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1480422277]
 shape = SubResource("CapsuleShape3D_4bgij")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1832659645]
 omni_range = 30.0

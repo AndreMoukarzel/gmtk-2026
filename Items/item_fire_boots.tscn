@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmcv4xgf0hyxx"]
 
-[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Scripts/item_fire_boots.gd" id="1_6peeo"]
+[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Items/item_fire_boots.gd" id="1_6peeo"]
 [ext_resource type="Texture2D" uid="uid://dbc0jgo1g2p6i" path="res://Assets/Sprites/fire_boots_icon.png" id="2_s34px"]
 [ext_resource type="Shader" uid="uid://c6bro1sqheq7r" path="res://Shaders/item_fire_boots.gdshader" id="3_s34px"]
 
@@ -24,15 +24,17 @@ height = 1.4
 radius = 1.12884
 height = 2.25769
 
-[node name="Item_fire_boots" type="Area3D"]
+[node name="Item_fire_boots" type="Area3D" unique_id=34052710]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_6peeo")
 item_icon = ExtResource("2_s34px")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987312478]
 material_override = SubResource("ShaderMaterial_cxwb8")
 mesh = SubResource("CapsuleMesh_ogpdu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=452290452]
 shape = SubResource("CapsuleShape3D_q2iaj")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

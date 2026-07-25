@@ -8,6 +8,8 @@ const DECELERATION: float = 350.0
 const JUMP_VELOCITY: float = 6.0
 const GRAVITY: float = 18.0
 
+@export var equipped_fire_boots_item_scene: PackedScene = null
+
 # Health
 @export var max_health: float = 100.0
 
@@ -37,8 +39,6 @@ var has_bullet_item: bool = false
 
 # Fire Boots
 var nearby_fire_boots_item: Area3D = null
-
-var equipped_fire_boots_item_scene: PackedScene = null
 var has_fire_boots_item: bool = false
 
 
@@ -312,7 +312,6 @@ func drop_speed_item() -> void:
 
 
 func equip_fire_boots(
-	item_scene: PackedScene,
 	item_icon: Texture2D
 ) -> bool:
 	if has_fire_boots_item:
@@ -331,7 +330,6 @@ func equip_fire_boots(
 	if not was_added:
 		return false
 
-	equipped_fire_boots_item_scene = item_scene
 	has_fire_boots_item = true
 	nearby_fire_boots_item = null
 
@@ -439,9 +437,6 @@ func drop_fire_boots() -> void:
 	if not has_fire_boots_item:
 		return
 
-	if equipped_fire_boots_item_scene == null:
-		return
-
 	var dropped_item := equipped_fire_boots_item_scene.instantiate()
 	get_tree().current_scene.add_child(dropped_item)
 
@@ -450,7 +445,6 @@ func drop_fire_boots() -> void:
 	)
 
 	has_fire_boots_item = false
-	equipped_fire_boots_item_scene = null
 	nearby_fire_boots_item = null
 
 	remove_damage_immunity(DamageTypes.Type.FIRE)
@@ -484,14 +478,9 @@ func is_immune_to(damage_type: DamageTypes.Type) -> bool:
 
 
 func take_damage(
-	damage: float,
-	damage_type: DamageTypes.Type
+	damage: float
 ) -> void:
 	if damage <= 0.0:
-		return
-
-	if is_immune_to(damage_type):
-		print("Dano bloqueado: ", damage_type)
 		return
 
 	health = maxf(health - damage, 0.0)

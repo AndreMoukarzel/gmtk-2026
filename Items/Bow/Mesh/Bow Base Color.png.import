@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwocix32opev8"
-path="res://.godot/imported/Bow Base Color.png-6b6eef218f3618758e2eb7997de9801a.ctex"
+path="res://.godot/imported/Bow Base Color.png-6bc0e3c6d9e719ced17a530f09a60e80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Models/Bow/Bow Base Color.png"
-dest_files=["res://.godot/imported/Bow Base Color.png-6b6eef218f3618758e2eb7997de9801a.ctex"]
+source_file="res://Items/Bow/Mesh/Bow Base Color.png"
+dest_files=["res://.godot/imported/Bow Base Color.png-6bc0e3c6d9e719ced17a530f09a60e80.ctex"]
 
 [params]
 

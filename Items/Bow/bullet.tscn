@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bt7k6r8qxc080"]
 
-[ext_resource type="Script" uid="uid://c8lvmlc2rvpkr" path="res://Scripts/bullet.gd" id="1_fe8e6"]
-[ext_resource type="Shader" uid="uid://byns5jfekbwgr" path="res://Shaders/bullet.gdshader" id="2_eu6ge"]
+[ext_resource type="Script" uid="uid://c8lvmlc2rvpkr" path="res://Scripts/bullet.gd" id="1_tp14u"]
+[ext_resource type="Shader" uid="uid://byns5jfekbwgr" path="res://Shaders/bullet.gdshader" id="2_13nvy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mkyuh"]
 radius = 1.30228
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u0onq"]
 render_priority = 0
-shader = ExtResource("2_eu6ge")
+shader = ExtResource("2_13nvy")
 shader_parameter/dark_color = Color(0.25, 0.005, 0, 1)
 shader_parameter/lava_color = Color(1, 0.08, 0, 1)
 shader_parameter/hot_color = Color(1, 0.85, 0.05, 1)
@@ -19,8 +19,11 @@ shader_parameter/edge_glow = 1.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_qfy3j"]
 
-[node name="Bullet" type="Area3D" unique_id=1966303978 groups=["bullet"]]
-script = ExtResource("1_fe8e6")
+[node name="Bullet" type="Area3D" unique_id=1966303978]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_tp14u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752984234]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

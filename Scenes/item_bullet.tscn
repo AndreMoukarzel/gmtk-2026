@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bkn4xq0307q0q"]
+
+[ext_resource type="Script" uid="uid://dgpx2rsbtdgjs" path="res://Scripts/item_bullet.gd" id="1_76r7q"]
+[ext_resource type="PackedScene" uid="uid://bt7k6r8qxc080" path="res://Scenes/bullet.tscn" id="2_68slw"]
+[ext_resource type="Texture2D" uid="uid://eqmud38nuhg2" path="res://Assets/Sprites/gun_icon.png" id="3_ukila"]
+[ext_resource type="Shader" uid="uid://byns5jfekbwgr" path="res://Shaders/bullet.gdshader" id="4_ukila"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dlqf"]
+render_priority = 0
+shader = ExtResource("4_ukila")
+shader_parameter/dark_color = Color(0.25, 0.005, 0, 1)
+shader_parameter/lava_color = Color(1, 0.08, 0, 1)
+shader_parameter/hot_color = Color(1, 0.85, 0.05, 1)
+shader_parameter/emission_strength = 4.0
+shader_parameter/lava_scale = 8.0
+shader_parameter/movement_speed = 3.0
+shader_parameter/edge_glow = 1.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_16jyr"]
+radius = 0.3
+height = 1.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_76r7q"]
+radius = 1.12884
+height = 2.25769
+
+[node name="ItemBullet" type="Area3D"]
+script = ExtResource("1_76r7q")
+bullet_scene = ExtResource("2_68slw")
+item_icon = ExtResource("3_ukila")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_8dlqf")
+mesh = SubResource("CapsuleMesh_16jyr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_76r7q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

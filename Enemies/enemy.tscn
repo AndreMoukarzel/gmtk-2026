@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dud6gsbyapbat"]
+
+[ext_resource type="Script" uid="uid://buhtc4l18ah5u" path="res://Enemies/enemy.gd" id="1_bxkaj"]
+[ext_resource type="PackedScene" uid="uid://phsqrlc1rhvq" path="res://Enemies/Mesh/Wolf.glb" id="2_bxkaj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ivic6"]
+radius = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_47qgu"]
+radius = 1.405
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1541529888 groups=["enemy"]]
+script = ExtResource("1_bxkaj")
+
+[node name="Wolf" parent="." unique_id=2080456522 instance=ExtResource("2_bxkaj")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0.06)
+
+[node name="Armature" parent="Wolf" index="0" unique_id=1555932316]
+transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Wolf/Armature" index="0" unique_id=177129837]
+bones/3/rotation = Quaternion(-0.2788269, 5.752487e-13, 1.9943273e-07, 0.9603414)
+
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=247129100]
+autoplay = &"idle"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1189785810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0169678, 0)
+shape = SubResource("SphereShape3D_ivic6")
+
+[node name="Hitbox" type="Area3D" parent="." unique_id=386811988]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=1184434724]
+shape = SubResource("SphereShape3D_47qgu")
+debug_color = Color(0.9657623, 7.70092e-07, 0.48764783, 0.41960785)
+
+[editable path="Wolf"]

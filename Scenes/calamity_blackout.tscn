@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d1tukjcyi7vqk"]
+
+[ext_resource type="Script" uid="uid://tbd0umrm0nrs" path="res://Scripts/calamity_blackout.gd" id="1_4h4d1"]
+
+[node name="CalamityBlackout" type="Node" unique_id=1406430310]
+script = ExtResource("1_4h4d1")

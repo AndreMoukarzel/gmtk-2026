@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dmcv4xgf0hyxx"]
+
+[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Scripts/item_fire_boots.gd" id="1_6peeo"]
+[ext_resource type="Texture2D" uid="uid://dbc0jgo1g2p6i" path="res://Assets/Sprites/fire_boots_icon.png" id="2_s34px"]
+[ext_resource type="Shader" uid="uid://c6bro1sqheq7r" path="res://Shaders/item_fire_boots.gdshader" id="3_s34px"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxwb8"]
+render_priority = 0
+shader = ExtResource("3_s34px")
+shader_parameter/color_bottom = Color(1, 0.05, 0, 1)
+shader_parameter/color_middle = Color(1, 0.45, 0, 1)
+shader_parameter/color_top = Color(1, 1, 0.25, 1)
+shader_parameter/animation_speed = 8.006
+shader_parameter/distortion_strength = 0.32
+shader_parameter/flame_frequency = 9.135
+shader_parameter/edge_softness = 0.068
+shader_parameter/emission_strength = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ogpdu"]
+radius = 0.3
+height = 1.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q2iaj"]
+radius = 1.12884
+height = 2.25769
+
+[node name="Item_fire_boots" type="Area3D"]
+script = ExtResource("1_6peeo")
+item_icon = ExtResource("2_s34px")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_cxwb8")
+mesh = SubResource("CapsuleMesh_ogpdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_q2iaj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

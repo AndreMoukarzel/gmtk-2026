@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bms0dhggeey8c"]
+
+[ext_resource type="Script" uid="uid://fdfpvcnppap6" path="res://Scripts/item_health.gd" id="1_kerlp"]
+[ext_resource type="Shader" uid="uid://dp7y8hfw7xerl" path="res://Shaders/item_health.gdshader" id="2_3e37t"]
+[ext_resource type="Texture2D" uid="uid://e0eavjrt4viy" path="res://Assets/Sprites/health_icon.png" id="2_6afdw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6afdw"]
+render_priority = 0
+shader = ExtResource("2_3e37t")
+shader_parameter/base_color = Color(0.02, 0.35, 0.08, 1)
+shader_parameter/glow_color = Color(0.15, 1, 0.35, 1)
+shader_parameter/glow_strength = 2.5
+shader_parameter/pulse_speed = 5.034
+shader_parameter/wave_speed = 3.185
+shader_parameter/wave_amount = 6.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_s7k0j"]
+radius = 0.3
+height = 1.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0j88p"]
+radius = 1.12884
+height = 2.25769
+
+[node name="Item_health" type="Area3D"]
+script = ExtResource("1_kerlp")
+item_icon = ExtResource("2_6afdw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_6afdw")
+mesh = SubResource("CapsuleMesh_s7k0j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_0j88p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

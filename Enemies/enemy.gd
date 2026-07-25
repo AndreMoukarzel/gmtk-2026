@@ -146,7 +146,8 @@ func attack() -> void:
 	var bodies = $Wolf/Attack.get_overlapping_bodies()
 	if len(bodies) > 0:
 		for body in bodies: # Players found
-			body.take_damage(6.0)
+			if body.has_method("take_damage"):
+				body.take_damage(atk_damage, global_position)
 	
 	await $Wolf/AnimationPlayer.animation_finished
 	is_attacking = false

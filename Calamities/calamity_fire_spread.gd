@@ -152,9 +152,9 @@ func get_ground_spawn_pose(box_shape: BoxShape3D) -> Dictionary:
 	else:
 		normal = normal.normalized()
 
-	var position: Vector3 = hit["position"] + normal * spawn_height
+	var pos: Vector3 = hit["position"] + normal * spawn_height
 	return {
-		"position": position,
+		"position": pos,
 		"normal": normal,
 	}
 

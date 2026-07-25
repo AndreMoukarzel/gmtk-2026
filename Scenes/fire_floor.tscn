@@ -19,18 +19,20 @@ shader_parameter/emission_strength = 1.5
 [sub_resource type="BoxShape3D" id="BoxShape3D_herkg"]
 size = Vector3(1.98615, 1, 1.99323)
 
-[node name="FireFloor" type="Area3D"]
-collision_layer = 2
+[node name="FireFloor" type="Area3D" unique_id=323637083]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_hamua")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1332308273]
 material_override = SubResource("ShaderMaterial_herkg")
 mesh = SubResource("PlaneMesh_a3g37")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1479597173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0167973, 0.460077, 0.00675988)
 shape = SubResource("BoxShape3D_herkg")
 
-[node name="DamageTimer" type="Timer" parent="."]
+[node name="DamageTimer" type="Timer" parent="." unique_id=1092581712]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

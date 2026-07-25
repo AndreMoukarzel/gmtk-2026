@@ -96,7 +96,11 @@ func get_closest_target() -> Array:
 	return [Vector3(0, 0, 0), 999999.0]
 
 
-func take_damage(damage: float, attack_origin: Vector3) -> void:
+func take_damage(
+		damage: float,
+		attack_origin: Vector3 = Vector3(0, 0, 0),
+		damage_type: DamageTypes.Type = DamageTypes.Type.PHYSICAL
+	) -> void:
 	if is_dead:
 		return
 

@@ -480,14 +480,20 @@ func is_immune_to(damage_type: DamageTypes.Type) -> bool:
 
 
 func take_damage(
-	damage: float
+	damage: float,
+	attack_origin: Vector3 = Vector3(0, 0, 0),
+	damage_type: DamageTypes.Type = DamageTypes.Type.PHYSICAL
 ) -> void:
 	if damage <= 0.0:
 		return
-
+	
+	if is_immune_to(damage_type):
+		print("Dano bloqueado: ", damage_type)
+		return
+	
 	health = maxf(health - damage, 0.0)
 	update_health_bar()
-
+	
 	print("Player recebeu ", damage, " de dano.")
 	print("Vida atual: ", health)
 

@@ -48,5 +48,6 @@ func apply_fire_damage(body: Node3D) -> void:
 	if body.has_method("take_damage"):
 		body.take_damage(
 			damage_per_tick,
+			Vector3(0, 0, 0),
 			DamageTypes.Type.FIRE
 		)

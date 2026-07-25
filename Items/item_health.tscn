@@ -36,3 +36,4 @@ mesh = SubResource("CapsuleMesh_s7k0j")
 shape = SubResource("CapsuleShape3D_0j88p")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

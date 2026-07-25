@@ -37,5 +37,5 @@ mesh = SubResource("CapsuleMesh_ogpdu")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=452290452]
 shape = SubResource("CapsuleShape3D_q2iaj")
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -203,6 +203,7 @@ func shoot_at_mouse() -> void:
 
 	bullet.global_position = bullet_origin
 	bullet.direction = bullet_direction
+	bullet.look_at(bullet.global_position + bullet.direction, Vector3.UP)
 
 	print("Bala criada")
 	print("Origem: ", bullet_origin)

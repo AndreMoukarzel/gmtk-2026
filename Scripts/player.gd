@@ -21,6 +21,12 @@ enum AnimState {
 var health: float
 var damage_immunities: Array[DamageTypes.Type] = []
 
+# Knockback
+@export var knockback_strength: float = 5.0
+@export var knockback_deceleration: float = 12.0
+
+var knockback_velocity: Vector3 = Vector3.ZERO
+
 # References
 @export var shoot_origin: Marker3D
 @export var arrow_cooldown: float = 0.3
@@ -192,7 +198,27 @@ func _physics_process(delta: float) -> void:
 
 	process_health_regeneration(delta)
 
+	# Reduz gradualmente o knockback.
+	knockback_velocity.x = move_toward(
+		knockback_velocity.x,
+		0.0,
+		knockback_deceleration * delta
+	)
+	knockback_velocity.z = move_toward(
+		knockback_velocity.z,
+		0.0,
+		knockback_deceleration * delta
+	)
+
+	# Aplica o knockback junto com o movimento normal.
+	velocity.x += knockback_velocity.x
+	velocity.z += knockback_velocity.z
+
 	move_and_slide()
+
+	# Remove o knockback da velocity para não acumular.
+	velocity.x -= knockback_velocity.x
+	velocity.z -= knockback_velocity.z
 
 
 func _face_direction(direction: Vector3) -> void:
@@ -827,7 +853,7 @@ func is_immune_to(damage_type: DamageTypes.Type) -> bool:
 
 func take_damage(
 	damage: float,
-	_attack_origin: Vector3 = Vector3(0, 0, 0),
+	attack_origin: Vector3 = Vector3(0, 0, 0),
 	damage_type: DamageTypes.Type = DamageTypes.Type.PHYSICAL
 ) -> void:
 	if damage <= 0.0:
@@ -839,7 +865,8 @@ func take_damage(
 
 	health = maxf(health - damage, 0.0)
 	update_health_bar()
-	
+	apply_knockback(attack_origin)
+
 	print("Player recebeu ", damage, " de dano.")
 	print("Vida atual: ", health)
 
@@ -847,8 +874,25 @@ func take_damage(
 		die()
 
 
+func apply_knockback(attack_origin: Vector3) -> void:
+	# Skip default / missing origins (e.g. fire DoT) so we don't fling from world origin.
+	if attack_origin.length_squared() < 0.0001:
+		return
+
+	var knockback_direction := global_position - attack_origin
+	knockback_direction.y = 0.0
+
+	if knockback_direction.length_squared() < 0.0001:
+		return
+
+	knockback_direction = knockback_direction.normalized()
+	knockback_velocity.x += knockback_direction.x * knockback_strength
+	knockback_velocity.z += knockback_direction.z * knockback_strength
+
+
 func die() -> void:
 	print("Player morreu.")
+	knockback_velocity = Vector3.ZERO
 
 
 func update_health_bar() -> void:

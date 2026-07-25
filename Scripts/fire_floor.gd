@@ -1,4 +1,3 @@
-# Fire Floor
 extends Area3D
 
 @export var damage_per_tick: float = 10.0

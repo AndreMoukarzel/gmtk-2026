@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DamageTypes="*res://Scenes/damage_types.tscn"
+DamageTypes="*uid://don7bdtldqou1"
 
 [display]
 

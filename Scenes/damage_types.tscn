@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://ccu7n0hkl1o04"]
-
-[ext_resource type="Script" uid="uid://don7bdtldqou1" path="res://Globals/DamageTypes.gd" id="1_q04sq"]
-
-[node name="DamageTypes" type="Node" unique_id=2083326497]
-script = ExtResource("1_q04sq")

@@ -3,6 +3,7 @@ extends Node3D
 
 @export var slash_arc_degrees: float = 120.0
 @export var slash_height: float = 1.0
+@export var trail_fade_duration: float = 0.28
 
 var slash_duration: float = 0.2
 var sword_damage: float = 25.0
@@ -12,6 +13,8 @@ var hitbox_forward_offset: float = 1.5
 @onready var sword_pivot: Node3D = $SwordPivot
 @onready var hitbox: Area3D = $Hitbox
 @onready var hitbox_shape: CollisionShape3D = $Hitbox/CollisionShape3D
+@onready var slash_trail: MeshInstance3D = $SlashTrail
+@onready var slash_sparks: CPUParticles3D = $SwordPivot/TipMarker/SlashSparks
 
 
 func configure(
@@ -38,6 +41,7 @@ func play(aim_direction: Vector3) -> void:
 	look_at(global_position + flat_direction, Vector3.UP)
 
 	_setup_hitbox()
+	_start_vfx()
 	_play_sword_arc()
 	_run_hitbox_window()
 
@@ -59,6 +63,16 @@ func _setup_hitbox() -> void:
 	hitbox_shape.position = Vector3.ZERO
 
 
+func _start_vfx() -> void:
+	if slash_trail != null:
+		slash_trail.fade_duration = trail_fade_duration
+		slash_trail.start_trail()
+
+	if slash_sparks != null:
+		slash_sparks.restart()
+		slash_sparks.emitting = true
+
+
 func _play_sword_arc() -> void:
 	var half_arc := deg_to_rad(slash_arc_degrees * 0.5)
 	sword_pivot.rotation.y = -half_arc
@@ -73,11 +87,25 @@ func _play_sword_arc() -> void:
 		end_yaw,
 		slash_duration
 	)
-	tween.finished.connect(queue_free)
+	tween.finished.connect(_on_slash_motion_finished)
 
 
 func _set_sword_yaw(yaw: float) -> void:
 	sword_pivot.rotation.y = yaw
+
+
+func _on_slash_motion_finished() -> void:
+	if slash_sparks != null:
+		slash_sparks.emitting = false
+
+	if slash_trail != null:
+		slash_trail.stop_and_fade()
+		await get_tree().create_timer(trail_fade_duration + 0.05).timeout
+	else:
+		await get_tree().create_timer(0.05).timeout
+
+	if is_instance_valid(self):
+		queue_free()
 
 
 func _run_hitbox_window() -> void:

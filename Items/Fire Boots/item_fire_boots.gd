@@ -1,4 +1,3 @@
-# Item Fire Boots
 extends Area3D
 
 

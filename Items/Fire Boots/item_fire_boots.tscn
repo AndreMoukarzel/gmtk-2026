@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmcv4xgf0hyxx"]
 
-[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Items/item_fire_boots.gd" id="1_6peeo"]
+[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Items/Fire Boots/item_fire_boots.gd" id="1_6peeo"]
 [ext_resource type="Texture2D" uid="uid://dbc0jgo1g2p6i" path="res://Assets/Sprites/fire_boots_icon.png" id="2_s34px"]
 [ext_resource type="Shader" uid="uid://c6bro1sqheq7r" path="res://Shaders/item_fire_boots.gdshader" id="3_s34px"]
 

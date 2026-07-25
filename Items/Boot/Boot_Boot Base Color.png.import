@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvqp3njl6dkh4"
-path="res://.godot/imported/Boot Base Color.png-ac4a02cd4fa4ff2a9f012618ff1e2ede.ctex"
+uid="uid://dse38pp13sf5f"
+path.s3tc="res://.godot/imported/Boot_Boot Base Color.png-d5b6861aef2499c6e0941e5801f22fbf.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "45b91f2bb49dec3e9c63bc212eb6502c"
 }
 
 [deps]
 
-source_file="res://Assets/Models/Boot/Boot Base Color.png"
-dest_files=["res://.godot/imported/Boot Base Color.png-ac4a02cd4fa4ff2a9f012618ff1e2ede.ctex"]
+source_file="res://Items/Boot/Boot_Boot Base Color.png"
+dest_files=["res://.godot/imported/Boot_Boot Base Color.png-d5b6861aef2499c6e0941e5801f22fbf.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

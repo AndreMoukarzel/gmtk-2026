@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dq71q4ejun540"]
 
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
-[ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/item_fire_boots.tscn" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/Fire Boots/item_fire_boots.tscn" id="2_6t5aa"]
 [ext_resource type="Shader" uid="uid://b8er36evvge2h" path="res://Shaders/player.gdshader" id="2_jasja"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_di2rl"]

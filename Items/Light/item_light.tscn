@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b68tnjokijax0"]
 
 [ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Items/Light/item_light.gd" id="1_08c6a"]
-[ext_resource type="Texture2D" uid="uid://bqv3lmpc8a4ln" path="res://Assets/Sprites/light_icon.png" id="2_4bgij"]
 [ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="2_5ts3w"]
+[ext_resource type="Texture2D" uid="uid://cyj7gxstshxhk" path="res://Items/Light/LampLight.png" id="2_fnfv0"]
+[ext_resource type="PackedScene" uid="uid://bokvm87hxt1ws" path="res://Items/Light/lamplight.glb" id="4_fnfv0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yolx7"]
 render_priority = 0
@@ -18,41 +19,92 @@ shader_parameter/distortion = 0.42
 top_radius = 0.92
 bottom_radius = 1.095
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4bgij"]
-render_priority = 0
-shader = ExtResource("2_5ts3w")
-shader_parameter/light_color = Color(1, 0.95, 0.75, 1)
-shader_parameter/glow_strength = 3.0
-shader_parameter/fade_power = 2.0
-shader_parameter/scroll_speed = 0.3
-shader_parameter/noise_scale = 6.0
-shader_parameter/distortion = 0.25
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_5ts3w"]
-radius = 0.3
-height = 1.4
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4bgij"]
 radius = 1.12884
 height = 2.25769
+
+[sub_resource type="Animation" id="Animation_arsrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("lamplight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.745, 0.145)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("lamplight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.28950366, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_30x7x"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("lamplight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.745, 0.145), Vector3(0, -0.57689667, 0.145)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("lamplight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.28950366, 0, 0), Vector3(-0.37181562, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bjd0s"]
+_data = {
+&"RESET": SubResource("Animation_arsrn"),
+&"idle": SubResource("Animation_30x7x")
+}
 
 [node name="item_light" type="Area3D" unique_id=2008136796]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_08c6a")
-item_icon = ExtResource("2_4bgij")
+item_icon = ExtResource("2_fnfv0")
 
 [node name="Aura" type="MeshInstance3D" parent="." unique_id=1336813303]
 transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_yolx7")
 mesh = SubResource("CylinderMesh_fnfv0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=848511244]
-material_override = SubResource("ShaderMaterial_4bgij")
-mesh = SubResource("CapsuleMesh_5ts3w")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1480422277]
 shape = SubResource("CapsuleShape3D_4bgij")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1832659645]
 omni_range = 30.0
+
+[node name="lamplight" parent="." unique_id=1700531292 instance=ExtResource("4_fnfv0")]
+transform = Transform3D(0.43, 0, 0, 0, 0.41210583, 0.12275492, 0, -0.12275492, 0.41210583, 0, -0.745, 0.145)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1326320550]
+libraries/ = SubResource("AnimationLibrary_bjd0s")
+autoplay = &"idle"

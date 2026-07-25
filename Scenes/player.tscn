@@ -32,7 +32,7 @@ hitbox_boundaries_ingame = false
 [node name="Character" parent="." unique_id=1051157959 instance=ExtResource("3_character")]
 transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.9706458, 0)
 
-[node name="Armature_001" parent="Character" index="0" unique_id=1694150820]
+[node name="Armature_001" parent="Character" index="0" unique_id=1843293278]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
@@ -52,7 +52,7 @@ material_override = SubResource("StandardMaterial3D_dw3w4")
 mesh = SubResource("BoxMesh_di2rl")
 
 [node name="ItemLight" type="OmniLight3D" parent="." unique_id=672443995]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00832629, -0.452816, 0.0478907)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 1.795, 0.048)
 visible = false
 light_energy = 2.0
 shadow_enabled = true

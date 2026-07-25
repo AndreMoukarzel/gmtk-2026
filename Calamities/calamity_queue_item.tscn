@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnkqqfvk2y7ec"]
 
-[ext_resource type="Script" uid="uid://brp3fvmhmuj4q" path="res://Scripts/calamity_queue_item.gd" id="1_4lwxd"]
+[ext_resource type="Script" uid="uid://brp3fvmhmuj4q" path="res://Calamities/calamity_queue_item.gd" id="1_4lwxd"]
 
 [node name="CalamityQueueItem" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 100)

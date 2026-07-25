@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bt7k6r8qxc080"]
 
-[ext_resource type="Script" uid="uid://c8lvmlc2rvpkr" path="res://Scripts/bullet.gd" id="1_y3uta"]
+[ext_resource type="Script" uid="uid://c8lvmlc2rvpkr" path="res://Items/Bow/Arrow/arrow.gd" id="1_y3uta"]
 [ext_resource type="PackedScene" uid="uid://dw6dyfofggul0" path="res://Items/Bow/Arrow/arrow.glb" id="2_puci2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gioi4"]

@@ -22,6 +22,7 @@ var damage_immunities: Array[DamageTypes.Type] = []
 var inventory_ui: ItemUI
 
 # Boost Speed
+var base_speed: float = 10.0
 var current_speed: float
 
 var nearby_speed_item: Area3D = null
@@ -68,7 +69,7 @@ var has_light_item: bool = false
 func _ready() -> void:
 	health = max_health
 	update_health_bar()
-	current_speed = Game.speed
+	current_speed = base_speed
 	item_light.visible = false
 
 	inventory_ui = get_tree().get_first_node_in_group("item_ui") as ItemUI
@@ -301,7 +302,7 @@ func drop_speed_item() -> void:
 	)
 
 	has_speed_item = false
-	current_speed = Game.speed
+	current_speed = base_speed
 
 	equipped_speed_item_scene = null
 	equipped_speed_value = 0.0

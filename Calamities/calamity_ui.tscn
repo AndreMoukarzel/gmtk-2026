@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ce5qbm2kq6dvu"]
 
-[ext_resource type="Script" uid="uid://dkja387246l7r" path="res://Scripts/calamity_ui.gd" id="1_g0wyt"]
+[ext_resource type="Script" uid="uid://dkja387246l7r" path="res://Calamities/calamity_ui.gd" id="1_g0wyt"]
 
 [node name="CalamityUI" type="Control"]
 layout_mode = 3

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bynow8i10wjbp"]
 
-[ext_resource type="Script" uid="uid://d2e7h1yt8h1e6" path="res://Scripts/calamity_announcement.gd" id="1_pjiw1"]
+[ext_resource type="Script" uid="uid://d2e7h1yt8h1e6" path="res://Calamities/calamity_announcement.gd" id="1_pjiw1"]
 
 [node name="CalamityAnnouncement" type="PanelContainer" unique_id=1373993795]
 custom_minimum_size = Vector2(700, 300)

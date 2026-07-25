@@ -13,12 +13,15 @@ extends CharacterBody3D
 
 @export_category("Movement")
 @export var speed: float = 3.0
+@export var atk_range: float = 5.0
+@export var atk_damage: float = 6.0
 
 @onready var hitbox: Area3D = $Hitbox
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 
 var health: float
 var is_dead: bool = false
+var is_attacking: bool = false
 var knockback_velocity: Vector3 = Vector3.ZERO
 var bounce_time := 0.0
 
@@ -34,15 +37,21 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= 10.0 * delta
 
-	var direction: Vector3 = direction_to_closest_target()
+	var target_info = get_closest_target()
+	var direction = target_info[0]
+	var distance = target_info[1]
 	
 	if direction.length_squared() > 0.001:
 		$Wolf.look_at(global_position + direction, Vector3.UP)
+	
+	if distance <= atk_range:
+		attack()
+		return
+	
 	# Bounce pelo juice
 	bounce_time += delta
 	$Wolf.rotation.x = deg_to_rad(6.0) * sin(bounce_time * 8.0)
 	
-
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
 
@@ -70,19 +79,21 @@ func _physics_process(delta: float) -> void:
 	velocity.z -= knockback_velocity.z
 
 
-func direction_to_closest_target() -> Vector3:
+func get_closest_target() -> Array:
 	var my_pos: Vector3 = self.global_position
 	if Player and Base:
 		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
 		if player_dist > base_dist:
-			return my_pos.direction_to(Base.global_position)
-		return my_pos.direction_to(Player.global_position)
+			return [my_pos.direction_to(Base.global_position), base_dist]
+		return [my_pos.direction_to(Player.global_position), player_dist]
 	elif Player:
-		return my_pos.direction_to(Player.global_position)
+		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
+		return [my_pos.direction_to(Player.global_position), player_dist]
 	elif Base:
-		return my_pos.direction_to(Base.global_position)
-	return Vector3(0, 0, 0)
+		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
+		return [my_pos.direction_to(Base.global_position), base_dist]
+	return [Vector3(0, 0, 0), 999999.0]
 
 
 func take_damage(damage: float, attack_origin: Vector3) -> void:
@@ -118,3 +129,20 @@ func die() -> void:
 	hitbox.set_deferred("monitorable", false)
 
 	queue_free()
+
+
+func attack() -> void:
+	if is_attacking:
+		return
+	
+	is_attacking = true
+	
+	$Wolf/AnimationPlayer.play("attack")
+	await get_tree().create_timer(0.8).timeout
+	var bodies = $Wolf/Attack.get_overlapping_bodies()
+	if len(bodies) > 0:
+		for body in bodies: # Players found
+			body.take_damage(6.0)
+	
+	await $Wolf/AnimationPlayer.animation_finished
+	is_attacking = false

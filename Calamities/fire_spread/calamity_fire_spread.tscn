@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Hazzards/fire_floor.tscn" id="2_4e145"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7nsdh"]
-size = Vector3(47.4146, 0.001, 48.0247)
+size = Vector3(157.04, 0.001, 86.43)
 
 [node name="CalamityFireSpread" type="Node3D" unique_id=2056114052]
 script = ExtResource("1_ayogg")
@@ -15,5 +15,6 @@ fire_floor_scene = ExtResource("2_4e145")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnArea" unique_id=1480479869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4995, 0)
 shape = SubResource("BoxShape3D_7nsdh")
+debug_color = Color(0.83683586, 0, 0.33338192, 0.41960785)
 
 [node name="DurationTimer" type="Timer" parent="." unique_id=1986621431]

@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode unshaded, cull_disabled;
+render_mode unshaded, cull_disabled, blend_mix;
 
 uniform vec4 color_bottom : source_color = vec4(0.9, 0.03, 0.0, 1.0);
 uniform vec4 color_middle : source_color = vec4(1.0, 0.3, 0.0, 1.0);
@@ -65,7 +65,12 @@ void fragment() {
 	// Pontos mais claros dentro do fogo.
 	float brightness = fire_pattern * 0.15;
 	fire_color += brightness;
+	
+	float edge =
+	    smoothstep(0.0, 0.1, uv.x) *
+	    (1.0 - smoothstep(0.9, 1.0, uv.x));
 
 	ALBEDO = fire_color;
 	EMISSION = fire_color * emission_strength;
+	ALPHA = edge;
 }

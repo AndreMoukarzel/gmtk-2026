@@ -8,7 +8,6 @@ const GROUND_COLLISION_MASK: int = 1
 @export_category("References")
 @export var calamity_controller: CalamityController
 @export var fire_floor_scene: PackedScene
-@export var spawn_collision: CollisionShape3D
 
 @export_category("Fire Spread")
 @export_range(1, 500, 1) var fire_amount: int = 40
@@ -16,6 +15,8 @@ const GROUND_COLLISION_MASK: int = 1
 ## Small lift along the ground normal to avoid z-fighting.
 @export var spawn_height: float = 0.05
 @export var maximum_spawn_attempts: int = 1000
+
+@onready var spawn_collision: CollisionShape3D = $SpawnArea/CollisionShape3D
 
 ## World Y where downward rays start. Keep above the highest map point.
 var ray_start_height: float = 40.0

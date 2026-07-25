@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dq71q4ejun540"]
 
-[ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
+[ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Player/player.gd" id="1_weodu"]
 [ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Player/player_v1.glb" id="3_character"]
 [ext_resource type="PackedScene" uid="uid://ct0c3f6d7yq7t" path="res://Player/health_bar.tscn" id="4_fkybt"]
 [ext_resource type="PackedScene" uid="uid://coego2m0gum53" path="res://Items/Sword/sword_slash.tscn" id="4_slash"]

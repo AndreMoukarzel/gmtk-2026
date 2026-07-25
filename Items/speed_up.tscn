@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://sw4ch5rxg6h4"]
 
-[ext_resource type="Script" uid="uid://5267rwpvh3b5" path="res://Scripts/speed_up.gd" id="1_fcvpw"]
+[ext_resource type="Script" uid="uid://5267rwpvh3b5" path="res://Items/speed_up.gd" id="1_fcvpw"]
 [ext_resource type="Texture2D" uid="uid://dlsb4v1a77t8v" path="res://Assets/Sprites/Speedup.png" id="2_n2k4i"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fcvpw"]
@@ -14,15 +14,17 @@ albedo_color = Color(1, 0.85098, 0.0313726, 1)
 radius = 1.12884
 height = 2.25769
 
-[node name="SpeedUp" type="Area3D"]
+[node name="SpeedUp" type="Area3D" unique_id=1296531047]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_fcvpw")
 item_icon = ExtResource("2_n2k4i")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=177740781]
 mesh = SubResource("CapsuleMesh_fcvpw")
 surface_material_override/0 = SubResource("StandardMaterial3D_n2k4i")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1043185924]
 shape = SubResource("CapsuleShape3D_n2k4i")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

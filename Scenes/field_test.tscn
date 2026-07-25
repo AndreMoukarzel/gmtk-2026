@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b1cqea5ey4gqy" path="res://Scripts/calamity_controller.gd" id="2_d5lmg"]
 [ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/enemy.tscn" id="3_sykjq"]
 [ext_resource type="Resource" uid="uid://cxbdfm3vei5x2" path="res://Calamities/calamity_blackout.tres" id="3_ug2oi"]
-[ext_resource type="PackedScene" uid="uid://sw4ch5rxg6h4" path="res://Scenes/speed_up.tscn" id="4_njs15"]
+[ext_resource type="PackedScene" uid="uid://sw4ch5rxg6h4" path="res://Items/speed_up.tscn" id="4_njs15"]
 [ext_resource type="PackedScene" uid="uid://d1tukjcyi7vqk" path="res://Scenes/calamity_blackout.tscn" id="4_oiwje"]
 [ext_resource type="PackedScene" uid="uid://8bauloig1egn" path="res://Items/items_ui.tscn" id="5_8or0p"]
 [ext_resource type="Resource" uid="uid://jpa63ngq6uvf" path="res://Calamities/calamity_firespread.tres" id="5_ndbta"]

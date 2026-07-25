@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b68tnjokijax0"]
 
-[ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Scripts/item_light.gd" id="1_08c6a"]
+[ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Items/item_light.gd" id="1_08c6a"]
 [ext_resource type="Texture2D" uid="uid://bqv3lmpc8a4ln" path="res://Assets/Sprites/light_icon.png" id="2_4bgij"]
 [ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="2_5ts3w"]
 

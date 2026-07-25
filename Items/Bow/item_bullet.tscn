@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkn4xq0307q0q"]
 
-[ext_resource type="Script" uid="uid://dgpx2rsbtdgjs" path="res://Scripts/item_bullet.gd" id="1_76r7q"]
+[ext_resource type="Script" uid="uid://dgpx2rsbtdgjs" path="res://Items/item_bullet.gd" id="1_76r7q"]
 [ext_resource type="PackedScene" uid="uid://bt7k6r8qxc080" path="res://Items/Bow/bullet.tscn" id="2_68slw"]
 [ext_resource type="Texture2D" uid="uid://eqmud38nuhg2" path="res://Assets/Sprites/gun_icon.png" id="3_ukila"]
 [ext_resource type="PackedScene" uid="uid://brvrr11gnhae6" path="res://Items/Bow/Mesh/Bow.glb" id="4_rfu62"]

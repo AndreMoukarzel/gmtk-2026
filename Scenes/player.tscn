@@ -28,7 +28,6 @@ shader_parameter/inner_radius = 0.25
 [node name="Player" type="CharacterBody3D" unique_id=132980947 node_paths=PackedStringArray("shoot_origin")]
 collision_layer = 4
 script = ExtResource("1_weodu")
-knockback_strength = 8.03
 shoot_origin = NodePath("ShootOrigin")
 sword_cooldown = 0.7
 sword_slash_scene = ExtResource("4_slash")
@@ -54,6 +53,9 @@ bones/13/rotation = Quaternion(-0.01856026, -4.7692023e-08, -2.7368977e-10, 0.99
 bones/14/rotation = Quaternion(-7.3673434e-08, 3.9989946e-08, 0.7810145, 0.6245129)
 bones/15/rotation = Quaternion(-1.1545008e-08, 4.7570797e-08, 0.03359097, 0.99943566)
 
+[node name="character_v1_004" parent="Character/Armature_001/Skeleton3D" index="0" unique_id=949681198]
+layers = 2
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
 shape = SubResource("CapsuleShape3D_di2rl")
 
@@ -74,6 +76,7 @@ mesh = SubResource("BoxMesh_di2rl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 1.795, 0.048)
 visible = false
 light_energy = 2.0
+light_cull_mask = 4294967293
 shadow_enabled = true
 omni_range = 50.0
 

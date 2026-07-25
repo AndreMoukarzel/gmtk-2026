@@ -23,7 +23,7 @@ var health: float
 var damage_immunities: Array[DamageTypes.Type] = []
 
 # Knockback
-@export var knockback_strength: float = 5.0
+@export var knockback_strength: float = 12.0
 @export var knockback_deceleration: float = 12.0
 
 var knockback_velocity: Vector3 = Vector3.ZERO

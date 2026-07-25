@@ -1,10 +1,14 @@
 extends Area3D
 
+
+@export_range(1, 300, 1) var MAX_ENEMYS: int = 90
 @export var ENEMY_SCN: PackedScene
 
 
 func spawn_enemies(amount: int) -> void:
-	for _i in range(amount):
+	var current_enemies: int = $"../Enemies".get_child_count()
+	
+	for _i in range(min(amount, MAX_ENEMYS - current_enemies)):
 		var Enemy = ENEMY_SCN.instantiate()
 		var random_pos: Vector3 = random_point_in_area(self)
 		
@@ -28,5 +32,5 @@ func random_point_in_area(area: Area3D) -> Vector3:
 	return collision_shape.global_transform * local_point
 
 
-func _on_calamity_controller_calamity_started(instance_id: int, calamity: CalamityData) -> void:
+func _on_calamity_controller_calamity_started(instance_id: int, _calamity: CalamityData) -> void:
 	spawn_enemies(50)

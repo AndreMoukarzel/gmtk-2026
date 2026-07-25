@@ -58,7 +58,6 @@ transparent_bg = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 1.795, 0.048)
 visible = false
 light_energy = 2.0
-light_cull_mask = 4294967293
 shadow_enabled = true
 omni_range = 50.0
 

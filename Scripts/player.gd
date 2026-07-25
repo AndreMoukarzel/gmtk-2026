@@ -9,6 +9,7 @@ const JUMP_VELOCITY: float = 6.0
 const GRAVITY: float = 18.0
 
 const RUNNING_ANIMATION: StringName = &"running"
+const IDLE_ANIMATION: StringName = &"mixamo_com"
 
 enum AnimState {
 	IDLE,
@@ -253,7 +254,7 @@ func _set_anim_state(new_state: AnimState) -> void:
 
 	match anim_state:
 		AnimState.IDLE:
-			animation_player.stop()
+			animation_player.play(IDLE_ANIMATION)
 
 		AnimState.RUNNING:
 			animation_player.play(RUNNING_ANIMATION)

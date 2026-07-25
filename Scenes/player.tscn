@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
 [ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Assets/Models/Player/player_v1.glb" id="3_character"]
 [ext_resource type="PackedScene" uid="uid://coego2m0gum53" path="res://Items/Sword/sword_slash.tscn" id="4_slash"]
-[ext_resource type="Shader" path="res://Shaders/hurt_vignette.gdshader" id="5_vignette"]
+[ext_resource type="Shader" uid="uid://wbrv1xgabg4f" path="res://Shaders/hurt_vignette.gdshader" id="5_vignette"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
@@ -43,6 +43,17 @@ transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.9706458, 0)
 [node name="Armature_001" parent="Character" index="0" unique_id=1843293278]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
+[node name="Skeleton3D" parent="Character/Armature_001" index="0" unique_id=46845597]
+bones/3/rotation = Quaternion(0.87275165, 0, 0, -0.48816445)
+bones/8/rotation = Quaternion(0.7064018, 0.031567235, 0.7064018, -0.031566832)
+bones/9/rotation = Quaternion(-0.01856026, 4.7692023e-08, 2.7368977e-10, 0.99982774)
+bones/10/rotation = Quaternion(-7.3673434e-08, -3.9989946e-08, -0.7810145, 0.6245129)
+bones/11/rotation = Quaternion(-1.1545008e-08, -4.7570797e-08, -0.03359097, 0.99943566)
+bones/12/rotation = Quaternion(0.7064018, -0.031567235, -0.7064018, -0.031566832)
+bones/13/rotation = Quaternion(-0.01856026, -4.7692023e-08, -2.7368977e-10, 0.99982774)
+bones/14/rotation = Quaternion(-7.3673434e-08, 3.9989946e-08, 0.7810145, 0.6245129)
+bones/15/rotation = Quaternion(-1.1545008e-08, 4.7570797e-08, 0.03359097, 0.99943566)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
 shape = SubResource("CapsuleShape3D_di2rl")
 
@@ -66,10 +77,10 @@ light_energy = 2.0
 shadow_enabled = true
 omni_range = 50.0
 
-[node name="HurtVignette" type="CanvasLayer" parent="."]
+[node name="HurtVignette" type="CanvasLayer" parent="." unique_id=546714239]
 layer = 20
 
-[node name="ColorRect" type="ColorRect" parent="HurtVignette"]
+[node name="ColorRect" type="ColorRect" parent="HurtVignette" unique_id=1829845011]
 material = SubResource("ShaderMaterial_vignette")
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,6 +88,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 1, 1, 1)
 
 [editable path="Character"]

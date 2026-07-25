@@ -9,6 +9,7 @@ var direction: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
+	add_to_group("despawn_on_hit")
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
 

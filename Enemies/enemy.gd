@@ -154,4 +154,6 @@ func attack() -> void:
 
 func _on_hitbox_area_entered(area: Area3D) -> void:
 	take_damage(area.damage, area.global_position)
-	area.queue_free()
+
+	if area.is_in_group("despawn_on_hit"):
+		area.queue_free()

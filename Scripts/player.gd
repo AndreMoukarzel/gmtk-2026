@@ -24,9 +24,17 @@ var damage_immunities: Array[DamageTypes.Type] = []
 # References
 @export var shoot_origin: Marker3D
 @export var arrow_cooldown: float = 0.3
+@export var sword_cooldown: float = 0.3
+@export var sword_slash_scene: PackedScene
+@export var animation_duration: float = 0.2
+@export var sword_damage: float = 25.0
+@export var sword_hitbox_size: Vector3 = Vector3(2, 2, 2)
+@export var sword_hitbox_forward_offset: float = 1.5
+@export var hitbox_boundaries_ingame: bool = true
 
 var inventory_ui: ItemUI
 var _arrow_cooldown_remaining: float = 0.0
+var _sword_cooldown_remaining: float = 0.0
 
 # Boost Speed
 var base_speed: float = 10.0
@@ -44,6 +52,11 @@ var nearby_bullet_item: Area3D = null
 var equipped_bullet_item_scene: PackedScene = null
 var equipped_bullet_scene: PackedScene = null
 var has_bullet_item: bool = false
+
+# Sword
+var nearby_sword_item: Area3D = null
+var equipped_sword_item_scene: PackedScene = null
+var has_sword_item: bool = false
 
 # Fire Boots
 var equipped_fire_boots_item_scene: PackedScene = null
@@ -120,17 +133,15 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Tiro (hold to fire)
+	# Ataque do item selecionado (hold to fire)
 	if _arrow_cooldown_remaining > 0.0:
 		_arrow_cooldown_remaining -= delta
 
+	if _sword_cooldown_remaining > 0.0:
+		_sword_cooldown_remaining -= delta
+
 	if Input.is_action_pressed("shoot"):
-		if can_shoot():
-			if _arrow_cooldown_remaining <= 0.0:
-				shoot_at_mouse()
-				_arrow_cooldown_remaining = arrow_cooldown
-		elif Input.is_action_just_pressed("shoot"):
-			print("Você não possui o ItemBullet equipado.")
+		_try_use_selected_weapon()
 
 	# Movimento
 	var input_direction := Input.get_vector(
@@ -213,8 +224,77 @@ func _set_anim_state(new_state: AnimState) -> void:
 			animation_player.play(RUNNING_ANIMATION)
 
 
+func _try_use_selected_weapon() -> void:
+	if inventory_ui == null:
+		return
+
+	var selected_item := inventory_ui.get_selected_item_id()
+
+	match selected_item:
+		&"bullet":
+			if not can_shoot():
+				if Input.is_action_just_pressed("shoot"):
+					print("Você não possui o ItemBullet equipado.")
+				return
+
+			if _arrow_cooldown_remaining <= 0.0:
+				shoot_at_mouse()
+				_arrow_cooldown_remaining = arrow_cooldown
+
+		&"sword":
+			if not can_slash():
+				# if Input.is_action_just_pressed("shoot"):
+				# 	print("Você não possui a Sword equipada.")
+				return
+
+			if _sword_cooldown_remaining <= 0.0:
+				slash_at_mouse()
+				_sword_cooldown_remaining = sword_cooldown
+
+
 func can_shoot() -> bool:
 	return has_bullet_item and equipped_bullet_scene != null
+
+
+func can_slash() -> bool:
+	return has_sword_item and sword_slash_scene != null
+
+
+func get_aim_direction_from_mouse() -> Vector3:
+	var current_camera := get_viewport().get_camera_3d()
+
+	if current_camera == null:
+		push_error("ERRO: nenhuma Camera3D ativa encontrada.")
+		return Vector3.ZERO
+
+	var mouse_position := get_viewport().get_mouse_position()
+	var ray_origin := current_camera.project_ray_origin(mouse_position)
+	var ray_direction := current_camera.project_ray_normal(mouse_position)
+
+	var aim_origin := global_position
+
+	if shoot_origin != null:
+		aim_origin = shoot_origin.global_position
+
+	var aim_plane := Plane(Vector3.UP, aim_origin.y)
+	var mouse_world_position = aim_plane.intersects_ray(
+		ray_origin,
+		ray_direction
+	)
+
+	if mouse_world_position == null:
+		push_error("ERRO: o raio do mouse não encontrou o plano horizontal.")
+		return Vector3.ZERO
+
+	var aim_direction: Vector3 = mouse_world_position - aim_origin
+	aim_direction.y = 0.0
+	aim_direction = aim_direction.normalized()
+
+	if aim_direction == Vector3.ZERO:
+		push_error("ERRO: direção de mira ficou zerada.")
+		return Vector3.ZERO
+
+	return aim_direction
 
 
 func shoot_at_mouse() -> void:
@@ -222,41 +302,15 @@ func shoot_at_mouse() -> void:
 		push_error("ERRO: Bullet Scene não foi configurada no Inspector.")
 		return
 
-	var current_camera := get_viewport().get_camera_3d()
+	var bullet_direction := get_aim_direction_from_mouse()
 
-	if current_camera == null:
-		push_error("ERRO: nenhuma Camera3D ativa encontrada.")
+	if bullet_direction == Vector3.ZERO:
 		return
-
-	var mouse_position := get_viewport().get_mouse_position()
-
-	var ray_origin := current_camera.project_ray_origin(mouse_position)
-	var ray_direction := current_camera.project_ray_normal(mouse_position)
 
 	var bullet_origin := global_position
 
 	if shoot_origin != null:
 		bullet_origin = shoot_origin.global_position
-
-	# Plano horizontal na altura do tiro
-	var shooting_plane := Plane(Vector3.UP, bullet_origin.y)
-
-	var mouse_world_position = shooting_plane.intersects_ray(
-		ray_origin,
-		ray_direction
-	)
-
-	if mouse_world_position == null:
-		push_error("ERRO: o raio do mouse não encontrou o plano horizontal.")
-		return
-
-	var bullet_direction: Vector3 = mouse_world_position - bullet_origin
-	bullet_direction.y = 0.0
-	bullet_direction = bullet_direction.normalized()
-
-	if bullet_direction == Vector3.ZERO:
-		push_error("ERRO: direção da bala ficou zerada.")
-		return
 
 	var bullet = equipped_bullet_scene.instantiate()
 
@@ -265,6 +319,79 @@ func shoot_at_mouse() -> void:
 	bullet.global_position = bullet_origin
 	bullet.direction = bullet_direction
 	bullet.look_at(bullet.global_position + bullet.direction, Vector3.UP)
+
+
+func slash_at_mouse() -> void:
+	if sword_slash_scene == null:
+		push_error("ERRO: Sword Slash Scene não foi configurada no Inspector.")
+		return
+
+	var slash_direction := get_aim_direction_from_mouse()
+
+	if slash_direction == Vector3.ZERO:
+		return
+
+	var slash := sword_slash_scene.instantiate() as Node3D
+
+	if slash == null:
+		push_error("ERRO: a cena do slash precisa herdar de Node3D.")
+		return
+
+	add_child(slash)
+
+	if slash.has_method("configure"):
+		slash.configure(
+			animation_duration,
+			sword_damage,
+			sword_hitbox_size,
+			sword_hitbox_forward_offset
+		)
+
+	if slash.has_method("play"):
+		slash.play(slash_direction)
+	else:
+		push_error("ERRO: SwordSlash não possui play().")
+		slash.queue_free()
+		return
+
+	if slash.has_node("Hitbox"):
+		add_hitbox_boundaries_ingame(slash.get_node("Hitbox") as Area3D)
+
+
+func add_hitbox_boundaries_ingame(hitbox: Area3D) -> void:
+	if not hitbox_boundaries_ingame:
+		return
+
+	if hitbox == null:
+		return
+
+	var collision_shape := hitbox.get_node_or_null("CollisionShape3D") as CollisionShape3D
+	if collision_shape == null:
+		return
+
+	var box_shape := collision_shape.shape as BoxShape3D
+	if box_shape == null:
+		return
+
+	if hitbox.get_node_or_null("HitboxBoundaryMesh") != null:
+		return
+
+	var mesh_instance := MeshInstance3D.new()
+	mesh_instance.name = "HitboxBoundaryMesh"
+
+	var box_mesh := BoxMesh.new()
+	box_mesh.size = box_shape.size
+	mesh_instance.mesh = box_mesh
+
+	var material := StandardMaterial3D.new()
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color = Color(1.0, 0.2, 0.2, 0.35)
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mesh_instance.material_override = material
+
+	hitbox.add_child(mesh_instance)
+	mesh_instance.visible = false
 
 
 func set_nearby_speed_item(item: Area3D) -> void:
@@ -304,9 +431,15 @@ func try_get_item() -> void:
 			nearby_light_item.collect(self)
 			return
 
+	if is_instance_valid(nearby_sword_item):
+		if nearby_sword_item.has_method("collect"):
+			nearby_sword_item.collect(self)
+			return
+
 	nearby_speed_item = null
 	nearby_bullet_item = null
 	nearby_fire_boots_item = null
+	nearby_sword_item = null
 
 	print("Nenhum item próximo.")
 
@@ -456,6 +589,9 @@ func drop_selected_item() -> void:
 		&"bullet":
 			drop_bullet_item()
 
+		&"sword":
+			drop_sword_item()
+
 		&"fire_boots":
 			drop_fire_boots()
 
@@ -491,6 +627,67 @@ func drop_bullet_item() -> void:
 	inventory_ui.remove_item(&"bullet")
 
 	print("ItemBullet largado.")
+
+
+func set_nearby_sword_item(item: Area3D) -> void:
+	nearby_sword_item = item
+	print("Sword próxima. Pressione get_item para pegar.")
+
+
+func remove_nearby_sword_item(item: Area3D) -> void:
+	if nearby_sword_item == item:
+		nearby_sword_item = null
+
+
+func equip_sword_item(
+	item_scene: PackedScene,
+	item_icon: Texture2D
+) -> bool:
+	if has_sword_item:
+		print("Você já possui a Sword.")
+		return false
+
+	if inventory_ui == null:
+		push_error("ItemUI não encontrada.")
+		return false
+
+	var was_added := inventory_ui.add_item(
+		&"sword",
+		item_icon
+	)
+
+	if not was_added:
+		return false
+
+	equipped_sword_item_scene = item_scene
+	has_sword_item = true
+	nearby_sword_item = null
+
+	print("Sword equipada.")
+	return true
+
+
+func drop_sword_item() -> void:
+	if not has_sword_item:
+		return
+
+	if equipped_sword_item_scene == null:
+		return
+
+	var dropped_item := equipped_sword_item_scene.instantiate()
+	get_tree().current_scene.add_child(dropped_item)
+
+	dropped_item.global_position = (
+		global_position + Vector3(0.0, 0.0, 1.5)
+	)
+
+	has_sword_item = false
+	equipped_sword_item_scene = null
+	nearby_sword_item = null
+
+	inventory_ui.remove_item(&"sword")
+
+	print("Sword largada.")
 
 
 func drop_fire_boots() -> void:

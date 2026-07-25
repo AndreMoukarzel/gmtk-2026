@@ -16,6 +16,7 @@ enum AnimState {
 	RUNNING,
 }
 
+@export var respawn_point: Node3D
 # Health
 @export var max_health: float = 100.0
 
@@ -934,14 +935,20 @@ func apply_knockback(attack_origin: Vector3) -> void:
 	knockback_velocity.x += knockback_direction.x * knockback_strength
 	knockback_velocity.z += knockback_direction.z * knockback_strength
 
-
 func die() -> void:
-	print("Player morreu.")
 	knockback_velocity = Vector3.ZERO
 	if _hurt_vignette_tween != null and _hurt_vignette_tween.is_valid():
 		_hurt_vignette_tween.kill()
 	_set_hurt_vignette_intensity(0.0)
+	respawn()
 
+
+func respawn() -> void:
+	if respawn_point != null:
+		global_position = respawn_point.global_position
+	velocity = Vector3.ZERO
+	health = max_health
+	update_health_bar()
 
 func update_health_bar() -> void:
 	var health_percent := health / max_health

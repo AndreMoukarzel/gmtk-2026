@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bf4j7j02g14oq"]
-
-[ext_resource type="PackedScene" uid="uid://ce5qbm2kq6dvu" path="res://Calamities/calamity_ui.tscn" id="1_bs0m7"]
-
-[node name="CalamityUI_Canvas" type="CanvasLayer"]
-
-[node name="CalamityUI" parent="." instance=ExtResource("1_bs0m7")]

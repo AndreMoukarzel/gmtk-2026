@@ -1,5 +1,5 @@
 class_name CalamityQueueItem
-extends PanelContainer
+extends MarginContainer
 
 @onready var icon: TextureRect = %Icon
 @onready var name_label: Label = %NameLabel

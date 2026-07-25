@@ -827,7 +827,7 @@ func is_immune_to(damage_type: DamageTypes.Type) -> bool:
 
 func take_damage(
 	damage: float,
-	attack_origin: Vector3 = Vector3(0, 0, 0),
+	_attack_origin: Vector3 = Vector3(0, 0, 0),
 	damage_type: DamageTypes.Type = DamageTypes.Type.PHYSICAL
 ) -> void:
 	if damage <= 0.0:

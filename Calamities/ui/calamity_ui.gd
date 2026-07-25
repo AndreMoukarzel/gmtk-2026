@@ -6,9 +6,6 @@ extends Control
 @export var announcement_scene: PackedScene
 @export var queue_item_scene: PackedScene
 
-@onready var announcement_position: Control = %AnnouncementPosition
-@onready var queue_container: VBoxContainer = %QueueContainer
-
 
 # instance_id → item visual correspondente.
 var queue_items: Dictionary = {}
@@ -36,7 +33,7 @@ func _on_calamity_announced(
 	_show_announcement(calamity)
 
 	var queue_item := queue_item_scene.instantiate() as CalamityQueueItem
-	queue_container.add_child(queue_item)
+	%QueueContainer.add_child(queue_item)
 
 	queue_item.setup(
 		instance_id,
@@ -53,7 +50,7 @@ func _show_announcement(calamity: CalamityData) -> void:
 		as CalamityAnnouncement
 	)
 
-	announcement_position.add_child(announcement)
+	%AnnouncementPosition.add_child(announcement)
 	announcement.setup(calamity)
 	announcement.play_presentation()
 

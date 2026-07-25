@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbj1duop8glf7"
-path="res://.godot/imported/calamity_blackout_icon.png-47b383381a4451e1b598a81fcf53d478.ctex"
+path="res://.godot/imported/calamity_blackout_icon.png-d77db700ca3918ea140b29766d9c6ef8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/calamity_blackout_icon.png"
-dest_files=["res://.godot/imported/calamity_blackout_icon.png-47b383381a4451e1b598a81fcf53d478.ctex"]
+source_file="res://Calamities/blackout/calamity_blackout_icon.png"
+dest_files=["res://.godot/imported/calamity_blackout_icon.png-d77db700ca3918ea140b29766d9c6ef8.ctex"]
 
 [params]
 

@@ -8,13 +8,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_herkg"]
 render_priority = 0
 shader = ExtResource("2_a3g37")
-shader_parameter/color_bottom = Color(0.9, 0.03, 0, 1)
-shader_parameter/color_middle = Color(1, 0.3, 0, 1)
-shader_parameter/color_top = Color(1, 0.9, 0.15, 1)
-shader_parameter/speed = 8.292
-shader_parameter/scale = 19.789
-shader_parameter/distortion = 0.419
-shader_parameter/emission_strength = 1.5
+shader_parameter/color_bottom = Color(0.89979166, 0.025840001, 0, 0.337)
+shader_parameter/color_middle = Color(1, 0.29951698, 0, 0.30100003)
+shader_parameter/color_top = Color(1, 0.89979166, 0.15170373, 0.344)
+shader_parameter/speed = 7.5670003594325
+shader_parameter/scale = 10.394000446215
+shader_parameter/distortion = 0.79200003762
+shader_parameter/emission_strength = 20.72
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_blqua"]
 top_radius = 2.035

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cswxafx7b84n8" path="res://Items/items_ui.gd" id="1_ihtn0"]
 
-[node name="Items_UI" type="CanvasLayer" groups=["item_ui"]]
+[node name="Items_UI" type="CanvasLayer" unique_id=1785261938 groups=["item_ui"]]
 script = ExtResource("1_ihtn0")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=982426345]
 custom_minimum_size = Vector2(100, 200)
 anchors_preset = 4
 anchor_top = 0.5
@@ -16,23 +16,31 @@ offset_bottom = 100.0
 grow_vertical = 2
 size_flags_horizontal = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1823106293]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1155905503]
 layout_mode = 2
+theme_override_constants/separation = 4
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="Item1" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer" unique_id=717383428]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 expand_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=1023294926]
+layout_mode = 2
+
+[node name="Item2" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer" unique_id=945377140]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 expand_mode = 2

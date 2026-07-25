@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bkn4xq0307q0q"]
+
+[ext_resource type="Script" uid="uid://dgpx2rsbtdgjs" path="res://Scripts/item_bullet.gd" id="1_76r7q"]
+[ext_resource type="PackedScene" uid="uid://bt7k6r8qxc080" path="res://Items/Bow/bullet.tscn" id="2_68slw"]
+[ext_resource type="Texture2D" uid="uid://eqmud38nuhg2" path="res://Assets/Sprites/gun_icon.png" id="3_ukila"]
+[ext_resource type="PackedScene" uid="uid://brvrr11gnhae6" path="res://Items/Bow/Mesh/Bow.glb" id="4_rfu62"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_76r7q"]
+radius = 1.12884
+height = 2.25769
+
+[sub_resource type="Animation" id="Animation_7n0gt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bow:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.28915548, -0.31881693, -0.97738427)]
+}
+
+[sub_resource type="Animation" id="Animation_cp4ko"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.125, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bow:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.28915548, -0.31881693, -0.97738427), Vector3(0.19613609, -0.6212706, -0.707269)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mjklt"]
+_data = {
+&"RESET": SubResource("Animation_7n0gt"),
+&"idle": SubResource("Animation_cp4ko")
+}
+
+[node name="ItemBullet" type="Area3D" unique_id=637541062]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_76r7q")
+bullet_scene = ExtResource("2_68slw")
+item_icon = ExtResource("3_ukila")
+
+[node name="Bow" parent="." unique_id=415597373 instance=ExtResource("4_rfu62")]
+transform = Transform3D(0.03630658, 0.044236872, -0.018025843, -0.047677193, 0.03215869, -0.017108573, -0.0029523708, 0.024676263, 0.05461104, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=133189418]
+shape = SubResource("CapsuleShape3D_76r7q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=249366297]
+libraries/ = SubResource("AnimationLibrary_mjklt")
+autoplay = &"idle"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -33,14 +33,12 @@ window/stretch/mode="canvas_items"
 [file_customization]
 
 folder_colors={
-"res://Assets/Models/": "red"
+"res://Assets/Models/": "red",
+"res://Items/Bow/": "red"
 }
 
 [global_group]
 
-bullet=""
-player=""
-enemy=""
 item_ui=""
 
 [input]
@@ -96,6 +94,7 @@ drop_item={
 3d_physics/layer_1="Floor"
 3d_physics/layer_2="Enemies"
 3d_physics/layer_3="Player"
+3d_physics/layer_4="PlayerAtks"
 
 [physics]
 

@@ -15,17 +15,11 @@ func _on_body_entered(body: Node3D) -> void:
 	if consumed:
 		return
 
-	if not body.is_in_group("player"):
-		return
-
 	if body.has_method("set_nearby_speed_item"):
 		body.set_nearby_speed_item(self)
 
 
 func _on_body_exited(body: Node3D) -> void:
-	if not body.is_in_group("player"):
-		return
-
 	if body.has_method("remove_nearby_speed_item"):
 		body.remove_nearby_speed_item(self)
 

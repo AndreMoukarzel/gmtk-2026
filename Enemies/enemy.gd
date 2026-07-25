@@ -146,3 +146,8 @@ func attack() -> void:
 	
 	await $Wolf/AnimationPlayer.animation_finished
 	is_attacking = false
+
+
+func _on_hitbox_area_entered(area: Area3D) -> void:
+	take_damage(area.damage, area.global_position)
+	area.queue_free()

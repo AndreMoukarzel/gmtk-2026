@@ -1,22 +1,15 @@
 [gd_scene format=3 uid="uid://dq71q4ejun540"]
 
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
-[ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Assets/Models/Player/player_v1.glb" id="3_character"]
+[ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Player/player_v1.glb" id="3_character"]
+[ext_resource type="PackedScene" uid="uid://ct0c3f6d7yq7t" path="res://Player/health_bar.tscn" id="4_fkybt"]
 [ext_resource type="PackedScene" uid="uid://coego2m0gum53" path="res://Items/Sword/sword_slash.tscn" id="4_slash"]
 [ext_resource type="Shader" uid="uid://wbrv1xgabg4f" path="res://Shaders/hurt_vignette.gdshader" id="5_vignette"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasja"]
-shading_mode = 0
-albedo_color = Color(0.999999, 0.928947, 0.923675, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_di2rl"]
-size = Vector3(1.2, 0.12, 0.04)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dw3w4"]
-shading_mode = 0
-albedo_color = Color(1, 0.172549, 0.243137, 1)
+[sub_resource type="ViewportTexture" id="ViewportTexture_l7v2h"]
+viewport_path = NodePath("HealthBar")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
 shader = ExtResource("5_vignette")
@@ -39,21 +32,10 @@ hitbox_boundaries_ingame = false
 [node name="Character" parent="." unique_id=1051157959 instance=ExtResource("3_character")]
 transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.9706458, 0)
 
-[node name="Armature_001" parent="Character" index="0" unique_id=1843293278]
+[node name="Armature_001" parent="Character" index="0" unique_id=639181040]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Character/Armature_001" index="0" unique_id=46845597]
-bones/3/rotation = Quaternion(0.87275165, 0, 0, -0.48816445)
-bones/8/rotation = Quaternion(0.7064018, 0.031567235, 0.7064018, -0.031566832)
-bones/9/rotation = Quaternion(-0.01856026, 4.7692023e-08, 2.7368977e-10, 0.99982774)
-bones/10/rotation = Quaternion(-7.3673434e-08, -3.9989946e-08, -0.7810145, 0.6245129)
-bones/11/rotation = Quaternion(-1.1545008e-08, -4.7570797e-08, -0.03359097, 0.99943566)
-bones/12/rotation = Quaternion(0.7064018, -0.031567235, -0.7064018, -0.031566832)
-bones/13/rotation = Quaternion(-0.01856026, -4.7692023e-08, -2.7368977e-10, 0.99982774)
-bones/14/rotation = Quaternion(-7.3673434e-08, 3.9989946e-08, 0.7810145, 0.6245129)
-bones/15/rotation = Quaternion(-1.1545008e-08, 4.7570797e-08, 0.03359097, 0.99943566)
-
-[node name="character_v1_004" parent="Character/Armature_001/Skeleton3D" index="0" unique_id=949681198]
+[node name="character_v1_004" parent="Character/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(1051157959, 2049641696) index="0" unique_id=824954690]
 layers = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
@@ -61,16 +43,16 @@ shape = SubResource("CapsuleShape3D_di2rl")
 
 [node name="ShootOrigin" type="Marker3D" parent="." unique_id=1282501623]
 
-[node name="HealthBar" type="Node3D" parent="." unique_id=738269589]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="HealthBarDisplay" type="Sprite3D" parent="." unique_id=1906838928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7338011, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_l7v2h")
 
-[node name="Background" type="MeshInstance3D" parent="HealthBar" unique_id=522718475]
-material_override = SubResource("StandardMaterial3D_jasja")
-mesh = SubResource("BoxMesh_di2rl")
+[node name="HealthBar" type="SubViewport" parent="." unique_id=2072564244]
+disable_3d = true
+transparent_bg = true
 
-[node name="Fill" type="MeshInstance3D" parent="HealthBar" unique_id=414345267]
-material_override = SubResource("StandardMaterial3D_dw3w4")
-mesh = SubResource("BoxMesh_di2rl")
+[node name="HealthBar" parent="HealthBar" unique_id=264823101 instance=ExtResource("4_fkybt")]
 
 [node name="ItemLight" type="OmniLight3D" parent="." unique_id=672443995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 1.795, 0.048)

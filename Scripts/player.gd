@@ -8,6 +8,13 @@ const DECELERATION: float = 350.0
 const JUMP_VELOCITY: float = 6.0
 const GRAVITY: float = 18.0
 
+const RUNNING_ANIMATION: StringName = &"running"
+
+enum AnimState {
+	IDLE,
+	RUNNING,
+}
+
 @export var equipped_fire_boots_item_scene: PackedScene = null
 
 # Health
@@ -18,8 +25,10 @@ var damage_immunities: Array[DamageTypes.Type] = []
 
 # References
 @export var shoot_origin: Marker3D
+@export var arrow_cooldown: float = 0.3
 
 var inventory_ui: ItemUI
+var _arrow_cooldown_remaining: float = 0.0
 
 # Boost Speed
 var base_speed: float = 10.0
@@ -61,9 +70,16 @@ var equipped_light_range: float = 0
 var equipped_light_energy: float = 0
 var has_light_item: bool = false
 
+var anim_state: AnimState = AnimState.IDLE
 
 @onready var health_fill: MeshInstance3D = $HealthBar/Fill
 @onready var item_light: OmniLight3D = $ItemLight
+@onready var character_model: Node3D = $Character
+@onready var animation_player: AnimationPlayer = $Character.find_child(
+	"AnimationPlayer",
+	true,
+	false
+) as AnimationPlayer
 
 
 func _ready() -> void:
@@ -71,6 +87,11 @@ func _ready() -> void:
 	update_health_bar()
 	current_speed = base_speed
 	item_light.visible = false
+
+	if animation_player == null:
+		push_error("AnimationPlayer não encontrada no modelo do player.")
+	else:
+		_set_anim_state(AnimState.IDLE)
 
 	inventory_ui = get_tree().get_first_node_in_group("item_ui") as ItemUI
 
@@ -100,11 +121,16 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Tiro
-	if Input.is_action_just_pressed("shoot"):
+	# Tiro (hold to fire)
+	if _arrow_cooldown_remaining > 0.0:
+		_arrow_cooldown_remaining -= delta
+
+	if Input.is_action_pressed("shoot"):
 		if can_shoot():
-			shoot_at_mouse()
-		else:
+			if _arrow_cooldown_remaining <= 0.0:
+				shoot_at_mouse()
+				_arrow_cooldown_remaining = arrow_cooldown
+		elif Input.is_action_just_pressed("shoot"):
 			print("Você não possui o ItemBullet equipado.")
 
 	# Movimento
@@ -135,6 +161,9 @@ func _physics_process(delta: float) -> void:
 			target_velocity.z,
 			ACCELERATION * delta
 		)
+
+		_face_direction(direction)
+		_set_anim_state(AnimState.RUNNING)
 	else:
 		velocity.x = move_toward(
 			velocity.x,
@@ -148,9 +177,41 @@ func _physics_process(delta: float) -> void:
 			DECELERATION * delta
 		)
 
+		_set_anim_state(AnimState.IDLE)
+
 	process_health_regeneration(delta)
 
 	move_and_slide()
+
+
+func _face_direction(direction: Vector3) -> void:
+	if character_model == null:
+		return
+
+	if direction.length_squared() < 0.0001:
+		return
+
+	character_model.look_at(
+		character_model.global_position + direction,
+		Vector3.UP
+	)
+
+
+func _set_anim_state(new_state: AnimState) -> void:
+	if new_state == anim_state:
+		return
+
+	anim_state = new_state
+
+	if animation_player == null:
+		return
+
+	match anim_state:
+		AnimState.IDLE:
+			animation_player.stop()
+
+		AnimState.RUNNING:
+			animation_player.play(RUNNING_ANIMATION)
 
 
 func can_shoot() -> bool:

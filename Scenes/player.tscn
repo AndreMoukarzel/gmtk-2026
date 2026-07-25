@@ -2,18 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
 [ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/Fire Boots/item_fire_boots.tscn" id="2_6t5aa"]
-[ext_resource type="Shader" uid="uid://b8er36evvge2h" path="res://Shaders/player.gdshader" id="2_jasja"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_di2rl"]
-render_priority = 0
-shader = ExtResource("2_jasja")
-shader_parameter/base_color = Color(0.1, 0.7, 1, 1)
-shader_parameter/pulse_speed = 4.798
-shader_parameter/pulse_strength = 0.065
-shader_parameter/color_speed = 1.368
-shader_parameter/emission_strength = 0.35
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jasja"]
+[ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Assets/Models/Player/player_v1.glb" id="3_character"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
@@ -34,9 +23,10 @@ script = ExtResource("1_weodu")
 equipped_fire_boots_item_scene = ExtResource("2_6t5aa")
 shoot_origin = NodePath("ShootOrigin")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1591451239]
-material_override = SubResource("ShaderMaterial_di2rl")
-mesh = SubResource("CapsuleMesh_jasja")
+[node name="Character" parent="." unique_id=1051157959 instance=ExtResource("3_character")]
+
+[node name="Armature_001" parent="Character" index="0" unique_id=1694150820]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
 shape = SubResource("CapsuleShape3D_di2rl")
@@ -60,3 +50,5 @@ visible = false
 light_energy = 2.0
 shadow_enabled = true
 omni_range = 50.0
+
+[editable path="Character"]

@@ -99,7 +99,6 @@ var has_light_item: bool = false
 var anim_state: AnimState = AnimState.IDLE
 var _highlighted_pickup: Area3D = null
 
-@onready var health_fill: MeshInstance3D = $HealthBar/Fill
 @onready var item_light: OmniLight3D = $ItemLight
 @onready var character_model: Node3D = $Character
 @onready var hurt_vignette_rect: ColorRect = $HurtVignette/ColorRect
@@ -112,6 +111,7 @@ var _highlighted_pickup: Area3D = null
 
 func _ready() -> void:
 	health = max_health
+	$HealthBar/HealthBar.max_value = max_health
 	update_health_bar()
 	_setup_hurt_vignette()
 	current_speed = base_speed
@@ -951,10 +951,7 @@ func respawn() -> void:
 	update_health_bar()
 
 func update_health_bar() -> void:
-	var health_percent := health / max_health
-
-	health_fill.scale.x = health_percent
-	health_fill.position.x = -(1.0 - health_percent) * 0.6
+	$HealthBar/HealthBar.value = health
 
 
 func process_health_regeneration(delta: float) -> void:

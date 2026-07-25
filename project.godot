@@ -44,7 +44,8 @@ folder_colors={
 "res://Items/Health/": "green",
 "res://Items/Light/": "yellow",
 "res://Items/Speed Boots/": "blue",
-"res://Items/Sword/": "purple"
+"res://Items/Sword/": "purple",
+"res://Player/": "pink"
 }
 
 [global_group]

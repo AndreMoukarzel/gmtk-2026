@@ -27,6 +27,12 @@ var damage_immunities: Array[DamageTypes.Type] = []
 
 var knockback_velocity: Vector3 = Vector3.ZERO
 
+@export var hurt_vignette_peak: float = 0.85
+@export var hurt_vignette_fade_seconds: float = 0.35
+
+var _hurt_vignette_tween: Tween
+var _hurt_vignette_material: ShaderMaterial
+
 # References
 @export var shoot_origin: Marker3D
 @export var arrow_cooldown: float = 0.3
@@ -94,6 +100,7 @@ var _highlighted_pickup: Area3D = null
 @onready var health_fill: MeshInstance3D = $HealthBar/Fill
 @onready var item_light: OmniLight3D = $ItemLight
 @onready var character_model: Node3D = $Character
+@onready var hurt_vignette_rect: ColorRect = $HurtVignette/ColorRect
 @onready var animation_player: AnimationPlayer = $Character.find_child(
 	"AnimationPlayer",
 	true,
@@ -104,6 +111,7 @@ var _highlighted_pickup: Area3D = null
 func _ready() -> void:
 	health = max_health
 	update_health_bar()
+	_setup_hurt_vignette()
 	current_speed = base_speed
 	item_light.visible = false
 
@@ -866,12 +874,48 @@ func take_damage(
 	health = maxf(health - damage, 0.0)
 	update_health_bar()
 	apply_knockback(attack_origin)
+	flash_hurt_vignette()
 
 	print("Player recebeu ", damage, " de dano.")
 	print("Vida atual: ", health)
 
 	if health <= 0.0:
 		die()
+
+
+func _setup_hurt_vignette() -> void:
+	if hurt_vignette_rect == null:
+		return
+
+	var material := hurt_vignette_rect.material as ShaderMaterial
+	if material == null:
+		return
+
+	_hurt_vignette_material = material.duplicate() as ShaderMaterial
+	hurt_vignette_rect.material = _hurt_vignette_material
+	_hurt_vignette_material.set_shader_parameter("intensity", 0.0)
+
+
+func flash_hurt_vignette() -> void:
+	if _hurt_vignette_material == null:
+		return
+
+	if _hurt_vignette_tween != null and _hurt_vignette_tween.is_valid():
+		_hurt_vignette_tween.kill()
+
+	_hurt_vignette_material.set_shader_parameter("intensity", hurt_vignette_peak)
+	_hurt_vignette_tween = create_tween()
+	_hurt_vignette_tween.tween_method(
+		_set_hurt_vignette_intensity,
+		hurt_vignette_peak,
+		0.0,
+		hurt_vignette_fade_seconds
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+func _set_hurt_vignette_intensity(value: float) -> void:
+	if _hurt_vignette_material != null:
+		_hurt_vignette_material.set_shader_parameter("intensity", value)
 
 
 func apply_knockback(attack_origin: Vector3) -> void:
@@ -893,6 +937,9 @@ func apply_knockback(attack_origin: Vector3) -> void:
 func die() -> void:
 	print("Player morreu.")
 	knockback_velocity = Vector3.ZERO
+	if _hurt_vignette_tween != null and _hurt_vignette_tween.is_valid():
+		_hurt_vignette_tween.kill()
+	_set_hurt_vignette_intensity(0.0)
 
 
 func update_health_bar() -> void:

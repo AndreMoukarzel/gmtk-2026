@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmcv4xgf0hyxx"]
 
 [ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Items/Fire Boots/item_fire_boots.gd" id="1_6peeo"]
-[ext_resource type="Texture2D" uid="uid://dbc0jgo1g2p6i" path="res://Assets/Sprites/fire_boots_icon.png" id="2_s34px"]
+[ext_resource type="Texture2D" uid="uid://1k5evxwgmsbu" path="res://Items/Fire Boots/fire_boot_icon.png" id="2_tei25"]
 [ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="3_tei25"]
 [ext_resource type="PackedScene" uid="uid://b2ykm7idpmcec" path="res://Items/Boot/Boot.glb" id="4_tei25"]
 
@@ -89,7 +89,7 @@ _data = {
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_6peeo")
-item_icon = ExtResource("2_s34px")
+item_icon = ExtResource("2_tei25")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987312478]
 transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)

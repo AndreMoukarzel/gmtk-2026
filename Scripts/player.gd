@@ -8,8 +8,6 @@ const DECELERATION: float = 350.0
 const JUMP_VELOCITY: float = 6.0
 const GRAVITY: float = 18.0
 
-@export var equipped_fire_boots_item_scene: PackedScene = null
-
 # Health
 @export var max_health: float = 100.0
 
@@ -39,6 +37,7 @@ var equipped_bullet_scene: PackedScene = null
 var has_bullet_item: bool = false
 
 # Fire Boots
+var equipped_fire_boots_item_scene: PackedScene = null
 var nearby_fire_boots_item: Area3D = null
 var has_fire_boots_item: bool = false
 
@@ -314,6 +313,7 @@ func drop_speed_item() -> void:
 
 
 func equip_fire_boots(
+	item_scene: PackedScene,
 	item_icon: Texture2D
 ) -> bool:
 	if has_fire_boots_item:
@@ -332,6 +332,7 @@ func equip_fire_boots(
 	if not was_added:
 		return false
 
+	equipped_fire_boots_item_scene = item_scene
 	has_fire_boots_item = true
 	nearby_fire_boots_item = null
 

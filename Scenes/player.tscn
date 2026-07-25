@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dq71q4ejun540"]
 
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Scripts/player.gd" id="1_weodu"]
-[ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/Fire Boots/item_fire_boots.tscn" id="2_6t5aa"]
 [ext_resource type="Shader" uid="uid://b8er36evvge2h" path="res://Shaders/player.gdshader" id="2_jasja"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_di2rl"]
@@ -31,7 +30,6 @@ albedo_color = Color(1, 0.172549, 0.243137, 1)
 [node name="Player" type="CharacterBody3D" unique_id=132980947 node_paths=PackedStringArray("shoot_origin")]
 collision_layer = 4
 script = ExtResource("1_weodu")
-equipped_fire_boots_item_scene = ExtResource("2_6t5aa")
 shoot_origin = NodePath("ShootOrigin")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1591451239]

@@ -16,9 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://bkn4xq0307q0q" path="res://Items/Bow/item_bow.tscn" id="6_tveew"]
 [ext_resource type="PackedScene" uid="uid://bnkqqfvk2y7ec" path="res://Calamities/calamity_queue_item.tscn" id="6_ug2oi"]
 [ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/Fire Boots/item_fire_boots.tscn" id="7_8svy6"]
-[ext_resource type="PackedScene" uid="uid://bms0dhggeey8c" path="res://Items/item_health.tscn" id="8_8kg8f"]
+[ext_resource type="PackedScene" uid="uid://bms0dhggeey8c" path="res://Items/Health/item_health.tscn" id="8_8kg8f"]
 [ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Scenes/fire_floor.tscn" id="8_at6ur"]
-[ext_resource type="PackedScene" uid="uid://b68tnjokijax0" path="res://Items/item_light.tscn" id="9_ahee3"]
+[ext_resource type="PackedScene" uid="uid://b68tnjokijax0" path="res://Items/Light/item_light.tscn" id="9_ahee3"]
 
 [sub_resource type="Environment" id="Environment_ahee3"]
 background_mode = 1

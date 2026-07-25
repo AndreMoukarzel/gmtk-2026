@@ -34,8 +34,13 @@ window/stretch/mode="canvas_items"
 folder_colors={
 "res://Assets/Models/": "red",
 "res://Items/Boot/": "teal",
-"res://Items/Bow/": "red",
-"res://Items/Bow/Arrow/": "yellow"
+"res://Items/Bow/": "purple",
+"res://Items/Bow/Arrow/": "yellow",
+"res://Items/Fire Boots/": "red",
+"res://Items/Health/": "green",
+"res://Items/Light/": "yellow",
+"res://Items/Speed Boots/": "blue",
+"res://Items/Sword/": "purple"
 }
 
 [global_group]

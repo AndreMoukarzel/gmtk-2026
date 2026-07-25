@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bms0dhggeey8c"]
 
-[ext_resource type="Script" uid="uid://fdfpvcnppap6" path="res://Items/item_health.gd" id="1_kerlp"]
+[ext_resource type="Script" uid="uid://fdfpvcnppap6" path="res://Items/Health/item_health.gd" id="1_kerlp"]
 [ext_resource type="Shader" uid="uid://dp7y8hfw7xerl" path="res://Shaders/item_health.gdshader" id="2_3e37t"]
 [ext_resource type="Texture2D" uid="uid://e0eavjrt4viy" path="res://Assets/Sprites/health_icon.png" id="2_6afdw"]
 

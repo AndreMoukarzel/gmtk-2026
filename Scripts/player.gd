@@ -15,8 +15,6 @@ enum AnimState {
 	RUNNING,
 }
 
-@export var equipped_fire_boots_item_scene: PackedScene = null
-
 # Health
 @export var max_health: float = 100.0
 

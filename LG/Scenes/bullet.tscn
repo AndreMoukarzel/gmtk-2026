@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bt7k6r8qxc080"]
+[gd_scene format=3 uid="uid://bt7k6r8qxc080"]
 
 [ext_resource type="Script" uid="uid://c8lvmlc2rvpkr" path="res://LG/Scripts/bullet.gd" id="1_fe8e6"]
 [ext_resource type="Shader" uid="uid://byns5jfekbwgr" path="res://LG/Shaders/bullet.gdshader" id="2_eu6ge"]
@@ -19,14 +19,14 @@ shader_parameter/edge_glow = 1.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_qfy3j"]
 
-[node name="Bullet" type="Area3D" groups=["bullet"]]
+[node name="Bullet" type="Area3D" unique_id=1966303978 groups=["bullet"]]
 script = ExtResource("1_fe8e6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752984234]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 shape = SubResource("SphereShape3D_mkyuh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=468489986]
 transform = Transform3D(0.66, 0, 0, 0, 0.66, 0, 0, 0, 0.66, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_u0onq")
 mesh = SubResource("SphereMesh_qfy3j")

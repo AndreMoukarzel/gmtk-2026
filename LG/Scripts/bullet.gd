@@ -7,9 +7,8 @@ var direction: Vector3 = Vector3.ZERO
 
 @export var damage: float = 25.0
 
-func _ready() -> void:
-	print("Bullet entrou na cena")
 
+func _ready() -> void:
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
 

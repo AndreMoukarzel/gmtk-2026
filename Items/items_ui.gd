@@ -3,12 +3,6 @@ extends CanvasLayer
 
 signal selected_item_changed(item_id: StringName)
 
-@onready var texture_rect: TextureRect = \
-	$Panel/MarginContainer/VBoxContainer/TextureRect
-
-@onready var texture_rect_2: TextureRect = \
-	$Panel/MarginContainer/VBoxContainer/TextureRect2
-
 
 var selected_slot: int = -1
 
@@ -41,8 +35,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func get_slots() -> Array[TextureRect]:
 	return [
-		texture_rect,
-		texture_rect_2
+		%Item1,
+		%Item2
 	]
 
 

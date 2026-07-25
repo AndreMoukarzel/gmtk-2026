@@ -1,7 +1,6 @@
-# Fire Floor
 extends Area3D
 
-@export var damage_per_tick: float = 10.0
+@export var damage_per_tick: float = 20.0
 @export var damage_interval: float = 1.0
 
 @onready var damage_timer: Timer = $DamageTimer
@@ -19,6 +18,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body not in bodies_inside:
 		bodies_inside.append(body)
+		$LongBurn.play()
 
 	# Apenas inicia o timer. Não causa dano imediatamente.
 	if damage_timer.is_stopped():
@@ -30,6 +30,7 @@ func _on_body_exited(body: Node3D) -> void:
 
 	if bodies_inside.is_empty():
 		damage_timer.stop()
+		$LongBurn.stop()
 
 
 func _on_damage_timer_timeout() -> void:
@@ -51,3 +52,4 @@ func apply_fire_damage(body: Node3D) -> void:
 			Vector3(0, 0, 0),
 			DamageTypes.Type.FIRE
 		)
+		$DamageSFX.play()

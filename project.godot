@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DamageTypes="*res://Scenes/damage_types.tscn"
+DamageTypes="*uid://don7bdtldqou1"
 
 [display]
 
@@ -33,9 +33,16 @@ window/stretch/mode="canvas_items"
 
 folder_colors={
 "res://Assets/Models/": "red",
+"res://Enemies/": "red",
+"res://Hazzards/": "yellow",
 "res://Items/Boot/": "teal",
-"res://Items/Bow/": "red",
-"res://Items/Bow/Arrow/": "yellow"
+"res://Items/Bow/": "purple",
+"res://Items/Bow/Arrow/": "yellow",
+"res://Items/Fire Boots/": "red",
+"res://Items/Health/": "green",
+"res://Items/Light/": "yellow",
+"res://Items/Speed Boots/": "blue",
+"res://Items/Sword/": "purple"
 }
 
 [global_group]

@@ -48,6 +48,7 @@ var equipped_bullet_scene: PackedScene = null
 var has_bullet_item: bool = false
 
 # Fire Boots
+var equipped_fire_boots_item_scene: PackedScene = null
 var nearby_fire_boots_item: Area3D = null
 var has_fire_boots_item: bool = false
 
@@ -267,10 +268,6 @@ func shoot_at_mouse() -> void:
 	bullet.direction = bullet_direction
 	bullet.look_at(bullet.global_position + bullet.direction, Vector3.UP)
 
-	print("Bala criada")
-	print("Origem: ", bullet_origin)
-	print("Direção: ", bullet_direction)
-
 
 func set_nearby_speed_item(item: Area3D) -> void:
 	nearby_speed_item = item
@@ -375,6 +372,7 @@ func drop_speed_item() -> void:
 
 
 func equip_fire_boots(
+	item_scene: PackedScene,
 	item_icon: Texture2D
 ) -> bool:
 	if has_fire_boots_item:
@@ -393,6 +391,7 @@ func equip_fire_boots(
 	if not was_added:
 		return false
 
+	equipped_fire_boots_item_scene = item_scene
 	has_fire_boots_item = true
 	nearby_fire_boots_item = null
 
@@ -551,7 +550,7 @@ func take_damage(
 	if is_immune_to(damage_type):
 		print("Dano bloqueado: ", damage_type)
 		return
-	
+
 	health = maxf(health - damage, 0.0)
 	update_health_bar()
 	

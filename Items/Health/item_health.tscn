@@ -1,8 +1,23 @@
 [gd_scene format=3 uid="uid://bms0dhggeey8c"]
 
-[ext_resource type="Script" uid="uid://fdfpvcnppap6" path="res://Items/item_health.gd" id="1_kerlp"]
+[ext_resource type="Script" uid="uid://fdfpvcnppap6" path="res://Items/Health/item_health.gd" id="1_kerlp"]
 [ext_resource type="Shader" uid="uid://dp7y8hfw7xerl" path="res://Shaders/item_health.gdshader" id="2_3e37t"]
 [ext_resource type="Texture2D" uid="uid://e0eavjrt4viy" path="res://Assets/Sprites/health_icon.png" id="2_6afdw"]
+[ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="3_8o2ph"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vn4c3"]
+render_priority = 0
+shader = ExtResource("3_8o2ph")
+shader_parameter/light_color = Color(0.12640303, 0.70582676, 0, 1)
+shader_parameter/glow_strength = 4.390000208525
+shader_parameter/fade_power = 1.8550000643625
+shader_parameter/scroll_speed = 0.73
+shader_parameter/noise_scale = 0.635
+shader_parameter/distortion = 0.42
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jxqyq"]
+top_radius = 0.92
+bottom_radius = 1.095
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6afdw"]
 render_priority = 0
@@ -27,6 +42,11 @@ collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_kerlp")
 item_icon = ExtResource("2_6afdw")
+
+[node name="Aura" type="MeshInstance3D" parent="." unique_id=1197716715]
+transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_vn4c3")
+mesh = SubResource("CylinderMesh_jxqyq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=112016555]
 material_override = SubResource("ShaderMaterial_6afdw")

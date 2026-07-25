@@ -72,11 +72,24 @@ func start_blackout() -> void:
 
 	# Escurece o ambiente.
 	if world_environment.environment != null:
-		world_environment.environment.background_energy_multiplier = 0.0
-		world_environment.environment.ambient_light_energy = 0.0
-		world_environment.environment.reflected_light_source = (
-			Environment.REFLECTION_SOURCE_DISABLED
-	)
+		var env := world_environment.environment
+		
+		var tween := create_tween()
+		tween.set_parallel(true)
+		
+		tween.tween_property(
+			env, "background_energy_multiplier",
+			0.0, 1.0
+		)
+		tween.tween_property(
+			env, "ambient_light_energy",
+			0.0, 1.0
+		)
+
+		tween.set_parallel(false)
+		tween.tween_callback(func():
+			env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
+		)
 
 
 func stop_blackout() -> void:
@@ -91,16 +104,23 @@ func stop_blackout() -> void:
 
 	# Restaura as configurações originais do ambiente.
 	if world_environment.environment != null:
-		world_environment.environment.background_energy_multiplier = (
-			_original_background_energy
+		var env := world_environment.environment
+		
+		var tween := create_tween()
+		tween.set_parallel(true)
+		
+		tween.tween_property(
+			env, "background_energy_multiplier",
+			_original_background_energy, 1.0
+		)
+		tween.tween_property(
+			env, "ambient_light_energy",
+			_original_ambient_light_energy, 1.0
 		)
 
-		world_environment.environment.ambient_light_energy = (
-			_original_ambient_light_energy
-		)
-
-		world_environment.environment.reflected_light_source = (
-			_original_reflected_light_source
+		tween.set_parallel(false)
+		tween.tween_callback(func():
+			env.reflected_light_source = _original_reflected_light_source
 		)
 
 

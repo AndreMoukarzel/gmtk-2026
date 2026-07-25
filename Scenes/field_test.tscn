@@ -16,9 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://bkn4xq0307q0q" path="res://Items/Bow/item_bow.tscn" id="6_tveew"]
 [ext_resource type="PackedScene" uid="uid://bnkqqfvk2y7ec" path="res://Calamities/calamity_queue_item.tscn" id="6_ug2oi"]
 [ext_resource type="PackedScene" uid="uid://dmcv4xgf0hyxx" path="res://Items/Fire Boots/item_fire_boots.tscn" id="7_8svy6"]
-[ext_resource type="PackedScene" uid="uid://bms0dhggeey8c" path="res://Items/item_health.tscn" id="8_8kg8f"]
-[ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Scenes/fire_floor.tscn" id="8_at6ur"]
-[ext_resource type="PackedScene" uid="uid://b68tnjokijax0" path="res://Items/item_light.tscn" id="9_ahee3"]
+[ext_resource type="PackedScene" uid="uid://bms0dhggeey8c" path="res://Items/Health/item_health.tscn" id="8_8kg8f"]
+[ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Hazzards/fire_floor.tscn" id="8_at6ur"]
+[ext_resource type="PackedScene" uid="uid://b68tnjokijax0" path="res://Items/Light/item_light.tscn" id="9_ahee3"]
+[ext_resource type="PackedScene" uid="uid://r43c6do6vgot" path="res://Items/Sword/item_sword.tscn" id="19_t3a8l"]
 
 [sub_resource type="Environment" id="Environment_ahee3"]
 background_mode = 1
@@ -53,7 +54,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.16254, 7.29275, 5.23772)
 
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=1759043248]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 12, 6)
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 7, 7.5)
 
 [node name="CalamityController" type="Node" parent="." unique_id=1196920683]
 script = ExtResource("2_d5lmg")
@@ -105,8 +106,8 @@ Player = NodePath("../../Player")
 [node name="SpeedUp" parent="Items" unique_id=193187564 instance=ExtResource("4_njs15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.07842, 1.4607, -0.203628)
 
-[node name="ItemBullet" parent="Items" unique_id=1142260970 instance=ExtResource("6_tveew")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0774, 1.5, -0.173416)
+[node name="ItemBow" parent="Items" unique_id=1142260970 instance=ExtResource("6_tveew")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0774, 1.9453473, -0.173416)
 
 [node name="Item_fire_boots" parent="Items" unique_id=419229948 instance=ExtResource("7_8svy6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39366, 1.5, 3.67274)
@@ -116,6 +117,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.16744, 1.58113, -0.249603)
 
 [node name="item_light" parent="Items" unique_id=2036857998 instance=ExtResource("9_ahee3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27141, 1.41849, 3.94751)
+
+[node name="ItemSword" parent="Items" unique_id=34828480 instance=ExtResource("19_t3a8l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.060389, 1.8954401, 4.018749)
 
 [node name="FireFloor" parent="." unique_id=760105325 instance=ExtResource("8_at6ur")]
 transform = Transform3D(0.999732, 0, -0.0231584, 0, 1, 0, 0.0231584, 0, 0.999732, -5.026, 0.568856, 5.68517)

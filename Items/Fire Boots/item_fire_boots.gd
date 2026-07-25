@@ -25,8 +25,11 @@ func collect(player: Node3D) -> void:
 
 	if not player.has_method("equip_fire_boots"):
 		return
+	
+	var packed_item_scene := load(scene_file_path) as PackedScene
 
 	var was_equipped: bool = player.equip_fire_boots(
+		packed_item_scene,
 		item_icon
 	)
 

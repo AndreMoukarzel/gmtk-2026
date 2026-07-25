@@ -205,10 +205,6 @@ func shoot_at_mouse() -> void:
 	bullet.direction = bullet_direction
 	bullet.look_at(bullet.global_position + bullet.direction, Vector3.UP)
 
-	print("Bala criada")
-	print("Origem: ", bullet_origin)
-	print("Direção: ", bullet_direction)
-
 
 func set_nearby_speed_item(item: Area3D) -> void:
 	nearby_speed_item = item
@@ -491,7 +487,7 @@ func take_damage(
 	if is_immune_to(damage_type):
 		print("Dano bloqueado: ", damage_type)
 		return
-	
+
 	health = maxf(health - damage, 0.0)
 	update_health_bar()
 	

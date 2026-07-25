@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://dlfy2ux6hwrj1"]
 
-[ext_resource type="Script" uid="uid://caenxiduueaj" path="res://Scripts/fire_floor.gd" id="1_hamua"]
+[ext_resource type="Script" uid="uid://caenxiduueaj" path="res://Hazzards/fire_floor.gd" id="1_hamua"]
 [ext_resource type="Shader" uid="uid://chd63vmi4ewf8" path="res://Shaders/fire_floor.gdshader" id="2_a3g37"]
+[ext_resource type="AudioStream" uid="uid://dobdhn0te88c4" path="res://Hazzards/maxhammarback-fire-sound-efftect-21991.mp3" id="3_blqua"]
+[ext_resource type="AudioStream" uid="uid://b5shro1o8ools" path="res://Hazzards/fire_short.mp3" id="4_u0rx0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_herkg"]
 render_priority = 0
@@ -33,6 +35,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0167973, 0.460077, 0.006759
 shape = SubResource("BoxShape3D_herkg")
 
 [node name="DamageTimer" type="Timer" parent="." unique_id=1092581712]
+wait_time = 3.0
+
+[node name="LongBurn" type="AudioStreamPlayer3D" parent="." unique_id=872071890]
+stream = ExtResource("3_blqua")
+volume_db = -15.0
+
+[node name="DamageSFX" type="AudioStreamPlayer3D" parent="." unique_id=1169056181]
+stream = ExtResource("4_u0rx0")
+volume_db = -5.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

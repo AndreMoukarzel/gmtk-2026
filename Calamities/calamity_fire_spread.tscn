@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://crtmypoeghm5m"]
 
 [ext_resource type="Script" uid="uid://dfx7ty5jg5r0g" path="res://Calamities/calamity_fire_spread.gd" id="1_ayogg"]
-[ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Scenes/fire_floor.tscn" id="2_4e145"]
+[ext_resource type="PackedScene" uid="uid://dlfy2ux6hwrj1" path="res://Hazzards/fire_floor.tscn" id="2_4e145"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7nsdh"]
 size = Vector3(47.4146, 0.001, 48.0247)

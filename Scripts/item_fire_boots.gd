@@ -1,9 +1,6 @@
 # Item Fire Boots
 extends Area3D
 
-const ITEM_SCENE: PackedScene = preload(
-	"res://Scenes/item_fire_boots.tscn"
-)
 
 @export var item_icon: Texture2D
 
@@ -41,7 +38,6 @@ func collect(player: Node3D) -> void:
 		return
 
 	var was_equipped: bool = player.equip_fire_boots(
-		ITEM_SCENE,
 		item_icon
 	)
 

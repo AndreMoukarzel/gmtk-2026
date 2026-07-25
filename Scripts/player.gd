@@ -229,28 +229,25 @@ func _try_use_selected_weapon() -> void:
 	if inventory_ui == null:
 		return
 
-	var selected_item := inventory_ui.get_selected_item_id()
+	if inventory_ui.has_item(&"bullet"):
+		if not can_shoot():
+			if Input.is_action_just_pressed("shoot"):
+				print("Você não possui o ItemBullet equipado.")
+			return
 
-	match selected_item:
-		&"bullet":
-			if not can_shoot():
-				if Input.is_action_just_pressed("shoot"):
-					print("Você não possui o ItemBullet equipado.")
-				return
+		if _arrow_cooldown_remaining <= 0.0:
+			shoot_at_mouse()
+			_arrow_cooldown_remaining = arrow_cooldown
 
-			if _arrow_cooldown_remaining <= 0.0:
-				shoot_at_mouse()
-				_arrow_cooldown_remaining = arrow_cooldown
+	if inventory_ui.has_item(&"sword"):
+		if not can_slash():
+			# if Input.is_action_just_pressed("shoot"):
+			# 	print("Você não possui a Sword equipada.")
+			return
 
-		&"sword":
-			if not can_slash():
-				# if Input.is_action_just_pressed("shoot"):
-				# 	print("Você não possui a Sword equipada.")
-				return
-
-			if _sword_cooldown_remaining <= 0.0:
-				slash_at_mouse()
-				_sword_cooldown_remaining = sword_cooldown
+		if _sword_cooldown_remaining <= 0.0:
+			slash_at_mouse()
+			_sword_cooldown_remaining = sword_cooldown
 
 
 func can_shoot() -> bool:

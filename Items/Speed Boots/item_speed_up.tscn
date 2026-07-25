@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://dmcv4xgf0hyxx"]
+[gd_scene format=3 uid="uid://sw4ch5rxg6h4"]
 
-[ext_resource type="Script" uid="uid://j4xbpmpdc34l" path="res://Items/Fire Boots/item_fire_boots.gd" id="1_6peeo"]
-[ext_resource type="Texture2D" uid="uid://dbc0jgo1g2p6i" path="res://Assets/Sprites/fire_boots_icon.png" id="2_s34px"]
-[ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="3_tei25"]
-[ext_resource type="PackedScene" uid="uid://b2ykm7idpmcec" path="res://Items/Boot/Boot.glb" id="4_tei25"]
+[ext_resource type="Script" uid="uid://5267rwpvh3b5" path="res://Items/Speed Boots/item_speed_up.gd" id="1_fcvpw"]
+[ext_resource type="Texture2D" uid="uid://dlsb4v1a77t8v" path="res://Assets/Sprites/Speedup.png" id="2_n2k4i"]
+[ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="3_i4k53"]
+[ext_resource type="PackedScene" uid="uid://b2ykm7idpmcec" path="res://Items/Boot/Boot.glb" id="3_uxekm"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxwb8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_57w3o"]
 render_priority = 0
-shader = ExtResource("3_tei25")
-shader_parameter/light_color = Color(0.8150196, 3.5857408e-06, 7.70092e-07, 1)
+shader = ExtResource("3_i4k53")
+shader_parameter/light_color = Color(0.08566009, 0.4651962, 0.6550305, 1)
 shader_parameter/glow_strength = 4.390000208525
 shader_parameter/fade_power = 1.8550000643625
 shader_parameter/scroll_speed = 0.73
 shader_parameter/noise_scale = 0.635
 shader_parameter/distortion = 0.42
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_0x70v"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_bjwbp"]
 top_radius = 0.92
 bottom_radius = 1.095
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q2iaj"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n2k4i"]
 radius = 1.12884
 height = 2.25769
 
@@ -79,32 +79,32 @@ tracks/1/keys = {
 "values": [Vector3(0, -0.32, 0), Vector3(0, -0.115, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_02uff"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i4k53"]
 _data = {
 &"RESET": SubResource("Animation_qehxr"),
 &"idle": SubResource("Animation_q6omt")
 }
 
-[node name="Item_fire_boots" type="Area3D" unique_id=34052710]
+[node name="SpeedUp" type="Area3D" unique_id=1296531047]
 collision_layer = 0
 collision_mask = 4
-script = ExtResource("1_6peeo")
-item_icon = ExtResource("2_s34px")
+script = ExtResource("1_fcvpw")
+item_icon = ExtResource("2_n2k4i")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987312478]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1601194663]
 transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_cxwb8")
-mesh = SubResource("CylinderMesh_0x70v")
+material_override = SubResource("ShaderMaterial_57w3o")
+mesh = SubResource("CylinderMesh_bjwbp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=452290452]
-shape = SubResource("CapsuleShape3D_q2iaj")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1043185924]
+shape = SubResource("CapsuleShape3D_n2k4i")
 
-[node name="Boot" parent="." unique_id=405651888 instance=ExtResource("4_tei25")]
+[node name="Boot" parent="." unique_id=405651888 instance=ExtResource("3_uxekm")]
 transform = Transform3D(0.19465533, 0.0360293, 0.10694012, 0, 0.21322379, -0.07183743, -0.11284635, 0.062149066, 0.18446733, 0, -0.32, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Boot" unique_id=1067801692]
-libraries/ = SubResource("AnimationLibrary_02uff")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Boot" unique_id=426303200]
+libraries/ = SubResource("AnimationLibrary_i4k53")
 autoplay = &"idle"
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

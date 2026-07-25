@@ -2,6 +2,8 @@ class_name CalamityFireSpread
 extends Node3D
 
 const CALAMITY_ID: String = "calamity_firespread"
+## Physics layer 1 = "Floor" in project.godot
+const GROUND_COLLISION_MASK: int = 1
 
 @export_category("References")
 @export var calamity_controller: CalamityController
@@ -11,8 +13,14 @@ const CALAMITY_ID: String = "calamity_firespread"
 @export_category("Fire Spread")
 @export_range(1, 500, 1) var fire_amount: int = 40
 @export var minimum_spacing: float = 3.0
+## Small lift along the ground normal to avoid z-fighting.
 @export var spawn_height: float = 0.05
 @export var maximum_spawn_attempts: int = 1000
+
+## World Y where downward rays start. Keep above the highest map point.
+var ray_start_height: float = 40.0
+## How far downward each ray travels from ray_start_height.
+var ray_length: float = 100.0
 
 var spawned_fires: Array[Node3D] = []
 var occupied_positions: Array[Vector3] = []
@@ -101,24 +109,54 @@ func spawn_fires() -> void:
 
 		attempts += 1
 
-		var spawn_position := get_random_position(box_shape)
+		var spawn_pose := get_ground_spawn_pose(box_shape)
+		if spawn_pose.is_empty():
+			continue
 
+		var spawn_position: Vector3 = spawn_pose["position"]
 		if position_is_occupied(spawn_position):
 			continue
 
-		create_fire(spawn_position)
+		create_fire(spawn_position, spawn_pose["normal"])
 
 
-func get_random_position(box_shape: BoxShape3D) -> Vector3:
+func get_ground_spawn_pose(box_shape: BoxShape3D) -> Dictionary:
 	var half_size := box_shape.size * 0.5
 
 	var local_position := Vector3(
 		randf_range(-half_size.x, half_size.x),
-		spawn_height,
+		0.0,
 		randf_range(-half_size.z, half_size.z)
 	)
 
-	return spawn_collision.to_global(local_position)
+	var global_xz := spawn_collision.to_global(local_position)
+	var ray_origin := Vector3(global_xz.x, ray_start_height, global_xz.z)
+	var ray_end := ray_origin + Vector3.DOWN * ray_length
+
+	var space_state := get_world_3d().direct_space_state
+	if space_state == null:
+		return {}
+
+	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.collision_mask = GROUND_COLLISION_MASK
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+
+	var hit := space_state.intersect_ray(query)
+	if hit.is_empty():
+		return {}
+
+	var normal: Vector3 = hit["normal"]
+	if normal.length_squared() < 0.0001:
+		normal = Vector3.UP
+	else:
+		normal = normal.normalized()
+
+	var pos: Vector3 = hit["position"] + normal * spawn_height
+	return {
+		"position": pos,
+		"normal": normal,
+	}
 
 
 func position_is_occupied(candidate_position: Vector3) -> bool:
@@ -139,7 +177,7 @@ func position_is_occupied(candidate_position: Vector3) -> bool:
 	return false
 
 
-func create_fire(spawn_position: Vector3) -> void:
+func create_fire(spawn_position: Vector3, ground_normal: Vector3) -> void:
 	var fire := fire_floor_scene.instantiate() as Node3D
 
 	if fire == null:
@@ -151,9 +189,20 @@ func create_fire(spawn_position: Vector3) -> void:
 	add_child(fire)
 
 	fire.global_position = spawn_position
+	_align_y_to_normal(fire, ground_normal)
 
 	spawned_fires.append(fire)
 	occupied_positions.append(spawn_position)
+
+
+func _align_y_to_normal(node: Node3D, normal: Vector3) -> void:
+	var up := normal.normalized()
+	var tangent := Vector3.RIGHT.cross(up)
+	if tangent.length_squared() < 0.001:
+		tangent = Vector3.FORWARD.cross(up)
+	tangent = tangent.normalized()
+	var bitangent := up.cross(tangent).normalized()
+	node.global_basis = Basis(tangent, up, bitangent).orthonormalized()
 
 
 func clear_fires() -> void:

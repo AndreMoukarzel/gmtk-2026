@@ -83,6 +83,7 @@ var equipped_light_energy: float = 0
 var has_light_item: bool = false
 
 var anim_state: AnimState = AnimState.IDLE
+var _highlighted_pickup: Area3D = null
 
 @onready var health_fill: MeshInstance3D = $HealthBar/Fill
 @onready var item_light: OmniLight3D = $ItemLight
@@ -396,52 +397,139 @@ func add_hitbox_boundaries_ingame(hitbox: Area3D) -> void:
 
 func set_nearby_speed_item(item: Area3D) -> void:
 	nearby_speed_item = item
-
 	print("SpeedUp próximo. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_speed_item(item: Area3D) -> void:
 	if nearby_speed_item == item:
 		nearby_speed_item = null
+		_refresh_pickup_highlight()
 
 
 func try_get_item() -> void:
 	if is_instance_valid(nearby_speed_item):
 		if nearby_speed_item.has_method("collect"):
 			nearby_speed_item.collect(self)
+			nearby_speed_item = null
+			_refresh_pickup_highlight()
 			return
 
 	if is_instance_valid(nearby_bullet_item):
 		if nearby_bullet_item.has_method("collect"):
 			nearby_bullet_item.collect(self)
+			nearby_bullet_item = null
+			_refresh_pickup_highlight()
 			return
 
 	if is_instance_valid(nearby_fire_boots_item):
 		if nearby_fire_boots_item.has_method("collect"):
 			nearby_fire_boots_item.collect(self)
+			nearby_fire_boots_item = null
+			_refresh_pickup_highlight()
 			return
 
 	if is_instance_valid(nearby_regeneration_item):
 		if nearby_regeneration_item.has_method("collect"):
 			nearby_regeneration_item.collect(self)
+			nearby_regeneration_item = null
+			_refresh_pickup_highlight()
 			return
 
 	if is_instance_valid(nearby_light_item):
 		if nearby_light_item.has_method("collect"):
 			nearby_light_item.collect(self)
+			nearby_light_item = null
+			_refresh_pickup_highlight()
 			return
 
 	if is_instance_valid(nearby_sword_item):
 		if nearby_sword_item.has_method("collect"):
 			nearby_sword_item.collect(self)
+			nearby_sword_item = null
+			_refresh_pickup_highlight()
 			return
 
 	nearby_speed_item = null
 	nearby_bullet_item = null
 	nearby_fire_boots_item = null
 	nearby_sword_item = null
+	_refresh_pickup_highlight()
 
 	print("Nenhum item próximo.")
+
+
+func _get_active_nearby_pickup() -> Area3D:
+	# Same priority order as try_get_item().
+	if is_instance_valid(nearby_speed_item):
+		return nearby_speed_item
+
+	if is_instance_valid(nearby_bullet_item):
+		return nearby_bullet_item
+
+	if is_instance_valid(nearby_fire_boots_item):
+		return nearby_fire_boots_item
+
+	if is_instance_valid(nearby_regeneration_item):
+		return nearby_regeneration_item
+
+	if is_instance_valid(nearby_light_item):
+		return nearby_light_item
+
+	if is_instance_valid(nearby_sword_item):
+		return nearby_sword_item
+
+	return null
+
+
+func _refresh_pickup_highlight() -> void:
+	var target := _get_active_nearby_pickup()
+
+	# #region agent log
+	_agent_dbg_log("A", "player.gd:_refresh_pickup_highlight", "refresh called", {
+		"target": str(target),
+		"target_name": target.name if target else "",
+		"prev": str(_highlighted_pickup),
+		"nearby_sword": is_instance_valid(nearby_sword_item),
+		"nearby_bullet": is_instance_valid(nearby_bullet_item),
+		"nearby_speed": is_instance_valid(nearby_speed_item),
+		"same_target": _highlighted_pickup == target
+	})
+	# #endregion
+
+	if _highlighted_pickup == target:
+		return
+
+	if is_instance_valid(_highlighted_pickup):
+		PickupHighlight.set_highlighted(_highlighted_pickup, false)
+
+	_highlighted_pickup = target
+
+	if is_instance_valid(_highlighted_pickup):
+		PickupHighlight.set_highlighted(_highlighted_pickup, true)
+
+
+func _agent_dbg_log(hypothesis_id: String, location: String, message: String, data: Dictionary = {}) -> void:
+	# #region agent log
+	var path := "c:/Users/breno/Desktop/GMTK2026/gmtk-2026/debug-319202.log"
+	var payload := {
+		"sessionId": "319202",
+		"runId": "post-fix",
+		"hypothesisId": hypothesis_id,
+		"location": location,
+		"message": message,
+		"data": data,
+		"timestamp": Time.get_unix_time_from_system() * 1000.0
+	}
+	var file := FileAccess.open(path, FileAccess.READ_WRITE)
+	if file == null:
+		file = FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		return
+	file.seek_end()
+	file.store_line(JSON.stringify(payload))
+	file.close()
+	# #endregion
 
 
 func equip_speed_item(
@@ -539,11 +627,13 @@ func _on_selected_item_changed(item_id: StringName) -> void:
 func set_nearby_bullet_item(item: Area3D) -> void:
 	nearby_bullet_item = item
 	print("ItemBullet próximo. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_bullet_item(item: Area3D) -> void:
 	if nearby_bullet_item == item:
 		nearby_bullet_item = null
+		_refresh_pickup_highlight()
 
 
 func equip_bullet_item(
@@ -632,11 +722,13 @@ func drop_bullet_item() -> void:
 func set_nearby_sword_item(item: Area3D) -> void:
 	nearby_sword_item = item
 	print("Sword próxima. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_sword_item(item: Area3D) -> void:
 	if nearby_sword_item == item:
 		nearby_sword_item = null
+		_refresh_pickup_highlight()
 
 
 func equip_sword_item(
@@ -714,11 +806,13 @@ func drop_fire_boots() -> void:
 func set_nearby_fire_boots_item(item: Area3D) -> void:
 	nearby_fire_boots_item = item
 	print("Fire Boots próximas. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_fire_boots_item(item: Area3D) -> void:
 	if nearby_fire_boots_item == item:
 		nearby_fire_boots_item = null
+		_refresh_pickup_highlight()
 
 
 func add_damage_immunity(damage_type: DamageTypes.Type) -> void:
@@ -797,11 +891,13 @@ func heal(amount: float) -> void:
 func set_nearby_regeneration_item(item: Area3D) -> void:
 	nearby_regeneration_item = item
 	print("Item de regeneração próximo. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_regeneration_item(item: Area3D) -> void:
 	if nearby_regeneration_item == item:
 		nearby_regeneration_item = null
+		_refresh_pickup_highlight()
 
 
 func equip_regeneration_item(
@@ -866,13 +962,14 @@ func drop_regeneration_item() -> void:
 
 func set_nearby_light_item(item: Area3D) -> void:
 	nearby_light_item = item
-
 	print("Item de luz próximo. Pressione get_item para pegar.")
+	_refresh_pickup_highlight()
 
 
 func remove_nearby_light_item(item: Area3D) -> void:
 	if nearby_light_item == item:
 		nearby_light_item = null
+		_refresh_pickup_highlight()
 
 
 func equip_light_item(

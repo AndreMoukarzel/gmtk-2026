@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnkqqfvk2y7ec"]
 
 [ext_resource type="Script" uid="uid://brp3fvmhmuj4q" path="res://Calamities/ui/queue_item/calamity_queue_item.gd" id="1_4lwxd"]
-[ext_resource type="Texture2D" uid="uid://dbj1duop8glf7" path="res://Calamities/blackout/calamity_blackout_icon.png" id="2_6yspj"]
+[ext_resource type="Texture2D" uid="uid://cor51gfr7ebyf" path="res://Calamities/fire_spread/fire.jpg" id="2_6yspj"]
 
 [node name="CalamityQueueItem" type="MarginContainer" unique_id=1159211858]
 custom_minimum_size = Vector2(200, 100)
@@ -30,8 +30,7 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_6yspj")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=966350098]
 layout_mode = 2

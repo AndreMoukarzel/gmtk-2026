@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdbvcwsbgjfne"
-path="res://.godot/imported/calamity_firespread_icon.png-212eb398b058c2a30c2cec6937a196ed.ctex"
+uid="uid://dy0jlr0c7jxoa"
+path="res://.godot/imported/darkness.jpeg-2897fd5ac11c38222f0dd4f74ee1fc93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/calamity_firespread_icon.png"
-dest_files=["res://.godot/imported/calamity_firespread_icon.png-212eb398b058c2a30c2cec6937a196ed.ctex"]
+source_file="res://Calamities/blackout/darkness.jpeg"
+dest_files=["res://.godot/imported/darkness.jpeg-2897fd5ac11c38222f0dd4f74ee1fc93.ctex"]
 
 [params]
 

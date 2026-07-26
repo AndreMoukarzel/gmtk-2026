@@ -349,6 +349,7 @@ func shoot_at_mouse() -> void:
 	var bullet = equipped_bullet_scene.instantiate()
 
 	get_tree().current_scene.add_child(bullet)
+	$ArrowSFX.play()
 
 	bullet.global_position = bullet_origin
 	bullet.direction = bullet_direction
@@ -372,6 +373,7 @@ func slash_at_mouse() -> void:
 		return
 
 	add_child(slash)
+	$SwordSFX.play()
 
 	if slash.has_method("configure"):
 		slash.configure(

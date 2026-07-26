@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://b2agldejhsjrn" path="res://Player/SFX/item-grab.mp3" id="6_vtle1"]
 [ext_resource type="AudioStream" uid="uid://h6iapiodhsyu" path="res://Player/SFX/item-drop.mp3" id="7_od3ui"]
 [ext_resource type="AudioStream" uid="uid://b0yh54uc2wqdu" path="res://Player/SFX/hover.mp3" id="8_od3ui"]
+[ext_resource type="AudioStream" uid="uid://cacvigd801os2" path="res://Player/SFX/sword.mp3" id="9_x3vf3"]
+[ext_resource type="AudioStream" uid="uid://br23s33mfncr" path="res://Player/SFX/arrow_short.mp3" id="10_apopc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
@@ -86,6 +88,14 @@ volume_db = -5.0
 
 [node name="HighlightSFX" type="AudioStreamPlayer3D" parent="." unique_id=2039434715]
 stream = ExtResource("8_od3ui")
+volume_db = -10.0
+
+[node name="SwordSFX" type="AudioStreamPlayer3D" parent="." unique_id=1966900936]
+stream = ExtResource("9_x3vf3")
+volume_db = -10.0
+
+[node name="ArrowSFX" type="AudioStreamPlayer3D" parent="." unique_id=105325385]
+stream = ExtResource("10_apopc")
 volume_db = -10.0
 
 [editable path="Character"]

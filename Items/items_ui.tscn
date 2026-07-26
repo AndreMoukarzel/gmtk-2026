@@ -10,7 +10,7 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -100.0
-offset_right = 100.0
+offset_right = 140.0
 offset_bottom = 100.0
 grow_vertical = 2
 size_flags_horizontal = 0
@@ -20,7 +20,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=982426345]
-custom_minimum_size = Vector2(100, 200)
+custom_minimum_size = Vector2(130, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -38,17 +38,45 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Item1" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=717383428]
+[node name="Slot1Row" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=717383427]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot1Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383429]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 22
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Item1" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383428]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+size_flags_horizontal = 3
 expand_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1023294926]
 layout_mode = 2
 
-[node name="Item2" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=945377140]
+[node name="Slot2Row" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=945377139]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot2Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377141]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 22
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Item2" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377140]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+size_flags_horizontal = 3
 expand_mode = 2

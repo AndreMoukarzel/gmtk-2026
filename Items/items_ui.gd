@@ -18,18 +18,14 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is not InputEventMouseButton:
+	if not event.is_pressed() or event.is_echo():
 		return
 
-	if not event.pressed:
-		return
-
-	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-		change_selection(-1)
+	if event.is_action_pressed("hotbar_1"):
+		select_slot(0)
 		get_viewport().set_input_as_handled()
-
-	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-		change_selection(1)
+	elif event.is_action_pressed("hotbar_2"):
+		select_slot(1)
 		get_viewport().set_input_as_handled()
 
 
@@ -38,6 +34,22 @@ func get_slots() -> Array[TextureRect]:
 		%Item1,
 		%Item2
 	]
+
+
+func select_slot(index: int) -> void:
+	if index < 0 or index >= slot_item_ids.size():
+		return
+
+	# Empty slot: keep current selection.
+	if slot_item_ids[index] == &"":
+		return
+
+	if selected_slot == index:
+		return
+
+	selected_slot = index
+	update_selection_visual()
+	emit_selection_changed()
 
 
 func add_item(item_id: StringName, item_texture: Texture2D) -> bool:
@@ -98,42 +110,6 @@ func get_selected_item_id() -> StringName:
 		return &""
 
 	return slot_item_ids[selected_slot]
-
-
-func change_selection(direction: int) -> void:
-	var available_slots: Array[int] = []
-
-	for index in range(slot_item_ids.size()):
-		if slot_item_ids[index] != &"":
-			available_slots.append(index)
-
-	if available_slots.is_empty():
-		selected_slot = -1
-		update_selection_visual()
-		emit_selection_changed()
-		return
-
-	if available_slots.size() == 1:
-		selected_slot = available_slots[0]
-		update_selection_visual()
-		emit_selection_changed()
-		return
-
-	var current_position := available_slots.find(selected_slot)
-
-	if current_position == -1:
-		selected_slot = available_slots[0]
-	else:
-		current_position = wrapi(
-			current_position + direction,
-			0,
-			available_slots.size()
-		)
-
-		selected_slot = available_slots[current_position]
-
-	update_selection_visual()
-	emit_selection_changed()
 
 
 func select_first_available_item() -> void:

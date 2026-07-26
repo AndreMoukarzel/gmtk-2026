@@ -41,11 +41,15 @@ signal calamity_finished(
 var _time_until_next_announcement: float
 var _next_instance_id: int = 0
 
+# Guarda a última calamidade anunciada.
+var _last_announced_calamity: CalamityData = null
+
 # Cada elemento guarda uma calamidade anunciada ainda não iniciada.
 var _pending_calamities: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	randomize()
 	_time_until_next_announcement = announcement_interval
 
 
@@ -69,7 +73,7 @@ func _update_announcement_timer(delta: float) -> void:
 
 func _update_pending_calamities(delta: float) -> void:
 	for index in range(_pending_calamities.size() - 1, -1, -1):
-		var pending := _pending_calamities[index]
+		var pending: Dictionary = _pending_calamities[index]
 
 		pending.remaining_time -= delta
 
@@ -84,8 +88,15 @@ func _update_pending_calamities(delta: float) -> void:
 
 
 func _announce_random_calamity() -> void:
-	var calamity: CalamityData = available_calamities.pick_random()
+	var calamity: CalamityData = _pick_random_calamity()
 
+	if calamity == null:
+		push_warning(
+			"CalamityController: nenhuma calamidade válida disponível."
+		)
+		return
+
+	_last_announced_calamity = calamity
 	_next_instance_id += 1
 
 	var pending := {
@@ -108,11 +119,39 @@ func _announce_random_calamity() -> void:
 	)
 
 
+func _pick_random_calamity() -> CalamityData:
+	var valid_calamities: Array[CalamityData] = []
+
+	for calamity in available_calamities:
+		if calamity == null:
+			continue
+
+		if calamity == _last_announced_calamity:
+			continue
+
+		valid_calamities.append(calamity)
+
+	# Caso exista somente uma calamidade configurada,
+	# permite que ela seja repetida para o sistema não parar.
+	if valid_calamities.is_empty():
+		for calamity in available_calamities:
+			if calamity != null:
+				valid_calamities.append(calamity)
+
+	if valid_calamities.is_empty():
+		return null
+
+	return valid_calamities.pick_random()
+
+
 func _start_calamity(pending: Dictionary) -> void:
 	var instance_id: int = pending.instance_id
 	var calamity: CalamityData = pending.calamity
 
-	calamity_started.emit(instance_id, calamity)
+	calamity_started.emit(
+		instance_id,
+		calamity
+	)
 
 	_finish_calamity_after_duration(
 		instance_id,
@@ -124,8 +163,11 @@ func _finish_calamity_after_duration(
 	instance_id: int,
 	calamity: CalamityData
 ) -> void:
-	# process_always=false so duration pauses with the game tree.
-	await get_tree().create_timer(calamity.duration, false).timeout
+	# A duração pausa junto com a árvore do jogo.
+	await get_tree().create_timer(
+		calamity.duration,
+		false
+	).timeout
 
 	calamity_finished.emit(
 		instance_id,

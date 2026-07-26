@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dccjfr561g41o"]
+[gd_scene format=3 uid="uid://dccjfr561g41o"]
 
 [ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_ee8e0"]
 [ext_resource type="Script" uid="uid://blxp728kgtbko" path="res://Enemies/Rat/rat.gd" id="2_3sax4"]
@@ -6,7 +6,10 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_3sax4"]
 radius = 0.585
 
-[node name="Rat" instance=ExtResource("1_ee8e0")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_uqf2u"]
+radius = 0.85783
+
+[node name="Rat" unique_id=62024942 instance=ExtResource("1_ee8e0")]
 script = ExtResource("2_3sax4")
 max_health = 20.0
 speed = 10.0
@@ -17,9 +20,12 @@ atk_damage = 3.0
 transform = Transform3D(0.135, 0, 0, 0, 0.135, 0, 0, 0, 0.135, 0, 0, 0.17)
 
 [node name="AnimationPlayer" parent="Wolf" index="3"]
-autoplay = "idle"
+autoplay = &"idle"
 
 [node name="CollisionShape3D" parent="." index="1"]
 shape = SubResource("SphereShape3D_3sax4")
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_uqf2u")
 
 [editable path="Wolf"]

@@ -2,25 +2,39 @@ extends Area3D
 
 
 @export_category("Limite")
+## Quantidade máxima de inimigos vivos ao mesmo tempo.
 @export_range(1, 300, 1) var MAX_ENEMYS: int = 90
 
 
-@export_category("Spawn normal")
-## Y: tempo entre os spawns.
+@export_category("Spawn automático")
+## Tempo entre os spawns automáticos.
 @export_range(0.1, 300.0, 0.1) var spawn_interval: float = 10.0
 
-## X: quantidade criada em cada spawn normal.
-@export_range(1, 100, 1) var enemies_per_spawn: int = 3
+## Quantidade de RATs em cada spawn automático.
+@export_range(0, 100, 1) var automatic_rats: int = 3
 
-## Cria inimigos imediatamente quando o jogo começa.
+## Quantidade de WOLFs em cada spawn automático.
+@export_range(0, 100, 1) var automatic_wolves: int = 1
+
+## Quantidade de TROLLs em cada spawn automático.
+@export_range(0, 100, 1) var automatic_trolls: int = 0
+
+## Realiza um spawn automático imediatamente quando o jogo começa.
 @export var spawn_on_start: bool = true
 
 
 @export_category("Super Horda")
-## Z: quantidade criada quando calamity_superhord começar.
-@export_range(1, 300, 1) var superhord_enemy_amount: int = 20
-
+## ID da calamidade que inicia a Super Horda.
 @export var superhord_calamity_id: String = "calamity_superhord"
+
+## Quantidade de RATs criados na Super Horda.
+@export_range(0, 300, 1) var superhord_rats: int = 10
+
+## Quantidade de WOLFs criados na Super Horda.
+@export_range(0, 300, 1) var superhord_wolves: int = 5
+
+## Quantidade de TROLLs criados na Super Horda.
+@export_range(0, 300, 1) var superhord_trolls: int = 5
 
 
 @export_category("Cenas")
@@ -34,44 +48,38 @@ extends Area3D
 
 
 var spawn_timer: Timer
-var enemy_scenes: Array[PackedScene] = []
 
 
 func _ready() -> void:
 	randomize()
 
-	prepare_enemy_scenes()
+	validate_enemy_scenes()
 	create_spawn_timer()
 	connect_calamity_controller()
 
 	if spawn_on_start:
-		spawn_enemies(enemies_per_spawn)
+		spawn_automatic_wave()
 
 
-func prepare_enemy_scenes() -> void:
-	enemy_scenes.clear()
-
-	if WOLF_SCN != null:
-		enemy_scenes.append(WOLF_SCN)
-
-	if TROLL_SCN != null:
-		enemy_scenes.append(TROLL_SCN)
-
-	if RAT_SCN != null:
-		enemy_scenes.append(RAT_SCN)
-
-	if enemy_scenes.is_empty():
-		push_error(
-			"Spawner: configure WOLF_SCN, TROLL_SCN e/ou RAT_SCN no Inspector."
+## Verifica se as cenas dos inimigos foram configuradas.
+func validate_enemy_scenes() -> void:
+	if RAT_SCN == null:
+		push_warning(
+			"Spawner: RAT_SCN não foi configurada no Inspector."
 		)
-	else:
-		print(
-			"Spawner preparado com ",
-			enemy_scenes.size(),
-			" tipos de inimigos."
+
+	if WOLF_SCN == null:
+		push_warning(
+			"Spawner: WOLF_SCN não foi configurada no Inspector."
+		)
+
+	if TROLL_SCN == null:
+		push_warning(
+			"Spawner: TROLL_SCN não foi configurada no Inspector."
 		)
 
 
+## Cria o timer responsável pelos spawns automáticos.
 func create_spawn_timer() -> void:
 	spawn_timer = Timer.new()
 	spawn_timer.name = "SpawnTimer"
@@ -90,6 +98,7 @@ func create_spawn_timer() -> void:
 	)
 
 
+## Conecta o spawner ao início das calamidades.
 func connect_calamity_controller() -> void:
 	if calamity_controller == null:
 		push_warning(
@@ -106,12 +115,118 @@ func connect_calamity_controller() -> void:
 
 
 func _on_spawn_timer_timeout() -> void:
-	print("Timer terminou. Tentando spawnar inimigos.")
+	print("Timer terminou. Criando spawn automático.")
 
-	spawn_enemies(enemies_per_spawn)
+	spawn_automatic_wave()
 
 
-func spawn_enemies(amount: int) -> void:
+## Cria a onda automática utilizando as quantidades definidas no Inspector.
+func spawn_automatic_wave() -> void:
+	var total_amount: int = (
+		automatic_rats
+		+ automatic_wolves
+		+ automatic_trolls
+	)
+
+	print(
+		"Spawn automático iniciado: ",
+		automatic_rats,
+		" RATs, ",
+		automatic_wolves,
+		" WOLFs e ",
+		automatic_trolls,
+		" TROLLs. Total: ",
+		total_amount
+	)
+
+	spawn_specific_enemies(
+		RAT_SCN,
+		automatic_rats,
+		"RAT"
+	)
+
+	spawn_specific_enemies(
+		WOLF_SCN,
+		automatic_wolves,
+		"WOLF"
+	)
+
+	spawn_specific_enemies(
+		TROLL_SCN,
+		automatic_trolls,
+		"TROLL"
+	)
+
+
+## Cria a Super Horda utilizando as quantidades definidas no Inspector.
+func spawn_superhord_wave() -> void:
+	var total_amount: int = (
+		superhord_rats
+		+ superhord_wolves
+		+ superhord_trolls
+	)
+
+	print(
+		"Super Horda iniciada: ",
+		superhord_rats,
+		" RATs, ",
+		superhord_wolves,
+		" WOLFs e ",
+		superhord_trolls,
+		" TROLLs. Total solicitado: ",
+		total_amount
+	)
+
+	spawn_specific_enemies(
+		RAT_SCN,
+		superhord_rats,
+		"RAT"
+	)
+
+	spawn_specific_enemies(
+		WOLF_SCN,
+		superhord_wolves,
+		"WOLF"
+	)
+
+	spawn_specific_enemies(
+		TROLL_SCN,
+		superhord_trolls,
+		"TROLL"
+	)
+
+
+## Cria uma quantidade específica de determinado inimigo.
+func spawn_specific_enemies(
+	enemy_scene: PackedScene,
+	amount: int,
+	enemy_name: String
+) -> void:
+	if amount <= 0:
+		return
+
+	if enemy_scene == null:
+		push_warning(
+			"Spawner: a cena de ",
+			enemy_name,
+			" não foi configurada no Inspector."
+		)
+		return
+
+	for _index in range(amount):
+		if not has_available_space():
+			print(
+				"Spawner: limite máximo de inimigos atingido durante o spawn de ",
+				enemy_name,
+				"."
+			)
+			return
+
+		spawn_enemy_scene(enemy_scene)
+
+
+## Instancia um inimigo e o posiciona dentro da área.
+func spawn_enemy_scene(enemy_scene: PackedScene) -> void:
 	var enemies_container: Node = get_node_or_null("../Enemies")
 	var player: Node3D = get_node_or_null("../Player") as Node3D
 	var base: Node3D = get_node_or_null("../Base Hitbox") as Node3D
@@ -134,66 +249,55 @@ func spawn_enemies(amount: int) -> void:
 		)
 		return
 
-	if enemy_scenes.is_empty():
+	if enemy_scene == null:
+		return
+
+	var enemy: Node3D = enemy_scene.instantiate() as Node3D
+
+	if enemy == null:
 		push_error(
-			"Spawner: nenhuma cena de inimigo foi configurada."
+			"Spawner: a raiz da cena do inimigo precisa ser Node3D."
 		)
 		return
 
-	var current_enemies: int = enemies_container.get_child_count()
-	var available_space: int = MAX_ENEMYS - current_enemies
-	var amount_to_spawn: int = mini(amount, available_space)
+	var random_position: Vector3 = random_point_in_area()
 
-	print(
-		"Inimigos atuais: ",
-		current_enemies,
-		" | Tentando criar: ",
-		amount_to_spawn
+	# Os scripts dos inimigos precisam possuir:
+	# @export var Player: Node3D
+	# @export var Base: Node3D
+	enemy.set("Player", player)
+	enemy.set("Base", base)
+
+	enemies_container.add_child(enemy)
+
+	enemy.global_position = Vector3(
+		random_position.x,
+		1.0,
+		random_position.z
 	)
 
-	if amount_to_spawn <= 0:
-		print("Spawner: limite máximo de inimigos atingido.")
-		return
+	print(
+		"Inimigo criado: ",
+		enemy_scene.resource_path,
+		" em ",
+		enemy.global_position
+	)
 
-	for _index in range(amount_to_spawn):
-		var selected_scene: PackedScene = enemy_scenes.pick_random()
 
-		if selected_scene == null:
-			continue
+## Verifica se ainda existe espaço até o limite máximo.
+func has_available_space() -> bool:
+	var enemies_container: Node = get_node_or_null("../Enemies")
 
-		var enemy: Node3D = selected_scene.instantiate() as Node3D
-
-		if enemy == null:
-			push_error(
-				"Spawner: a raiz da cena do inimigo precisa ser Node3D."
-			)
-			continue
-
-		var random_position: Vector3 = random_point_in_area()
-
-		# Define as referências antes de adicionar o inimigo.
-		# Os três scripts de inimigo precisam possuir:
-		# @export var Player: Node3D
-		# @export var Base: Node3D
-		enemy.set("Player", player)
-		enemy.set("Base", base)
-
-		enemies_container.add_child(enemy)
-
-		enemy.global_position = Vector3(
-			random_position.x,
-			1.0,
-			random_position.z
+	if enemies_container == null:
+		push_error(
+			"Spawner: não encontrou o nó ../Enemies."
 		)
+		return false
 
-		print(
-			"Inimigo criado: ",
-			selected_scene.resource_path,
-			" em ",
-			enemy.global_position
-		)
+	return enemies_container.get_child_count() < MAX_ENEMYS
 
 
+## Escolhe uma posição aleatória dentro do BoxShape3D.
 func random_point_in_area() -> Vector3:
 	var collision_shape: CollisionShape3D = (
 		get_node_or_null("CollisionShape3D") as CollisionShape3D
@@ -224,6 +328,7 @@ func random_point_in_area() -> Vector3:
 	return collision_shape.global_transform * local_position
 
 
+## Detecta quando uma calamidade começa.
 func _on_calamity_controller_calamity_started(
 	_instance_id: int,
 	calamity: CalamityData
@@ -243,10 +348,4 @@ func _on_calamity_controller_calamity_started(
 	if started_calamity_id != superhord_calamity_id:
 		return
 
-	print(
-		"Super horda iniciada. Criando ",
-		superhord_enemy_amount,
-		" inimigos."
-	)
-
-	spawn_enemies(superhord_enemy_amount)
+	spawn_superhord_wave()

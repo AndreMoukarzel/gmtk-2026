@@ -7,6 +7,9 @@ extends CharacterBody3D
 @export_category("Health")
 @export var max_health: float = 100.0
 
+@export_category("Score")
+@export var score_value: int = 3
+
 @export_category("Knockback")
 @export var knockback_strength: float = 5.0
 @export var knockback_deceleration: float = 12.0
@@ -112,7 +115,17 @@ func take_damage(
 	apply_knockback(attack_origin)
 
 	if health <= 0.0:
+		_award_kill_score()
 		die()
+
+
+func _award_kill_score() -> void:
+	if score_value == 0:
+		return
+
+	var manager := get_tree().get_first_node_in_group("score_manager")
+	if manager != null and manager.has_method("add_score"):
+		manager.add_score(score_value)
 
 
 func apply_knockback(bullet_position: Vector3) -> void:

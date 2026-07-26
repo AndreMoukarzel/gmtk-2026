@@ -915,6 +915,11 @@ func die() -> void:
 	if _hurt_vignette_tween != null and _hurt_vignette_tween.is_valid():
 		_hurt_vignette_tween.kill()
 	_set_hurt_vignette_intensity(0.0)
+
+	var score_manager := get_tree().get_first_node_in_group("score_manager")
+	if score_manager != null and score_manager.has_method("halve_score"):
+		score_manager.halve_score()
+
 	respawn()
 
 

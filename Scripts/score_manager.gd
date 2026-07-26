@@ -19,10 +19,19 @@ func _ready() -> void:
 
 ## Add points from any source (survival, kills, pickups, etc.).
 func add_score(amount: int) -> void:
-	if amount == 0:
+	if not _run_active or amount == 0:
 		return
 
 	score = maxi(score + amount, 0)
+	score_changed.emit(score)
+
+
+## Floor-halves the current score (e.g. player death penalty).
+func halve_score() -> void:
+	if not _run_active:
+		return
+
+	score = score / 2
 	score_changed.emit(score)
 
 

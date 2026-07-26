@@ -26,7 +26,7 @@ func take_damage(amount: float) -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	take_damage(damage_per_hit)
+	take_damage(damage_per_hit)	
 
 	if body.has_method("die"):
 		body.die()

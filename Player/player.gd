@@ -19,8 +19,12 @@ enum AnimState {
 @export var respawn_point: Node3D
 # Health
 @export var max_health: float = 100.0
+## Seconds the player stays dead before respawning at respawn_point.
+@export var respawn_delay: float = 10.0
 
 var health: float
+var is_dead: bool = false
+var _respawn_time_left: float = 0.0
 var damage_immunities: Array[DamageTypes.Type] = []
 
 # Knockback
@@ -101,19 +105,29 @@ var _highlighted_pickup: Area3D = null
 
 @onready var item_light: OmniLight3D = $ItemLight
 @onready var character_model: Node3D = $Character
+@onready var health_bar_display: Sprite3D = $HealthBarDisplay
 @onready var hurt_vignette_rect: ColorRect = $HurtVignette/ColorRect
+@onready var death_overlay: CanvasLayer = $DeathOverlay
+@onready var death_greyscale_rect: ColorRect = $DeathOverlay/Greyscale
+@onready var respawn_timer_label: Label = $DeathOverlay/RespawnTimerLabel
 @onready var animation_player: AnimationPlayer = $Character.find_child(
 	"AnimationPlayer",
 	true,
 	false
 ) as AnimationPlayer
 
+var _death_greyscale_material: ShaderMaterial
+var _alive_collision_layer: int = 0
+
 
 func _ready() -> void:
+	add_to_group("player")
+	_alive_collision_layer = collision_layer
 	health = max_health
 	$HealthBar/HealthBar.max_value = max_health
 	update_health_bar()
 	_setup_hurt_vignette()
+	_setup_death_overlay()
 	current_speed = base_speed
 	item_light.visible = false
 
@@ -134,6 +148,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		_process_death_state(delta)
+		return
+
 	if Input.is_action_just_pressed("get_item"):
 		print("Q pressionado")
 		print("Nearby item: ", nearby_speed_item)
@@ -443,6 +461,9 @@ func remove_nearby_speed_item(item: Area3D) -> void:
 
 
 func try_get_item() -> void:
+	if is_dead:
+		return
+
 	if is_instance_valid(nearby_speed_item):
 		if nearby_speed_item.has_method("collect"):
 			nearby_speed_item.collect(self)
@@ -671,6 +692,9 @@ func equip_bullet_item(
 
 
 func drop_selected_item() -> void:
+	if is_dead:
+		return
+
 	if inventory_ui == null:
 		return
 
@@ -871,6 +895,9 @@ func take_damage(
 	attack_origin: Vector3 = Vector3(0, 0, 0),
 	damage_type: DamageTypes.Type = DamageTypes.Type.PHYSICAL
 ) -> void:
+	if is_dead:
+		return
+
 	if damage <= 0.0:
 		return
 	
@@ -942,7 +969,15 @@ func apply_knockback(attack_origin: Vector3) -> void:
 	knockback_velocity.z += knockback_direction.z * knockback_strength
 
 func die() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
+	_respawn_time_left = maxf(respawn_delay, 0.0)
+
 	knockback_velocity = Vector3.ZERO
+	velocity = Vector3.ZERO
+
 	if _hurt_vignette_tween != null and _hurt_vignette_tween.is_valid():
 		_hurt_vignette_tween.kill()
 	_set_hurt_vignette_intensity(0.0)
@@ -951,21 +986,95 @@ func die() -> void:
 	if score_manager != null and score_manager.has_method("halve_score"):
 		score_manager.halve_score()
 
-	respawn()
+	_set_anim_state(AnimState.IDLE)
+	_set_body_present(false)
+	_show_death_overlay()
+	_update_respawn_timer_label()
+
+
+func _process_death_state(delta: float) -> void:
+	velocity = Vector3.ZERO
+	knockback_velocity = Vector3.ZERO
+	move_and_slide()
+
+	_respawn_time_left = maxf(_respawn_time_left - delta, 0.0)
+	_update_respawn_timer_label()
+
+	if _respawn_time_left <= 0.0:
+		respawn()
 
 
 func respawn() -> void:
+	is_dead = false
+	_respawn_time_left = 0.0
+	_hide_death_overlay()
+
 	if respawn_point != null:
 		global_position = respawn_point.global_position
 	velocity = Vector3.ZERO
+	knockback_velocity = Vector3.ZERO
 	health = max_health
 	update_health_bar()
+	_set_body_present(true)
+
+
+## True while enemies / hazards should treat this player as a target.
+func is_targetable() -> bool:
+	return not is_dead
+
+
+func _set_body_present(present: bool) -> void:
+	if character_model != null:
+		character_model.visible = present
+	if health_bar_display != null:
+		health_bar_display.visible = present
+
+	collision_layer = _alive_collision_layer if present else 0
+
+
+## Called when the castle falls so greyscale doesn't sit under game over.
+func clear_death_overlay() -> void:
+	_hide_death_overlay()
+
+
+func _setup_death_overlay() -> void:
+	if death_overlay != null:
+		death_overlay.visible = false
+
+	if death_greyscale_rect == null:
+		return
+
+	var material := death_greyscale_rect.material as ShaderMaterial
+	if material == null:
+		return
+
+	_death_greyscale_material = material.duplicate() as ShaderMaterial
+	death_greyscale_rect.material = _death_greyscale_material
+	_death_greyscale_material.set_shader_parameter("intensity", 1.0)
+
+
+func _show_death_overlay() -> void:
+	if death_overlay != null:
+		death_overlay.visible = true
+
+
+func _hide_death_overlay() -> void:
+	if death_overlay != null:
+		death_overlay.visible = false
+
+
+func _update_respawn_timer_label() -> void:
+	if respawn_timer_label == null:
+		return
+	respawn_timer_label.text = str(ceili(_respawn_time_left))
 
 func update_health_bar() -> void:
 	$HealthBar/HealthBar.value = health
 
 
 func process_health_regeneration(delta: float) -> void:
+	if is_dead:
+		return
 	if not has_regeneration_item:
 		regeneration_timer = 0.0
 		return
@@ -982,6 +1091,9 @@ func process_health_regeneration(delta: float) -> void:
 
 
 func heal(amount: float) -> void:
+	if is_dead:
+		return
+
 	if amount <= 0.0:
 		return
 

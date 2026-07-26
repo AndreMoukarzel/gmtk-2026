@@ -32,6 +32,10 @@ func trigger() -> void:
 	_is_active = true
 	$FinalDmgSFX.play()
 
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("clear_death_overlay"):
+			player.clear_death_overlay()
+
 	var final_score := 0
 	var highscore := ScoreSettings.load_highscore()
 	var manager := get_tree().get_first_node_in_group("score_manager")

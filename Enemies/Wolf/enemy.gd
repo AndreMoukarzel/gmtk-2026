@@ -84,7 +84,9 @@ func _physics_process(delta: float) -> void:
 
 func get_closest_target() -> Array:
 	var my_pos: Vector3 = self.global_position
-	if Player and Base:
+	var player_alive := _is_player_targetable()
+
+	if player_alive and Base:
 		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
 		if base_dist <= 150:
@@ -92,14 +94,23 @@ func get_closest_target() -> Array:
 		if player_dist <= 200:
 			return [my_pos.direction_to(Player.global_position), player_dist]
 		return [my_pos.direction_to(Base.global_position), base_dist]
-	elif Player:
+	elif player_alive:
 		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
 		return [my_pos.direction_to(Player.global_position), player_dist]
 	elif Base:
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
 		return [my_pos.direction_to(Base.global_position), base_dist]
 	return [Vector3(0, 0, 0), 999999.0]
-	
+
+
+func _is_player_targetable() -> bool:
+	if Player == null:
+		return false
+	if Player.has_method("is_targetable"):
+		return Player.is_targetable()
+	if "is_dead" in Player:
+		return not bool(Player.get("is_dead"))
+	return true
 
 
 func take_damage(

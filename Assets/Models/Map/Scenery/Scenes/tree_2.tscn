@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bslahktst1i8j"]
+
+[ext_resource type="ArrayMesh" uid="uid://b8q3mc25m2fge" path="res://Assets/Models/Map/Scenery/trees/tree_2_mesh.res" id="1_tf74p"]
+
+[node name="tree_2" type="Node3D" unique_id=1711435547]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1473243086]
+mesh = ExtResource("1_tf74p")

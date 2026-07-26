@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://5054u5m4u808"]
+
+[ext_resource type="ArrayMesh" uid="uid://bj3lbvsee42uu" path="res://Assets/Models/Map/Scenery/rocks/rock_4_mesh.res" id="1_syyv0"]
+
+[node name="rock_4" type="Node3D" unique_id=716376278]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=106481697]
+mesh = ExtResource("1_syyv0")

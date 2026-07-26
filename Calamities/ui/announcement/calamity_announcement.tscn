@@ -5,13 +5,8 @@
 
 [node name="CalamityAnnouncement" type="PanelContainer" unique_id=1373993795]
 custom_minimum_size = Vector2(700, 300)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -350.0
-offset_right = 350.0
+offset_right = 700.0
 offset_bottom = 300.0
-grow_horizontal = 2
 script = ExtResource("1_pjiw1")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1498066503]

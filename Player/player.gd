@@ -551,6 +551,7 @@ func equip_speed_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_speed_item_scene = item_scene
 	equipped_speed_value = speed_value
 	has_speed_item = true
@@ -608,6 +609,7 @@ func equip_fire_boots(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_fire_boots_item_scene = item_scene
 	has_fire_boots_item = true
 	nearby_fire_boots_item = null
@@ -655,6 +657,7 @@ func equip_bullet_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_bullet_item_scene = item_scene
 	equipped_bullet_scene = projectile_scene
 	has_bullet_item = true
@@ -669,6 +672,8 @@ func drop_selected_item() -> void:
 		return
 
 	var selected_item := inventory_ui.get_selected_item_id()
+	
+	$DropSFX.play()
 
 	match selected_item:
 		&"speed":
@@ -749,6 +754,7 @@ func equip_sword_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_sword_item_scene = item_scene
 	has_sword_item = true
 	nearby_sword_item = null
@@ -979,6 +985,7 @@ func equip_regeneration_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_regeneration_item_scene = item_scene
 	equipped_regeneration_value = regeneration_value
 	has_regeneration_item = true
@@ -1056,6 +1063,7 @@ func equip_light_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_light_item_scene = item_scene
 	equipped_light_range = light_range
 	equipped_light_energy = light_energy

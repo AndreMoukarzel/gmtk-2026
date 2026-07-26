@@ -8,6 +8,7 @@ var _is_active: bool = false
 
 @onready var root: Control = $Root
 @onready var play_again_button: Button = %PlayAgainButton
+@onready var score_label: Label = %ScoreLabel
 
 
 func _ready() -> void:
@@ -27,6 +28,15 @@ func trigger() -> void:
 		return
 
 	_is_active = true
+
+	var manager := get_tree().get_first_node_in_group("score_manager")
+	if manager != null:
+		if manager.has_method("end_run"):
+			manager.end_run()
+		score_label.text = "Score: %d" % int(manager.score)
+	else:
+		score_label.text = "Score: 0"
+
 	get_tree().paused = true
 	root.visible = true
 	play_again_button.grab_focus()

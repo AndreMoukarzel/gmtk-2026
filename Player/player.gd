@@ -851,6 +851,7 @@ func take_damage(
 	update_health_bar()
 	apply_knockback(attack_origin)
 	flash_hurt_vignette()
+	$DmgSFX.play()
 
 	print("Player recebeu ", damage, " de dano.")
 	print("Vida atual: ", health)

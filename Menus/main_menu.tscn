@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://l80inlivu7qd"]
+
+[ext_resource type="Script" uid="uid://benkgdw5qiyho" path="res://Menus/main_menu.gd" id="1_p3jrs"]
+[ext_resource type="PackedScene" uid="uid://bgaxpuryx7td4" path="res://Menus/UI/settings_menu.tscn" id="2_at0u2"]
+
+[node name="MainMenu" type="Control" unique_id=1435887929]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p3jrs")
+
+[node name="Background" type="ColorRect" parent="." unique_id=927882256]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.1, 0.14, 1)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=601027200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainButtons" type="VBoxContainer" parent="Center" unique_id=684781911]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Center/MainButtons" unique_id=1554401062]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Prophet's Respite"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Center/MainButtons" unique_id=1493725244]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Play game"
+
+[node name="SettingsButton" type="Button" parent="Center/MainButtons" unique_id=327087770]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Settings"
+
+[node name="ExitButton" type="Button" parent="Center/MainButtons" unique_id=178034046]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Exit game"
+
+[node name="SettingsMenu" parent="." unique_id=1325800514 instance=ExtResource("2_at0u2")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1

@@ -5,8 +5,6 @@ extends Area3D
 
 var health: float
 
-@onready var detector: Area3D = $Detector
-
 
 func _ready() -> void:
 	health = max_health

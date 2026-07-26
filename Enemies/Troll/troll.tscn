@@ -2,28 +2,33 @@
 
 [ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_gjube"]
 [ext_resource type="Script" uid="uid://mxnda3wg2im2" path="res://Enemies/Troll/troll.gd" id="2_vplmq"]
+[ext_resource type="PackedScene" uid="uid://cmsqei2jyxu2a" path="res://Enemies/Troll/troll.glb" id="3_biwdk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vplmq"]
 radius = 2.51
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_biwdk"]
-radius = 2.801253
-
-[node name="Troll" unique_id=100775571 instance=ExtResource("1_gjube")]
+[node name="Troll" unique_id=1907954825 instance=ExtResource("1_gjube")]
 script = ExtResource("2_vplmq")
-max_health = 400.0
+max_health = 600.0
 speed = 3.0
 
 [node name="Wolf" parent="." index="0"]
 transform = Transform3D(0.705, 0, 0, 0, 0.705, 0, 0, 0, 0.705, 0, 0, 1.33)
 
-[node name="AnimationPlayer" parent="Wolf" index="3"]
+[node name="Armature" parent="Wolf" index="0" unique_id=425353974]
+visible = false
+
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=1409241120]
 autoplay = &"idle"
+
+[node name="troll" parent="Wolf" index="5" unique_id=959207906 instance=ExtResource("3_biwdk")]
+transform = Transform3D(1.288, 0, 0, 0, 1.288, 0, 0, 0, 1.288, 0, -2.095, -1.887)
+
+[node name="Cube" parent="Wolf/troll" index="0" unique_id=1358223618]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" parent="." index="1"]
 shape = SubResource("SphereShape3D_vplmq")
 
-[node name="CollisionShape3D" parent="Hitbox" index="0"]
-shape = SubResource("SphereShape3D_biwdk")
-
 [editable path="Wolf"]
+[editable path="Wolf/troll"]

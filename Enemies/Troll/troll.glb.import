@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dyy0u8gjjw2qq"
-path="res://.godot/imported/map_v1.glb-7ee933e43e3df911b49d7c2337763214.scn"
+uid="uid://cmsqei2jyxu2a"
+path="res://.godot/imported/troll.glb-8924b15fa3cdf3a72e433f5436d4d618.scn"
 
 [deps]
 
-source_file="res://Assets/Models/Map/map_v1.glb"
-dest_files=["res://.godot/imported/map_v1.glb-7ee933e43e3df911b49d7c2337763214.scn"]
+source_file="res://Enemies/Troll/troll.glb"
+dest_files=["res://.godot/imported/troll.glb-8924b15fa3cdf3a72e433f5436d4d618.scn"]
 
 [params]
 
@@ -42,4 +42,4 @@ materials/extract_path=""
 _subresources={}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
-gltf/texture_map_mode=0
+gltf/texture_map_mode=1

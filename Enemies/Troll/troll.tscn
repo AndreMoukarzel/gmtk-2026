@@ -1,20 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://boo4wyvfypnl0"]
+[gd_scene format=3 uid="uid://boo4wyvfypnl0"]
 
 [ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_gjube"]
 [ext_resource type="Script" uid="uid://mxnda3wg2im2" path="res://Enemies/Troll/troll.gd" id="2_vplmq"]
+[ext_resource type="PackedScene" uid="uid://cmsqei2jyxu2a" path="res://Enemies/Troll/troll.glb" id="3_biwdk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vplmq"]
 radius = 2.51
 
-[node name="Troll" instance=ExtResource("1_gjube")]
+[node name="Troll" unique_id=1907954825 instance=ExtResource("1_gjube")]
 script = ExtResource("2_vplmq")
 max_health = 600.0
 speed = 3.0
 
-[node name="Wolf" parent="." index="0"]
-transform = Transform3D(0.705, 0, 0, 0, 0.705, 0, 0, 0, 0.705, 0, 0, 1.33)
+[node name="troll" parent="." index="0" unique_id=959207906 instance=ExtResource("3_biwdk")]
 
-[node name="CollisionShape3D" parent="." index="1"]
+[node name="Cube" parent="troll" index="0" unique_id=1126690672]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Wolf" parent="." index="1"]
+transform = Transform3D(0.705, 0, 0, 0, 0.705, 0, 0, 0, 0.705, 0, 0, 1.33)
+visible = false
+
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=2102960297]
+autoplay = &"idle"
+
+[node name="CollisionShape3D" parent="." index="2"]
 shape = SubResource("SphereShape3D_vplmq")
 
+[editable path="troll"]
 [editable path="Wolf"]

@@ -35,6 +35,8 @@ folder_colors={
 "res://Assets/Models/": "red",
 "res://Calamities/": "orange",
 "res://Enemies/": "red",
+"res://Enemies/Troll/": "yellow",
+"res://Enemies/Wolf/": "purple",
 "res://Hazzards/": "yellow",
 "res://Items/": "green",
 "res://Items/Boot/": "teal",

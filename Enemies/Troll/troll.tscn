@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://boo4wyvfypnl0"]
+
+[ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_gjube"]
+[ext_resource type="Script" uid="uid://mxnda3wg2im2" path="res://Enemies/Troll/troll.gd" id="2_vplmq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vplmq"]
+radius = 2.51
+
+[node name="Troll" unique_id=1541529888 instance=ExtResource("1_gjube")]
+script = ExtResource("2_vplmq")
+max_health = 600.0
+speed = 3.0
+
+[node name="Wolf" parent="." index="0" unique_id=2080456522]
+transform = Transform3D(0.705, 0, 0, 0, 0.705, 0, 0, 0, 0.705, 0, 0, 1.33)
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=1189785810]
+shape = SubResource("SphereShape3D_vplmq")
+
+[editable path="Wolf"]

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dccjfr561g41o"]
+
+[ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_ee8e0"]
+[ext_resource type="Script" uid="uid://blxp728kgtbko" path="res://Enemies/Rat/rat.gd" id="2_3sax4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3sax4"]
+radius = 0.585
+
+[node name="Rat" unique_id=1541529888 instance=ExtResource("1_ee8e0")]
+script = ExtResource("2_3sax4")
+max_health = 20.0
+speed = 10.0
+atk_range = 4.0
+atk_damage = 3.0
+
+[node name="Wolf" parent="." index="0" unique_id=2080456522]
+transform = Transform3D(0.135, 0, 0, 0, 0.135, 0, 0, 0, 0.135, 0, 0, 0.17)
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=1189785810]
+shape = SubResource("SphereShape3D_3sax4")
+
+[editable path="Wolf"]

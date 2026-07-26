@@ -1,7 +1,7 @@
 extends Area3D
 
-@export var light_range: float = 15.0
-@export var light_energy: float = 2.0
+@export var light_range: float = 30.0
+@export var light_energy: float = 5.0
 @export var item_icon: Texture2D
 
 var consumed: bool = false

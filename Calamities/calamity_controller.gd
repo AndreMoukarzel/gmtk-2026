@@ -24,10 +24,10 @@ signal calamity_finished(
 
 
 # Tempo entre um anúncio e outro.
-@export var announcement_interval: float = 15.0
+@export var announcement_interval: float = 10.0
 
 # Antecedência inicial da profecia.
-@export var warning_time: float = 10.0
+@export var warning_time: float = 40.0
 
 # Limite mínimo caso queira diminuir o tempo posteriormente.
 @export var minimum_warning_time: float = 3.0

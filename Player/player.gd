@@ -674,8 +674,15 @@ func drop_selected_item() -> void:
 	if inventory_ui == null:
 		return
 
+	if not _is_inside_item_droppable_area():
+		print("Só é possível dropar itens na área permitida.")
+		return
+
 	var selected_item := inventory_ui.get_selected_item_id()
-	
+	if selected_item == &"":
+		print("Nenhum item selecionado.")
+		return
+
 	$DropSFX.play()
 
 	match selected_item:
@@ -699,6 +706,29 @@ func drop_selected_item() -> void:
 
 		_:
 			print("Nenhum item selecionado.")
+
+
+func _is_inside_item_droppable_area() -> bool:
+	var area := get_tree().get_first_node_in_group("item_droppable_area") as Node3D
+	if area == null:
+		return false
+
+	var shape_node := area.get_node_or_null("CollisionShape3D") as CollisionShape3D
+	if shape_node == null:
+		return false
+
+	var box := shape_node.shape as BoxShape3D
+	if box == null:
+		return false
+
+	# Use the shape's transform even if disabled (marker-only volume).
+	var local := shape_node.global_transform.affine_inverse() * global_position
+	var half := box.size * 0.5
+	return (
+		absf(local.x) <= half.x
+		and absf(local.y) <= half.y
+		and absf(local.z) <= half.z
+	)
 
 
 func drop_bullet_item() -> void:

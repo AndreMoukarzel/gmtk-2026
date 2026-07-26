@@ -8,6 +8,7 @@ var health: float
 
 
 func _ready() -> void:
+	add_to_group("base_hitbox")
 	health = max_health
 	health_changed.emit(health, max_health)
 

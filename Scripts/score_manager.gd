@@ -1,6 +1,8 @@
 class_name ScoreManager
 extends Node
 
+const ScoreSettings = preload("res://Menus/score_settings.gd")
+
 signal score_changed(new_score: int)
 
 ## Current run score. Reset automatically when the scene reloads.
@@ -26,6 +28,12 @@ func add_score(amount: int) -> void:
 
 func end_run() -> void:
 	_run_active = false
+
+
+## Stops scoring and persists a new highscore when beaten. Returns the highscore.
+func finalize_run() -> int:
+	end_run()
+	return ScoreSettings.submit_score(score)
 
 
 func _process(delta: float) -> void:

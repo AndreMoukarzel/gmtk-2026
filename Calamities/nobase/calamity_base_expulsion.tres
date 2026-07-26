@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CalamityData" load_steps=3 format=3 uid="uid://bqmm1yxwcxhle"]
+
+[ext_resource type="Texture2D" uid="uid://dr5bu5h13f4cl" path="res://Calamities/nobase/calamity_nobase.png" id="1_mpinq"]
+[ext_resource type="Script" uid="uid://cptx31raarx11" path="res://Calamities/calamity_data.gd" id="1_quwk2"]
+
+[resource]
+script = ExtResource("1_quwk2")
+calamity_id = &"calamity_base_expulsion"
+calamity_name = "Base Expulsion"
+description = "Acess to your own base denied."
+icon = ExtResource("1_mpinq")
+duration = 10.0
+metadata/_custom_type_script = "uid://cptx31raarx11"

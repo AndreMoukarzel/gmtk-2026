@@ -349,6 +349,7 @@ func shoot_at_mouse() -> void:
 	var bullet = equipped_bullet_scene.instantiate()
 
 	get_tree().current_scene.add_child(bullet)
+	$ArrowSFX.play()
 
 	bullet.global_position = bullet_origin
 	bullet.direction = bullet_direction
@@ -372,6 +373,7 @@ func slash_at_mouse() -> void:
 		return
 
 	add_child(slash)
+	$SwordSFX.play()
 
 	if slash.has_method("configure"):
 		slash.configure(
@@ -528,6 +530,7 @@ func _refresh_pickup_highlight() -> void:
 
 	if is_instance_valid(_highlighted_pickup):
 		PickupHighlight.set_highlighted(_highlighted_pickup, true)
+		$HighlightSFX.play()
 
 
 func equip_speed_item(
@@ -551,6 +554,7 @@ func equip_speed_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_speed_item_scene = item_scene
 	equipped_speed_value = speed_value
 	has_speed_item = true
@@ -608,6 +612,7 @@ func equip_fire_boots(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_fire_boots_item_scene = item_scene
 	has_fire_boots_item = true
 	nearby_fire_boots_item = null
@@ -655,6 +660,7 @@ func equip_bullet_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_bullet_item_scene = item_scene
 	equipped_bullet_scene = projectile_scene
 	has_bullet_item = true
@@ -669,6 +675,8 @@ func drop_selected_item() -> void:
 		return
 
 	var selected_item := inventory_ui.get_selected_item_id()
+	
+	$DropSFX.play()
 
 	match selected_item:
 		&"speed":
@@ -749,6 +757,7 @@ func equip_sword_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_sword_item_scene = item_scene
 	has_sword_item = true
 	nearby_sword_item = null
@@ -842,6 +851,7 @@ func take_damage(
 	update_health_bar()
 	apply_knockback(attack_origin)
 	flash_hurt_vignette()
+	$DmgSFX.play()
 
 	print("Player recebeu ", damage, " de dano.")
 	print("Vida atual: ", health)
@@ -979,6 +989,7 @@ func equip_regeneration_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_regeneration_item_scene = item_scene
 	equipped_regeneration_value = regeneration_value
 	has_regeneration_item = true
@@ -1056,6 +1067,7 @@ func equip_light_item(
 	if not was_added:
 		return false
 
+	$PickupSFX.play()
 	equipped_light_item_scene = item_scene
 	equipped_light_range = light_range
 	equipped_light_energy = light_energy

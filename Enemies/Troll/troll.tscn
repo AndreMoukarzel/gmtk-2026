@@ -12,20 +12,23 @@ script = ExtResource("2_vplmq")
 max_health = 600.0
 speed = 3.0
 
-[node name="troll" parent="." index="0" unique_id=959207906 instance=ExtResource("3_biwdk")]
-
-[node name="Cube" parent="troll" index="0" unique_id=1126690672]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="Wolf" parent="." index="1"]
+[node name="Wolf" parent="." index="0"]
 transform = Transform3D(0.705, 0, 0, 0, 0.705, 0, 0, 0, 0.705, 0, 0, 1.33)
+
+[node name="Armature" parent="Wolf" index="0" unique_id=425353974]
 visible = false
 
-[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=2102960297]
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=1409241120]
 autoplay = &"idle"
 
-[node name="CollisionShape3D" parent="." index="2"]
+[node name="troll" parent="Wolf" index="5" unique_id=959207906 instance=ExtResource("3_biwdk")]
+transform = Transform3D(1.288, 0, 0, 0, 1.288, 0, 0, 0, 1.288, 0, -2.095, -1.887)
+
+[node name="Cube" parent="Wolf/troll" index="0" unique_id=1358223618]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="." index="1"]
 shape = SubResource("SphereShape3D_vplmq")
 
-[editable path="troll"]
 [editable path="Wolf"]
+[editable path="Wolf/troll"]

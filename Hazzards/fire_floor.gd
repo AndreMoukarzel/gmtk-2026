@@ -102,7 +102,9 @@ func _on_body_entered(body: Node3D) -> void:
 		bodies_inside.append(body)
 		$LongBurn.play()
 
-	# Apenas inicia o timer. Não causa dano imediatamente.
+	# Immediate hit on enter so briefly dipping into fire still hurts.
+	apply_fire_damage(body)
+
 	if damage_timer.is_stopped():
 		damage_timer.start()
 

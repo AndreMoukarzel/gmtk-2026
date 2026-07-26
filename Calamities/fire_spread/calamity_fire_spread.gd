@@ -6,6 +6,8 @@ const CALAMITY_ID: String = "calamity_firespread"
 const GROUND_COLLISION_MASK: int = 1
 ## Optional level marker under Castle (or elsewhere) for base courtyard fire.
 const BASE_SPAWN_SHAPE_NAME: String = "BoxForFireCalamityToHitBase"
+## Reject ground hits steeper than this (degrees from world up).
+const MAX_SLOPE_DEGREES: float = 10.0
 
 @export_category("References")
 @export var calamity_controller: CalamityController
@@ -214,6 +216,10 @@ func get_ground_spawn_pose(
 		normal = Vector3.UP
 	else:
 		normal = normal.normalized()
+
+	# Skip steep ground so fire discs don't clip through slopes/cliffs.
+	if normal.angle_to(Vector3.UP) >= deg_to_rad(MAX_SLOPE_DEGREES):
+		return {}
 
 	var pos: Vector3 = hit["position"] + normal * spawn_height
 	return {

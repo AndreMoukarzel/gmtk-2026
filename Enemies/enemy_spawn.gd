@@ -34,4 +34,4 @@ func random_point_in_area(area: Area3D) -> Vector3:
 
 
 func _on_calamity_controller_calamity_started(instance_id: int, _calamity: CalamityData) -> void:
-	spawn_enemies(50)
+	spawn_enemies(20)

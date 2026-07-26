@@ -2,7 +2,7 @@ extends Area3D
 
 signal health_changed(current: float, maximum: float)
 
-@export var max_health: float = 200.0
+@export var max_health: float = 5000.0
 @export var damage_per_hit: float = 10.0
 var health: float
 

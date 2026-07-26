@@ -87,6 +87,5 @@ expand_mode = 2
 [node name="Tips" type="Label" parent="MarginContainer/VBoxContainer" unique_id=982792419]
 layout_mode = 2
 theme_override_constants/outline_size = 4
-text = "\"Q\"to Pickup
-\"E\"to Drop
-(Can only drop inside the castle)"
+text = "\"Q\" to Pickup
+\"E\" to Drop inside the castle"

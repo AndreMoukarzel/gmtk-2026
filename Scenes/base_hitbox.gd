@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends Area3D
 
 @export var max_health: float = 200.0
 @export var damage_per_hit: float = 10.0
@@ -10,7 +10,7 @@ var health: float
 
 func _ready() -> void:
 	health = max_health
-	detector.body_entered.connect(_on_detector_body_entered)
+	body_entered.connect(_on_detector_body_entered)
 
 
 func _on_detector_body_entered(body: Node3D) -> void:

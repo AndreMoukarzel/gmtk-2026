@@ -4,6 +4,8 @@ extends Node3D
 ## Zones are markers only (no physics). Points that miss Floor are skipped.
 
 const GROUND_COLLISION_MASK: int = 1
+const WORLD_COLLISION_LAYER: int = 1
+const COLLISION_SIZE_FACTOR: float = 0.75
 const RAY_START_HEIGHT: float = 80.0
 const RAY_LENGTH: float = 200.0
 
@@ -35,8 +37,11 @@ const RAY_LENGTH: float = 200.0
 
 var _rng := RandomNumberGenerator.new()
 var _multimesh_root: Node3D
+var _collision_root: Node3D
 ## mesh path -> Array[Transform3D]
 var _transforms_by_mesh: Dictionary = {}
+## { "mesh_path": String, "mesh": Mesh, "xform": Transform3D }
+var _collision_entries: Array[Dictionary] = []
 
 
 func _ready() -> void:
@@ -45,6 +50,9 @@ func _ready() -> void:
 	_multimesh_root = Node3D.new()
 	_multimesh_root.name = "ScatteredProps"
 	add_child(_multimesh_root)
+	_collision_root = Node3D.new()
+	_collision_root.name = "ScatteredRockColliders"
+	add_child(_collision_root)
 	# Wait until physics is ready so Floor raycasts hit the map.
 	call_deferred("_scatter_deferred")
 
@@ -54,6 +62,7 @@ func _scatter_deferred() -> void:
 	await get_tree().physics_frame
 	_scatter_all_zones()
 	_build_multimeshes()
+	_build_rock_collisions()
 
 
 func _configure_marker_area() -> void:
@@ -105,6 +114,7 @@ func _config_for_zone(zone_name: String) -> Dictionary:
 				"scale_min": forest_scale_min,
 				"scale_max": forest_scale_max,
 				"align_to_normal": false,
+				"add_collision": false,
 			}
 		"MuddyRocksZone":
 			return {
@@ -119,6 +129,7 @@ func _config_for_zone(zone_name: String) -> Dictionary:
 				"scale_min": muddy_scale_min,
 				"scale_max": muddy_scale_max,
 				"align_to_normal": true,
+				"add_collision": true,
 			}
 		"GreyRocksZone":
 			return {
@@ -133,6 +144,7 @@ func _config_for_zone(zone_name: String) -> Dictionary:
 				"scale_min": grey_scale_min,
 				"scale_max": grey_scale_max,
 				"align_to_normal": true,
+				"add_collision": true,
 			}
 		_:
 			return {}
@@ -193,6 +205,12 @@ func _scatter_zone(
 		if not _transforms_by_mesh.has(mesh_path):
 			_transforms_by_mesh[mesh_path] = []
 		(_transforms_by_mesh[mesh_path] as Array).append(xform)
+		if config.get("add_collision", false):
+			_collision_entries.append({
+				"mesh_path": mesh_path,
+				"mesh": mesh,
+				"xform": xform,
+			})
 		placed_xz.append(pos2)
 
 	if placed_xz.size() < target:
@@ -310,3 +328,35 @@ func _build_multimeshes() -> void:
 		mmi.name = mesh_path.get_file().get_basename()
 		mmi.multimesh = multimesh
 		_multimesh_root.add_child(mmi)
+
+
+func _build_rock_collisions() -> void:
+	if _collision_root == null or _collision_entries.is_empty():
+		return
+
+	## One BoxShape3D per mesh type (local AABB * 0.75); instance scale is on the body.
+	var shape_cache: Dictionary = {}
+
+	for entry in _collision_entries:
+		var mesh_path: String = entry["mesh_path"]
+		var mesh: Mesh = entry["mesh"]
+		var xform: Transform3D = entry["xform"]
+
+		var box: BoxShape3D
+		if shape_cache.has(mesh_path):
+			box = shape_cache[mesh_path]
+		else:
+			box = BoxShape3D.new()
+			box.size = mesh.get_aabb().size * COLLISION_SIZE_FACTOR
+			shape_cache[mesh_path] = box
+
+		var body := StaticBody3D.new()
+		body.collision_layer = WORLD_COLLISION_LAYER
+		body.collision_mask = 0
+		body.transform = xform
+		_collision_root.add_child(body)
+
+		var col := CollisionShape3D.new()
+		col.shape = box
+		col.position = mesh.get_aabb().get_center()
+		body.add_child(col)

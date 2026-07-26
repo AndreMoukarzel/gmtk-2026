@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://iaj3n07iub26"]
 
-[ext_resource type="ArrayMesh" uid="uid://blypjyjl28vdp" path="res://Assets/Models/Map/Scenery/rocks/rock_1_mesh.res" id="1_itaer"]
+[ext_resource type="ArrayMesh" uid="uid://cospdg0rykr3o" path="res://Assets/Models/Map/Scenery/rocks/rock_1_mesh.res" id="1_itaer"]
 
 [node name="rock_1" type="Node3D" unique_id=1336393538]
 

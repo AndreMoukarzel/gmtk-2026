@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://jwsjtqh2e5xs"]
+
+[ext_resource type="Script" path="res://Scripts/score_popup.gd" id="1_script"]
+
+[node name="ScorePopup" type="Label3D"]
+pixel_size = 0.01
+billboard = 1
+text = "+3"
+font_size = 64
+outline_size = 8
+script = ExtResource("1_script")

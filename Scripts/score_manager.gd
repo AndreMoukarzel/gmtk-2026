@@ -5,6 +5,15 @@ const ScoreSettings = preload("res://Menus/score_settings.gd")
 
 signal score_changed(new_score: int)
 
+@export_category("Score Popup")
+@export var score_popup_scene: PackedScene
+## Seconds until the floating "+N" fully fades out.
+@export var score_popup_fade_seconds: float = 0.85
+## Label3D font size for the floating score popup.
+@export var score_popup_font_size: int = 72
+## Lift above the death point so the number isn't buried in the mesh.
+@export var score_popup_height_offset: float = 1.25
+
 ## Current run score. Reset automatically when the scene reloads.
 var score: int = 0
 
@@ -24,6 +33,32 @@ func add_score(amount: int) -> void:
 
 	score = maxi(score + amount, 0)
 	score_changed.emit(score)
+
+
+## Combat kill helper: awards points and spawns a fading billboard at the world position.
+func add_score_at(amount: int, world_position: Vector3) -> void:
+	add_score(amount)
+	if _run_active and amount != 0:
+		spawn_score_popup(amount, world_position)
+
+
+func spawn_score_popup(amount: int, world_position: Vector3) -> void:
+	if score_popup_scene == null:
+		return
+
+	var popup := score_popup_scene.instantiate()
+	if popup == null:
+		return
+
+	var parent := get_tree().current_scene
+	if parent == null:
+		parent = self
+
+	parent.add_child(popup)
+	popup.global_position = world_position + Vector3.UP * score_popup_height_offset
+
+	if popup.has_method("setup"):
+		popup.setup(amount, score_popup_fade_seconds, score_popup_font_size)
 
 
 ## Floor-halves the current score (e.g. player death penalty).

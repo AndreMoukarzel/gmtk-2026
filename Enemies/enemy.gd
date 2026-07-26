@@ -124,7 +124,12 @@ func _award_kill_score() -> void:
 		return
 
 	var manager := get_tree().get_first_node_in_group("score_manager")
-	if manager != null and manager.has_method("add_score"):
+	if manager == null:
+		return
+
+	if manager.has_method("add_score_at"):
+		manager.add_score_at(score_value, global_position)
+	elif manager.has_method("add_score"):
 		manager.add_score(score_value)
 
 

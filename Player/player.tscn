@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dq71q4ejun540"]
 
 [ext_resource type="Script" uid="uid://dfuhvkr337nm3" path="res://Player/player.gd" id="1_weodu"]
-[ext_resource type="PackedScene" uid="uid://d1kpqeqy2rs0c" path="res://Player/player_v1.glb" id="3_character"]
+[ext_resource type="PackedScene" uid="uid://b1riy0c0pkb38" path="res://Player/player_model.tscn" id="3_apopc"]
 [ext_resource type="PackedScene" uid="uid://ct0c3f6d7yq7t" path="res://Player/health_bar.tscn" id="4_fkybt"]
 [ext_resource type="PackedScene" uid="uid://coego2m0gum53" path="res://Items/Sword/sword_slash.tscn" id="4_slash"]
 [ext_resource type="Shader" uid="uid://wbrv1xgabg4f" path="res://Shaders/hurt_vignette.gdshader" id="5_vignette"]
@@ -35,14 +35,11 @@ sword_damage = 50.0
 sword_hitbox_size = Vector3(4, 2, 4)
 hitbox_boundaries_ingame = false
 
-[node name="Character" parent="." unique_id=1051157959 instance=ExtResource("3_character")]
-transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.9706458, 0)
+[node name="Character" parent="." unique_id=89715977 instance=ExtResource("3_apopc")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -1, 0)
 
 [node name="Armature_001" parent="Character" index="0" unique_id=639181040]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="character_v1_004" parent="Character/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(1051157959, 2049641696) index="0" unique_id=824954690]
-layers = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=889163382]
 shape = SubResource("CapsuleShape3D_di2rl")

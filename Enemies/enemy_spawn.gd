@@ -13,6 +13,7 @@ func spawn_enemies(amount: int) -> void:
 		var random_pos: Vector3 = random_point_in_area(self)
 		
 		Enemy.Player = $"../Player"
+		Enemy.Base = $"../Base Hitbox"
 		$"../Enemies".add_child(Enemy)
 		Enemy.global_position = Vector3(random_pos.x, 1.0, random_pos.z)
 

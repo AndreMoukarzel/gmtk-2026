@@ -84,6 +84,7 @@ func get_closest_target() -> Array:
 	if Player and Base:
 		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
+		print(player_dist)
 		if player_dist > base_dist:
 			return [my_pos.direction_to(Base.global_position), base_dist]
 		return [my_pos.direction_to(Player.global_position), player_dist]
@@ -94,6 +95,7 @@ func get_closest_target() -> Array:
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
 		return [my_pos.direction_to(Base.global_position), base_dist]
 	return [Vector3(0, 0, 0), 999999.0]
+	
 
 
 func take_damage(

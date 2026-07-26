@@ -27,4 +27,5 @@ We represent the "Countdown" with the prophecies, where you have a Countdown to 
 
 ---
 
-![Thumbnail]("Menus/Thumb.png")
+
+![Thumbnail][("https://github.com/AndreMoukarzel/gmtk-2026/blob/main/Menus/Thumb.png")

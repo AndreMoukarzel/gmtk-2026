@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vjqou5bqb06"
 path.s3tc="res://.godot/imported/rock_2_ImphenziaPalette02-Albedo.png-e2888d3e34b94c1ae8a29b79f35a54c2.s3tc.ctex"
+path.etc2="res://.godot/imported/rock_2_ImphenziaPalette02-Albedo.png-e2888d3e34b94c1ae8a29b79f35a54c2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Models/Map/Scenery/rocks/rock_2_ImphenziaPalette02-Albedo.png"
-dest_files=["res://.godot/imported/rock_2_ImphenziaPalette02-Albedo.png-e2888d3e34b94c1ae8a29b79f35a54c2.s3tc.ctex"]
+dest_files=["res://.godot/imported/rock_2_ImphenziaPalette02-Albedo.png-e2888d3e34b94c1ae8a29b79f35a54c2.s3tc.ctex", "res://.godot/imported/rock_2_ImphenziaPalette02-Albedo.png-e2888d3e34b94c1ae8a29b79f35a54c2.etc2.ctex"]
 
 [params]
 

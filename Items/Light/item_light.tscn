@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b68tnjokijax0"]
+[gd_scene load_steps=8 format=3 uid="uid://b68tnjokijax0"]
 
 [ext_resource type="Script" uid="uid://c6dohx01klgoq" path="res://Items/Light/item_light.gd" id="1_08c6a"]
 [ext_resource type="Shader" uid="uid://dk2xo2i0sdoaq" path="res://Shaders/item_light.gdshader" id="2_5ts3w"]
@@ -8,9 +8,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yolx7"]
 render_priority = 0
 shader = ExtResource("2_5ts3w")
-shader_parameter/light_color = Color(0.90072364, 0.8282561, 1.1551381e-06, 1)
-shader_parameter/glow_strength = 4.390000208525
-shader_parameter/fade_power = 1.8550000643625
+shader_parameter/light_color = Color(0.900724, 0.828256, 1.15514e-06, 1)
+shader_parameter/glow_strength = 4.39
+shader_parameter/fade_power = 1.855
 shader_parameter/scroll_speed = 0.73
 shader_parameter/noise_scale = 0.635
 shader_parameter/distortion = 0.42
@@ -23,88 +23,25 @@ bottom_radius = 1.095
 radius = 1.12884
 height = 2.25769
 
-[sub_resource type="Animation" id="Animation_arsrn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("lamplight:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, -0.745, 0.145)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("lamplight:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.28950366, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_30x7x"]
-resource_name = "idle"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("lamplight:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, -0.745, 0.145), Vector3(0, -0.57689667, 0.145)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("lamplight:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(-0.28950366, 0, 0), Vector3(-0.37181562, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bjd0s"]
-_data = {
-&"RESET": SubResource("Animation_arsrn"),
-&"idle": SubResource("Animation_30x7x")
-}
-
-[node name="item_light" type="Area3D" unique_id=2008136796]
+[node name="item_light" type="Area3D"]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_08c6a")
 item_icon = ExtResource("2_fnfv0")
 
-[node name="Aura" type="MeshInstance3D" parent="." unique_id=1336813303]
-transform = Transform3D(0.49242356, 0, -0.87035567, 0, 1, 0, 0.87035567, 0, 0.49242356, 0, 0, 0)
+[node name="Aura" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.492424, 0, -0.870356, 0, 1, 0, 0.870356, 0, 0.492424, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_yolx7")
 mesh = SubResource("CylinderMesh_fnfv0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1480422277]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4bgij")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1832659645]
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
 omni_range = 30.0
 
-[node name="lamplight" parent="." unique_id=1700531292 instance=ExtResource("4_fnfv0")]
-transform = Transform3D(0.43, 0, 0, 0, 0.41210583, 0.12275492, 0, -0.12275492, 0.41210583, 0, -0.745, 0.145)
+[node name="lamplight" parent="." instance=ExtResource("4_fnfv0")]
+transform = Transform3D(0.43, 0, 0, 0, 0.412106, 0.122755, 0, -0.122755, 0.412106, 0, -0.745, 0.145)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1326320550]
-libraries/ = SubResource("AnimationLibrary_bjd0s")
-autoplay = &"idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"

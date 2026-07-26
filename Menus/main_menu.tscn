@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://l80inlivu7qd"]
 
 [ext_resource type="Script" uid="uid://benkgdw5qiyho" path="res://Menus/main_menu.gd" id="1_p3jrs"]
+[ext_resource type="Texture2D" uid="uid://7x4xcsuhix20" path="res://Menus/Thumb Cartoon.png" id="2_11gta"]
 [ext_resource type="PackedScene" uid="uid://bgaxpuryx7td4" path="res://Menus/UI/settings_menu.tscn" id="2_at0u2"]
+[ext_resource type="PackedScene" uid="uid://rhsgwvm2xso2" path="res://Menus/UI/tutorial_menu.tscn" id="4_11gta"]
 
 [node name="MainMenu" type="Control" unique_id=1435887929]
 layout_mode = 3
@@ -12,14 +14,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p3jrs")
 
-[node name="Background" type="ColorRect" parent="." unique_id=927882256]
+[node name="Background" type="TextureRect" parent="." unique_id=109700821]
+modulate = Color(1, 1, 1, 0.7411765)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.1, 0.14, 1)
+texture = ExtResource("2_11gta")
 
 [node name="Center" type="CenterContainer" parent="." unique_id=601027200]
 layout_mode = 1
@@ -37,9 +40,16 @@ theme_override_constants/separation = 14
 
 [node name="Title" type="Label" parent="Center/MainButtons" unique_id=1554401062]
 layout_mode = 2
-theme_override_font_sizes/font_size = 42
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 54
 text = "Prophet's Respite"
 horizontal_alignment = 1
+
+[node name="TutorialButton" type="Button" parent="Center/MainButtons" unique_id=568081235]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "How to Play!?"
 
 [node name="PlayButton" type="Button" parent="Center/MainButtons" unique_id=1493725244]
 unique_name_in_owner = true
@@ -63,3 +73,10 @@ text = "Exit game"
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
+
+[node name="TutorialMenu" parent="." unique_id=1797495299 instance=ExtResource("4_11gta")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Center/MainButtons/TutorialButton" to="." method="_on_tutorial_button_pressed"]

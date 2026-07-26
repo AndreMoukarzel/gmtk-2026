@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://rhsgwvm2xso2"]
+
+[ext_resource type="Script" uid="uid://6nllhce7xdln" path="res://Menus/UI/tutorial_menu.gd" id="1_18emt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18emt"]
+bg_color = Color(0.7931204, 0.4913687, 0.3304364, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_18emt"]
+color = Color(1, 1, 1, 1)
+
+[node name="TutorialMenu" type="Control" unique_id=1797495299]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_18emt")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=100935352]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.050708726, 0.06100855, 0.07846785, 0.92200005)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=2008738963]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1424453703]
+custom_minimum_size = Vector2(420, 220)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_18emt")
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel" unique_id=890604204]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel/Margin" unique_id=495069948]
+layout_mode = 2
+theme_override_constants/separation = 26
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/VBox" unique_id=1109049230]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 28
+text = "How to Play"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/Margin/VBox" unique_id=1596704454]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_18emt")
+
+[node name="Instructions1" type="Label" parent="Center/Panel/Margin/VBox" unique_id=381592750]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "You must defend your castle from hordes of fiends,
+while weathering multiple prophecies that will plague you!"
+
+[node name="Instructions2" type="Label" parent="Center/Panel/Margin/VBox" unique_id=1598214919]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "- Q: Grabs items from your castle
+- E: Drops items back (only inside your castle, where it is safe!)
+- WASD: Move around your prophetic butt
+- Left Mouse Button: Attack in the direction of your mouse, as
+    long as you are holding any (or multiple) weapons"
+
+[node name="Instructions3" type="Label" parent="Center/Panel/Margin/VBox" unique_id=1015453865]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Monsters will hound you and try to destroy your castle,
+defend it with your life!"
+
+[node name="Instructions4" type="Label" parent="Center/Panel/Margin/VBox" unique_id=7130140]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "SURVIVE"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="Center/Panel/Margin/VBox" unique_id=763181803]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Back"

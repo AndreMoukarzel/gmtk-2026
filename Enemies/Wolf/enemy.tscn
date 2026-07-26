@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dud6gsbyapbat"]
+[gd_scene format=3 uid="uid://dud6gsbyapbat"]
 
 [ext_resource type="Script" uid="uid://buhtc4l18ah5u" path="res://Enemies/Wolf/enemy.gd" id="1_bxkaj"]
 [ext_resource type="PackedScene" uid="uid://phsqrlc1rhvq" path="res://Enemies/Wolf/Mesh/Wolf.glb" id="2_bxkaj"]
 [ext_resource type="AudioStream" uid="uid://dkyacuhxcfiwx" path="res://Enemies/Wolf/growl.mp3" id="3_47qgu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7v2h"]
-size = Vector3(2.3, 2, 2)
+size = Vector3(3.065, 2.995, 2.66)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ivic6"]
 radius = 1.0
@@ -13,46 +13,46 @@ radius = 1.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_47qgu"]
 radius = 1.405
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" unique_id=1524417988]
 collision_layer = 2
 script = ExtResource("1_bxkaj")
 speed = 7.5
 atk_damage = 15.0
 
-[node name="Wolf" parent="." instance=ExtResource("2_bxkaj")]
+[node name="Wolf" parent="." unique_id=1017078659 instance=ExtResource("2_bxkaj")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0.06)
 
-[node name="Armature" parent="Wolf" index="0"]
+[node name="Armature" parent="Wolf" index="0" unique_id=425353974]
 transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 
-[node name="AnimationPlayer" parent="Wolf" index="3"]
-autoplay = "idle"
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=1409241120]
+autoplay = &"idle"
 
-[node name="Attack" type="Area3D" parent="Wolf"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, -0.24)
+[node name="Attack" type="Area3D" parent="Wolf" unique_id=1168426273]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, -1.6713638)
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wolf/Attack"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wolf/Attack" unique_id=1307564179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 shape = SubResource("BoxShape3D_l7v2h")
 debug_color = Color(0.985784, 0, 0.334978, 0.419608)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=301059758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0169678, 0)
 shape = SubResource("SphereShape3D_ivic6")
 
-[node name="Hitbox" type="Area3D" parent="."]
+[node name="Hitbox" type="Area3D" parent="." unique_id=935384481]
 collision_layer = 0
 collision_mask = 8
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=2062899509]
 shape = SubResource("SphereShape3D_47qgu")
 debug_color = Color(0, 0.634797, 0.418558, 0.419608)
 
-[node name="GrowlSFX" type="AudioStreamPlayer3D" parent="."]
+[node name="GrowlSFX" type="AudioStreamPlayer3D" parent="." unique_id=1159740999]
 stream = ExtResource("3_47qgu")
 volume_db = -15.0
 

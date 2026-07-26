@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dud6gsbyapbat" path="res://Enemies/Wolf/enemy.tscn" id="1_ee8e0"]
 [ext_resource type="Script" uid="uid://blxp728kgtbko" path="res://Enemies/Rat/rat.gd" id="2_3sax4"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3sax4"]
+size = Vector3(3.29, 2.9, 3.125)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_3sax4"]
 radius = 0.585
 
@@ -19,8 +22,14 @@ atk_damage = 3.0
 [node name="Wolf" parent="." index="0"]
 transform = Transform3D(0.135, 0, 0, 0, 0.135, 0, 0, 0, 0.135, 0, 0, 0.17)
 
-[node name="AnimationPlayer" parent="Wolf" index="3"]
+[node name="AnimationPlayer" parent="Wolf" index="3" unique_id=1409241120]
 autoplay = &"idle"
+
+[node name="Attack" parent="Wolf" index="4"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, -5.7590046)
+
+[node name="CollisionShape3D" parent="Wolf/Attack" index="0"]
+shape = SubResource("BoxShape3D_3sax4")
 
 [node name="CollisionShape3D" parent="." index="1"]
 shape = SubResource("SphereShape3D_3sax4")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://l80inlivu7qd"]
 
 [ext_resource type="Script" uid="uid://benkgdw5qiyho" path="res://Menus/main_menu.gd" id="1_p3jrs"]
-[ext_resource type="Texture2D" uid="uid://7x4xcsuhix20" path="res://Menus/Thumb Cartoon.png" id="2_11gta"]
+[ext_resource type="Texture2D" uid="uid://c7pv7dmp4ra0y" path="res://Menus/Thumb.png" id="2_11gta"]
 [ext_resource type="PackedScene" uid="uid://bgaxpuryx7td4" path="res://Menus/UI/settings_menu.tscn" id="2_at0u2"]
 [ext_resource type="PackedScene" uid="uid://rhsgwvm2xso2" path="res://Menus/UI/tutorial_menu.tscn" id="4_11gta"]
 

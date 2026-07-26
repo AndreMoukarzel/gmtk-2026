@@ -675,6 +675,7 @@ func drop_selected_item() -> void:
 		return
 
 	if not _is_inside_item_droppable_area():
+		$BuzzerSFX.play()
 		print("Só é possível dropar itens na área permitida.")
 		return
 

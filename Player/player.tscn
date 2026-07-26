@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cacvigd801os2" path="res://Player/SFX/sword.mp3" id="9_x3vf3"]
 [ext_resource type="AudioStream" uid="uid://br23s33mfncr" path="res://Player/SFX/arrow_short.mp3" id="10_apopc"]
 [ext_resource type="AudioStream" uid="uid://dmfmsywvy0pxd" path="res://Player/SFX/roblox-death-sound-effect.mp3" id="11_apopc"]
+[ext_resource type="AudioStream" uid="uid://c5jv2dnhcrn5a" path="res://Player/SFX/buzzer.mp3" id="12_5htga"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
@@ -98,6 +99,10 @@ volume_db = -10.0
 
 [node name="DmgSFX" type="AudioStreamPlayer3D" parent="." unique_id=374553128]
 stream = ExtResource("11_apopc")
+volume_db = -10.0
+
+[node name="BuzzerSFX" type="AudioStreamPlayer3D" parent="." unique_id=1604294684]
+stream = ExtResource("12_5htga")
 volume_db = -10.0
 
 [editable path="Character"]

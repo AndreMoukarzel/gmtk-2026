@@ -19,12 +19,15 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Panel" type="Panel" parent="MarginContainer" unique_id=982426345]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1991596354]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer" unique_id=982426345]
 custom_minimum_size = Vector2(130, 200)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=1823106293]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel" unique_id=1823106293]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,49 +37,56 @@ offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=1155905503]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer" unique_id=1155905503]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Slot1Row" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=717383427]
+[node name="Slot1Row" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=717383427]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Slot1Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383429]
+[node name="Slot1Label" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383429]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
-size_flags_vertical = 4
 theme_override_font_sizes/font_size = 22
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Item1" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383428]
+[node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Slot1Row" unique_id=717383428]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+size_flags_vertical = 4
 expand_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1023294926]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1023294926]
 layout_mode = 2
 
-[node name="Slot2Row" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=945377139]
+[node name="Slot2Row" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=945377139]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Slot2Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377141]
+[node name="Slot2Label" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377141]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
-size_flags_vertical = 4
 theme_override_font_sizes/font_size = 22
 text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Item2" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377140]
+[node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Slot2Row" unique_id=945377140]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+size_flags_vertical = 4
 expand_mode = 2
+
+[node name="Tips" type="Label" parent="MarginContainer/VBoxContainer" unique_id=982792419]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+text = "\"Q\"to Pickup
+\"E\"to Drop
+(Can only drop inside the castle)"

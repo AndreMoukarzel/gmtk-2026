@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://wbrv1xgabg4f" path="res://Shaders/hurt_vignette.gdshader" id="5_vignette"]
 [ext_resource type="AudioStream" uid="uid://b2agldejhsjrn" path="res://Player/SFX/item-grab.mp3" id="6_vtle1"]
 [ext_resource type="AudioStream" uid="uid://h6iapiodhsyu" path="res://Player/SFX/item-drop.mp3" id="7_od3ui"]
+[ext_resource type="AudioStream" uid="uid://b0yh54uc2wqdu" path="res://Player/SFX/hover.mp3" id="8_od3ui"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_di2rl"]
 
@@ -82,5 +83,9 @@ volume_db = -5.0
 [node name="DropSFX" type="AudioStreamPlayer3D" parent="." unique_id=116767761]
 stream = ExtResource("7_od3ui")
 volume_db = -5.0
+
+[node name="HighlightSFX" type="AudioStreamPlayer3D" parent="." unique_id=2039434715]
+stream = ExtResource("8_od3ui")
+volume_db = -10.0
 
 [editable path="Character"]

@@ -528,6 +528,7 @@ func _refresh_pickup_highlight() -> void:
 
 	if is_instance_valid(_highlighted_pickup):
 		PickupHighlight.set_highlighted(_highlighted_pickup, true)
+		$HighlightSFX.play()
 
 
 func equip_speed_item(

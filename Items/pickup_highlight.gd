@@ -24,44 +24,15 @@ static func get_outline_material() -> ShaderMaterial:
 
 static func set_highlighted(item: Node3D, active: bool) -> void:
 	if item == null or not is_instance_valid(item):
-		# #region agent log
-		_agent_dbg_log("B", "pickup_highlight.gd:set_highlighted", "invalid item", {"active": active})
-		# #endregion
 		return
 
 	var meshes := _collect_item_meshes(item)
-	var mesh_names: Array[String] = []
-	var apply_mode := ""
 
 	for mesh_instance in meshes:
-		mesh_names.append(mesh_instance.name)
 		if active:
-			apply_mode = _apply_highlight(mesh_instance)
+			_apply_highlight(mesh_instance)
 		else:
 			_clear_highlight(mesh_instance)
-
-		# #region agent log
-		_agent_dbg_log("C", "pickup_highlight.gd:set_highlighted", "overlay applied", {
-			"item": item.name,
-			"active": active,
-			"mesh": mesh_instance.name,
-			"apply_mode": apply_mode,
-			"has_overlay_after": mesh_instance.material_overlay != null,
-			"has_override_after": mesh_instance.material_override != null,
-			"surface_count": mesh_instance.get_surface_override_material_count() if mesh_instance.mesh else -1
-		})
-		# #endregion
-
-	# #region agent log
-	_agent_dbg_log("B", "pickup_highlight.gd:set_highlighted", "mesh collection result", {
-		"item": item.name,
-		"active": active,
-		"mesh_count": meshes.size(),
-		"mesh_names": mesh_names,
-		"child_names": _child_names(item),
-		"shader_ok": get_outline_material() != null and get_outline_material().shader != null
-	})
-	# #endregion
 
 
 static func _apply_highlight(mesh_instance: MeshInstance3D) -> String:
@@ -161,33 +132,3 @@ static func _collect_item_meshes(root: Node) -> Array[MeshInstance3D]:
 			return meshes
 
 	return meshes
-
-
-static func _child_names(root: Node) -> Array[String]:
-	var names: Array[String] = []
-	for child in root.get_children():
-		names.append("%s:%s" % [child.name, child.get_class()])
-	return names
-
-
-static func _agent_dbg_log(hypothesis_id: String, location: String, message: String, data: Dictionary = {}) -> void:
-	# #region agent log
-	var path := "c:/Users/breno/Desktop/GMTK2026/gmtk-2026/debug-319202.log"
-	var payload := {
-		"sessionId": "319202",
-		"runId": "post-fix-aura",
-		"hypothesisId": hypothesis_id,
-		"location": location,
-		"message": message,
-		"data": data,
-		"timestamp": Time.get_unix_time_from_system() * 1000.0
-	}
-	var file := FileAccess.open(path, FileAccess.READ_WRITE)
-	if file == null:
-		file = FileAccess.open(path, FileAccess.WRITE)
-	if file == null:
-		return
-	file.seek_end()
-	file.store_line(JSON.stringify(payload))
-	file.close()
-	# #endregion

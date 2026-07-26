@@ -518,18 +518,6 @@ func _get_active_nearby_pickup() -> Area3D:
 func _refresh_pickup_highlight() -> void:
 	var target := _get_active_nearby_pickup()
 
-	# #region agent log
-	_agent_dbg_log("A", "player.gd:_refresh_pickup_highlight", "refresh called", {
-		"target": str(target),
-		"target_name": target.name if target else "",
-		"prev": str(_highlighted_pickup),
-		"nearby_sword": is_instance_valid(nearby_sword_item),
-		"nearby_bullet": is_instance_valid(nearby_bullet_item),
-		"nearby_speed": is_instance_valid(nearby_speed_item),
-		"same_target": _highlighted_pickup == target
-	})
-	# #endregion
-
 	if _highlighted_pickup == target:
 		return
 
@@ -540,29 +528,6 @@ func _refresh_pickup_highlight() -> void:
 
 	if is_instance_valid(_highlighted_pickup):
 		PickupHighlight.set_highlighted(_highlighted_pickup, true)
-
-
-func _agent_dbg_log(hypothesis_id: String, location: String, message: String, data: Dictionary = {}) -> void:
-	# #region agent log
-	var path := "c:/Users/breno/Desktop/GMTK2026/gmtk-2026/debug-319202.log"
-	var payload := {
-		"sessionId": "319202",
-		"runId": "post-fix",
-		"hypothesisId": hypothesis_id,
-		"location": location,
-		"message": message,
-		"data": data,
-		"timestamp": Time.get_unix_time_from_system() * 1000.0
-	}
-	var file := FileAccess.open(path, FileAccess.READ_WRITE)
-	if file == null:
-		file = FileAccess.open(path, FileAccess.WRITE)
-	if file == null:
-		return
-	file.seek_end()
-	file.store_line(JSON.stringify(payload))
-	file.close()
-	# #endregion
 
 
 func equip_speed_item(

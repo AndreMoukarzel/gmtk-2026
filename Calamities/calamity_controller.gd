@@ -124,7 +124,8 @@ func _finish_calamity_after_duration(
 	instance_id: int,
 	calamity: CalamityData
 ) -> void:
-	await get_tree().create_timer(calamity.duration).timeout
+	# process_always=false so duration pauses with the game tree.
+	await get_tree().create_timer(calamity.duration, false).timeout
 
 	calamity_finished.emit(
 		instance_id,

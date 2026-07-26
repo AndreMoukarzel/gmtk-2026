@@ -13,6 +13,7 @@ radius = 1.0
 radius = 1.405
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1541529888]
+collision_layer = 2
 script = ExtResource("1_bxkaj")
 
 [node name="Wolf" parent="." unique_id=2080456522 instance=ExtResource("2_bxkaj")]

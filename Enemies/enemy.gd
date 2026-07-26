@@ -84,7 +84,9 @@ func get_closest_target() -> Array:
 	if Player and Base:
 		var player_dist: float = my_pos.distance_squared_to(Player.global_position)
 		var base_dist: float = my_pos.distance_squared_to(Base.global_position)
-		if player_dist <= 200.000 and base_dist <= 150.000:
+		if base_dist <= 150:
+			return [my_pos.direction_to(Base.global_position), base_dist]
+		if player_dist <= 200:
 			return [my_pos.direction_to(Player.global_position), player_dist]
 		return [my_pos.direction_to(Base.global_position), base_dist]
 	elif Player:

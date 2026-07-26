@@ -14,10 +14,8 @@ func take_damage(amount: float) -> void:
 		return
 
 	health = maxf(health - amount, 0.0)
-	print (health)
 	if health <= 0.0:
-		pass
-		
+		return
 
 
 func _on_body_entered(body: Node3D) -> void:

@@ -11,18 +11,20 @@ extends Node
 @export var calamity_id: StringName = &"calamity_blackout"
 
 var _blackout_active: bool = false
+var _active_tween: Tween
 
 # Configurações originais.
 var _original_light_visible: bool
 var _original_light_energy: float
 
-var _original_environment: Environment
 var _original_background_energy: float
 var _original_ambient_light_energy: float
 var _original_reflected_light_source: Environment.ReflectionSource
 
 
 func _ready() -> void:
+	add_to_group("calamity_blackout")
+
 	if controller == null:
 		push_error("CalamityBlackout: Controller não configurado.")
 		return
@@ -67,29 +69,34 @@ func start_blackout() -> void:
 
 	_save_original_settings()
 
-	# Desliga a luz direcional.
+	# Duplicate so we never mutate the PackedScene-cached Environment.
+	# Otherwise Play Again / reload keeps the darkened settings.
+	if world_environment.environment != null:
+		world_environment.environment = world_environment.environment.duplicate()
+
 	directional_light.visible = false
 
-	# Escurece o ambiente.
-	if world_environment.environment != null:
-		var env := world_environment.environment
-		
-		var tween := create_tween()
-		tween.set_parallel(true)
-		
-		tween.tween_property(
-			env, "background_energy_multiplier",
-			0.0, 1.0
-		)
-		tween.tween_property(
-			env, "ambient_light_energy",
-			0.0, 1.0
-		)
+	if world_environment.environment == null:
+		return
 
-		tween.set_parallel(false)
-		tween.tween_callback(func():
-			env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
-		)
+	var env := world_environment.environment
+	_kill_active_tween()
+	_active_tween = create_tween()
+	_active_tween.set_parallel(true)
+
+	_active_tween.tween_property(
+		env, "background_energy_multiplier",
+		0.0, 1.0
+	)
+	_active_tween.tween_property(
+		env, "ambient_light_energy",
+		0.0, 1.0
+	)
+
+	_active_tween.set_parallel(false)
+	_active_tween.tween_callback(func():
+		env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
+	)
 
 
 func stop_blackout() -> void:
@@ -97,50 +104,34 @@ func stop_blackout() -> void:
 		return
 
 	_blackout_active = false
+	_kill_active_tween()
 
-	# Restaura a luz direcional.
 	directional_light.visible = _original_light_visible
 	directional_light.light_energy = _original_light_energy
 
-	# Restaura as configurações originais do ambiente.
-	if world_environment.environment != null:
-		var env := world_environment.environment
-		
-		var tween := create_tween()
-		tween.set_parallel(true)
-		
-		tween.tween_property(
-			env, "background_energy_multiplier",
-			_original_background_energy, 1.0
-		)
-		tween.tween_property(
-			env, "ambient_light_energy",
-			_original_ambient_light_energy, 1.0
-		)
+	if world_environment.environment == null:
+		return
 
-		tween.set_parallel(false)
-		tween.tween_callback(func():
-			env.reflected_light_source = _original_reflected_light_source
-		)
+	var env := world_environment.environment
+	env.background_energy_multiplier = _original_background_energy
+	env.ambient_light_energy = _original_ambient_light_energy
+	env.reflected_light_source = _original_reflected_light_source
+
+
+func _kill_active_tween() -> void:
+	if _active_tween != null and _active_tween.is_valid():
+		_active_tween.kill()
+	_active_tween = null
 
 
 func _save_original_settings() -> void:
 	_original_light_visible = directional_light.visible
 	_original_light_energy = directional_light.light_energy
 
-	_original_environment = world_environment.environment
-
-	if _original_environment == null:
+	var env := world_environment.environment
+	if env == null:
 		return
 
-	_original_background_energy = (
-		_original_environment.background_energy_multiplier
-	)
-
-	_original_ambient_light_energy = (
-		_original_environment.ambient_light_energy
-	)
-
-	_original_reflected_light_source = (
-		_original_environment.reflected_light_source
-	)
+	_original_background_energy = env.background_energy_multiplier
+	_original_ambient_light_energy = env.ambient_light_energy
+	_original_reflected_light_source = env.reflected_light_source

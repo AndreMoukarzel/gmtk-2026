@@ -1,6 +1,6 @@
 extends Control
 
-const AudioSettings = preload("res://Scripts/UI/audio_settings.gd")
+const AudioSettings = preload("res://Menus/audio_settings.gd")
 
 signal closed
 

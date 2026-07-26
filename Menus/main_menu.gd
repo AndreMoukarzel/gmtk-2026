@@ -1,6 +1,6 @@
 extends Control
 
-const AudioSettings = preload("res://Scripts/UI/audio_settings.gd")
+const AudioSettings = preload("res://Menus/audio_settings.gd")
 const GAME_SCENE_PATH := "res://Scenes/field_test.tscn"
 
 @onready var main_buttons: VBoxContainer = %MainButtons

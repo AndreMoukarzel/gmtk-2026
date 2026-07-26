@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://buhtc4l18ah5u" path="res://Enemies/enemy.gd" id="1_bxkaj"]
 [ext_resource type="PackedScene" uid="uid://phsqrlc1rhvq" path="res://Enemies/Mesh/Wolf.glb" id="2_bxkaj"]
+[ext_resource type="AudioStream" uid="uid://dkyacuhxcfiwx" path="res://Enemies/growl.mp3" id="3_47qgu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7v2h"]
 size = Vector3(2.3, 2, 2)
@@ -51,6 +52,10 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=1184434724]
 shape = SubResource("SphereShape3D_47qgu")
 debug_color = Color(0, 0.63479745, 0.41855842, 0.41960785)
+
+[node name="GrowlSFX" type="AudioStreamPlayer3D" parent="." unique_id=1187916170]
+stream = ExtResource("3_47qgu")
+volume_db = -15.0
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 

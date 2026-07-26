@@ -162,6 +162,7 @@ func attack() -> void:
 	
 	is_attacking = true
 	
+	$GrowlSFX.play()
 	$Wolf/AnimationPlayer.play("attack")
 	await get_tree().create_timer(0.8).timeout
 	var bodies = $Wolf/Attack.get_overlapping_bodies()

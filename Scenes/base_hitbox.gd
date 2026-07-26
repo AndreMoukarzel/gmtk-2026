@@ -21,6 +21,8 @@ func take_damage(amount: float) -> void:
 	health_changed.emit(health, max_health)
 	if health <= 0.0:
 		_trigger_game_over()
+	else:
+		$DmgSFX.play()
 
 
 func _on_body_entered(body: Node3D) -> void:

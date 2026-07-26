@@ -30,6 +30,7 @@ func trigger() -> void:
 		return
 
 	_is_active = true
+	$FinalDmgSFX.play()
 
 	var final_score := 0
 	var highscore := ScoreSettings.load_highscore()

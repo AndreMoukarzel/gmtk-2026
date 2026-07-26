@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://c314bo3h0am3y"]
 
-[ext_resource type="Script" path="res://Menus/game_over.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://jh6j4sh3erib" path="res://Menus/game_over.gd" id="1_script"]
+[ext_resource type="AudioStream" uid="uid://brm3vym3yk4hw" path="res://Scenes/lordsonny-small-rock-break-194553.mp3" id="2_ognnq"]
 
-[node name="GameOver" type="CanvasLayer"]
+[node name="GameOver" type="CanvasLayer" unique_id=472691541]
 process_mode = 3
 layer = 110
 script = ExtResource("1_script")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=730093698]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Dim" type="ColorRect" parent="Root"]
+[node name="Dim" type="ColorRect" parent="Root" unique_id=477369359]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.02, 0.02, 0.82)
 
-[node name="Center" type="CenterContainer" parent="Root"]
+[node name="Center" type="CenterContainer" parent="Root" unique_id=694432040]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,43 +33,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="Root/Center"]
+[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=232511380]
 custom_minimum_size = Vector2(420, 280)
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="Root/Center/Panel"]
+[node name="Margin" type="MarginContainer" parent="Root/Center/Panel" unique_id=1076826492]
 layout_mode = 2
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="Root/Center/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Root/Center/Panel/Margin" unique_id=1018596487]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Title" type="Label" parent="Root/Center/Panel/Margin/VBox"]
+[node name="Title" type="Label" parent="Root/Center/Panel/Margin/VBox" unique_id=987527697]
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
 text = "GAME OVER"
 horizontal_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="Root/Center/Panel/Margin/VBox"]
+[node name="ScoreLabel" type="Label" parent="Root/Center/Panel/Margin/VBox" unique_id=345331690]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Score: 0"
 horizontal_alignment = 1
 
-[node name="HighscoreLabel" type="Label" parent="Root/Center/Panel/Margin/VBox"]
+[node name="HighscoreLabel" type="Label" parent="Root/Center/Panel/Margin/VBox" unique_id=854898380]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Highscore: 0"
 horizontal_alignment = 1
 
-[node name="PlayAgainButton" type="Button" parent="Root/Center/Panel/Margin/VBox"]
+[node name="PlayAgainButton" type="Button" parent="Root/Center/Panel/Margin/VBox" unique_id=1879425110]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "Play Again"
+
+[node name="FinalDmgSFX" type="AudioStreamPlayer" parent="." unique_id=243329290]
+process_mode = 3
+stream = ExtResource("2_ognnq")
+volume_db = -10.0

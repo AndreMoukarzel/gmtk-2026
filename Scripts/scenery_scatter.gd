@@ -181,11 +181,11 @@ func _scatter_zone(
 		if mesh == null:
 			continue
 
-		var scale := _rng.randf_range(config["scale_min"], config["scale_max"])
+		var obj_scale := _rng.randf_range(config["scale_min"], config["scale_max"])
 		var xform := _make_transform(
 			ground["position"],
 			normal,
-			scale,
+			obj_scale,
 			config["align_to_normal"],
 			mesh
 		)
@@ -258,7 +258,7 @@ func _make_transform(
 	mesh: Mesh
 ) -> Transform3D:
 	var yaw := _rng.randf_range(0.0, TAU)
-	var basis: Basis
+	var obj_basis: Basis
 
 	if align_to_normal:
 		var up := normal.normalized()
@@ -267,24 +267,24 @@ func _make_transform(
 			tangent = Vector3.FORWARD.cross(up)
 		tangent = tangent.normalized()
 		var bitangent := up.cross(tangent).normalized()
-		basis = Basis(tangent, up, bitangent).orthonormalized()
-		basis = basis.rotated(up, yaw)
+		obj_basis = Basis(tangent, up, bitangent).orthonormalized()
+		obj_basis = obj_basis.rotated(up, yaw)
 	else:
 		# Trees stay upright; only spin around world Y.
-		basis = Basis.from_euler(Vector3(0.0, yaw, 0.0))
+		obj_basis = Basis.from_euler(Vector3(0.0, yaw, 0.0))
 
-	basis = basis.scaled(Vector3.ONE * uniform_scale)
+	obj_basis = obj_basis.scaled(Vector3.ONE * uniform_scale)
 
 	# Sit the mesh AABB bottom on the ground hit (origin is often mesh center).
 	var aabb := mesh.get_aabb()
 	var local_bottom_lift := Vector3(0.0, -aabb.position.y, 0.0)
-	var position := (
+	var obj_position := (
 		ground_position
 		+ normal.normalized() * height_offset
-		+ basis * local_bottom_lift
+		+ obj_basis * local_bottom_lift
 	)
 
-	return Transform3D(basis, position)
+	return Transform3D(obj_basis, obj_position)
 
 
 func _build_multimeshes() -> void:

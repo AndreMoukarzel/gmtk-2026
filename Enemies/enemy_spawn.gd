@@ -33,5 +33,5 @@ func random_point_in_area(area: Area3D) -> Vector3:
 	return collision_shape.global_transform * local_point
 
 
-func _on_calamity_controller_calamity_started(instance_id: int, _calamity: CalamityData) -> void:
+func _on_calamity_controller_calamity_started(_instance_id: int, _calamity: CalamityData) -> void:
 	spawn_enemies(20)

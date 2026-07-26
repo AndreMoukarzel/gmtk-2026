@@ -66,7 +66,7 @@ func halve_score() -> void:
 	if not _run_active:
 		return
 
-	score = score / 2
+	score = floor(float(score) / 2)
 	score_changed.emit(score)
 
 

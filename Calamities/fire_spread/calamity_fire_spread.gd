@@ -149,7 +149,7 @@ func _spawn_fires_in_shape(
 
 	while spawned_fires.size() - created_before < target_count:
 		if attempts >= maximum_spawn_attempts:
-			push_warning(
+			print(
 				"Não foi possível criar todos os fogos em '%s'. Criados: %d de %d."
 				% [
 					collision.name,

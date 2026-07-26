@@ -1,8 +1,8 @@
 extends Label3D
 
-func setup(amount: int, fade_seconds: float, font_size: int) -> void:
+func setup(amount: int, fade_seconds: float, score_font_size: int) -> void:
 	text = "+%d" % amount
-	self.font_size = font_size
+	self.font_size = score_font_size
 	billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	modulate = Color(1.0, 0.92, 0.35, 1.0)
 	outline_modulate = Color(0.0, 0.0, 0.0, 1.0)

@@ -72,7 +72,7 @@ func _on_calamity_countdown_updated(
 
 func _on_calamity_started(
 	instance_id: int,
-	calamity: CalamityData
+	_calamity: CalamityData
 ) -> void:
 	if not queue_items.has(instance_id):
 		return

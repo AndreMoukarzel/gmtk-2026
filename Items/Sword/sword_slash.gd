@@ -139,7 +139,7 @@ func _disable_hitbox() -> void:
 	_set_boundary_mesh_visible(false)
 
 
-func _set_boundary_mesh_visible(is_visible: bool) -> void:
+func _set_boundary_mesh_visible(visibility: bool) -> void:
 	var boundary_mesh := hitbox.get_node_or_null("HitboxBoundaryMesh") as MeshInstance3D
 	if boundary_mesh != null:
-		boundary_mesh.visible = is_visible
+		boundary_mesh.visible = visibility
